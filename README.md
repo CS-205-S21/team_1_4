@@ -1,4 +1,4 @@
-# project
+# Project: Pet Tinder
 
 This project will be a matchmaking system for potential adopters. They will be able to login, 
 with a database containing their data, then view many profiles of pets stored in the
