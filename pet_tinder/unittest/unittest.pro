@@ -7,7 +7,7 @@ SOURCES += main.cpp
 
 LIBS += -pthread
 
-SOURCES += ../../gtest/googletest/src/gtest-all.cc
+//S.OURCES += ../../gtest/googletest/src/gtest-all.cc
 
 INCLUDEPATH += ../../gtest \
  ../../gtest/googletest \
@@ -16,3 +16,4 @@ INCLUDEPATH += ../../gtest \
 
 HEADERS += ../matchmaking/matchmaker.h
 SOURCES += ../matchmaking/matchmaker.cpp
+
