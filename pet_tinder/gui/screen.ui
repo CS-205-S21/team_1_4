@@ -266,7 +266,7 @@
           <item>
            <widget class="QPushButton" name="pushButton_3">
             <property name="text">
-             <string>Hate</string>
+             <string>Dislike</string>
             </property>
            </widget>
           </item>
@@ -282,25 +282,48 @@
        </layout>
       </item>
       <item>
-       <widget class="QLabel" name="animalCustomBio">
-        <property name="maximumSize">
-         <size>
-          <width>10000</width>
-          <height>16777215</height>
-         </size>
+       <widget class="QScrollArea" name="scrollArea">
+        <property name="widgetResizable">
+         <bool>true</bool>
         </property>
-        <property name="text">
-         <string>Name: Sir McQuackinns
+        <widget class="QWidget" name="scrollAreaWidgetContents_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>252</width>
+           <height>336</height>
+          </rect>
+         </property>
+         <widget class="QLabel" name="animalCustomBio">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>263</width>
+            <height>338</height>
+           </rect>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>10000</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>Name: Sir McQuackinns
 
 Species: Duck
 
 Breed: Cutie
 
-Bio: What time does a duck wake up in the morning? At the quack of dawn!</string>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
+Bio: What time does a duck wake up in the morning? At the quack of dawn! bgtdg tg trh th th yh g fygj ytj tyj gcjtyh yhj dyjycj fygj tyj ytj yt jygj ty cyj yjtctrh tf hcft tfh cft hg</string>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </widget>
        </widget>
       </item>
       <item>
@@ -356,22 +379,6 @@ Bio: What time does a duck wake up in the morning? At the quack of dawn!</string
           </property>
           <property name="text">
            <string>Liked Pets</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="pushButton">
-          <property name="maximumSize">
-           <size>
-            <width>10000</width>
-            <height>10000</height>
-           </size>
-          </property>
-          <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
-          </property>
-          <property name="text">
-           <string>Login</string>
           </property>
          </widget>
         </item>

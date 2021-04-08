@@ -25,13 +25,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        screen.cpp
+        screen.cpp \
+    homescreen.cpp
 
 HEADERS += \
-        screen.h
+        screen.h \
+    homescreen.h
 
 FORMS += \
-        screen.ui
+        screen.ui \
+    homescreen.ui
 
 RESOURCES += \
     petpics_gui.qrc
