@@ -14,6 +14,9 @@ class Screen : public QMainWindow
 public:
     explicit Screen(QWidget *parent = 0);
     ~Screen();
+    void initialize();
+
+private slots:
 
 private:
     Ui::Screen *ui;

@@ -6,144 +6,376 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>667</width>
-    <height>401</height>
+    <width>623</width>
+    <height>417</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="palette">
+   <palette>
+    <active>
+     <colorrole role="WindowText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Button">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Light">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>53</red>
+        <green>255</green>
+        <blue>164</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Midlight">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>61</red>
+        <green>255</green>
+        <blue>217</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="ButtonText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>51</red>
+        <green>51</green>
+        <blue>51</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>39</red>
+        <green>145</green>
+        <blue>96</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </active>
+    <inactive>
+     <colorrole role="WindowText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Button">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Light">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>53</red>
+        <green>255</green>
+        <blue>164</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Midlight">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>61</red>
+        <green>255</green>
+        <blue>217</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="ButtonText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>0</red>
+        <green>0</green>
+        <blue>0</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>51</red>
+        <green>51</green>
+        <blue>51</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>39</red>
+        <green>145</green>
+        <blue>96</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </inactive>
+    <disabled>
+     <colorrole role="WindowText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="127">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Button">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Light">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>53</red>
+        <green>255</green>
+        <blue>164</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Midlight">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>61</red>
+        <green>255</green>
+        <blue>217</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="ButtonText">
+      <brush brushstyle="SolidPattern">
+       <color alpha="127">
+        <red>255</red>
+        <green>255</green>
+        <blue>255</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Base">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>39</red>
+        <green>145</green>
+        <blue>96</blue>
+       </color>
+      </brush>
+     </colorrole>
+     <colorrole role="Window">
+      <brush brushstyle="SolidPattern">
+       <color alpha="255">
+        <red>39</red>
+        <green>145</green>
+        <blue>96</blue>
+       </color>
+      </brush>
+     </colorrole>
+    </disabled>
+   </palette>
   </property>
   <property name="windowTitle">
    <string>Screen</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QWidget" name="horizontalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>9</x>
-      <y>9</y>
-      <width>3623</width>
-      <height>321</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,0,0">
-     <property name="spacing">
-      <number>6</number>
-     </property>
-     <item>
-      <widget class="QLabel" name="animalImage">
-       <property name="text">
-        <string>TextLabel</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="animalInfo">
-       <item>
-        <layout class="QGridLayout" name="animalTraits">
-         <item row="1" column="1">
-          <widget class="QLabel" name="label_2">
-           <property name="text">
-            <string>insert_breed</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLabel" name="label">
-           <property name="maximumSize">
-            <size>
-             <width>100</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="text">
-            <string>Breed:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>Species: </string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLabel" name="label_4">
-           <property name="text">
-            <string>insert_species</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QLabel" name="animalCustomBio">
-         <property name="maximumSize">
-          <size>
-           <width>200</width>
-           <height>16777215</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>TextLabel</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="mainButtons">
-       <item>
-        <widget class="QPushButton" name="profileButton">
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Profile</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="petListButton">
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Pets</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="likedPetsButton">
-         <property name="maximumSize">
-          <size>
-           <width>50</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="text">
-          <string>Liked Pets</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
-  </widget>
-  <widget class="QMenuBar" name="menuBar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>667</width>
-     <height>20</height>
-    </rect>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="animalImage">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>300</height>
+         </size>
+        </property>
+        <property name="sizeIncrement">
+         <size>
+          <width>39</width>
+          <height>29</height>
+         </size>
+        </property>
+        <property name="autoFillBackground">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="animalCustomBio">
+        <property name="maximumSize">
+         <size>
+          <width>200</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Name: Sir McQuackinns
+
+Breed: Dumbass
+
+Species: Stupid
+
+Bio: Are you a Q-T? Because you make me want to die!</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QPushButton" name="profileButton">
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>100</height>
+           </size>
+          </property>
+          <property name="sizeIncrement">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>Profile</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="petListButton">
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>100</height>
+           </size>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>Pets</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="likedPetsButton">
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>100</height>
+           </size>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>Liked Pets</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <item>
+           <widget class="QPushButton" name="pushButton_3">
+            <property name="text">
+             <string>Hate</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_2">
+            <property name="text">
+             <string>Like</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton">
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>100</height>
+           </size>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>Login</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -154,6 +386,16 @@
    </attribute>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>623</width>
+     <height>20</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

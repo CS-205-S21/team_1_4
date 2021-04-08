@@ -32,3 +32,7 @@ HEADERS += \
 
 FORMS += \
         screen.ui
+
+RESOURCES += \
+    petpics_gui.qrc
+

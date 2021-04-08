@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Duck_gui.jfif</file>
+    </qresource>
+</RCC>
