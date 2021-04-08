@@ -227,113 +227,37 @@
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,3,0">
       <item>
-       <widget class="QLabel" name="animalImage">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>200</width>
-          <height>300</height>
-         </size>
-        </property>
-        <property name="sizeIncrement">
-         <size>
-          <width>39</width>
-          <height>29</height>
-         </size>
-        </property>
-        <property name="autoFillBackground">
-         <bool>true</bool>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QLabel" name="animalCustomBio">
-        <property name="maximumSize">
-         <size>
-          <width>200</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <property name="text">
-         <string>Name: Sir McQuackinns
-
-Breed: Dumbass
-
-Species: Stupid
-
-Bio: Are you a Q-T? Because you make me want to die!</string>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout">
+       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="3,0">
         <item>
-         <widget class="QPushButton" name="profileButton">
+         <widget class="QLabel" name="animalImage">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="maximumSize">
            <size>
-            <width>100</width>
-            <height>100</height>
+            <width>10000</width>
+            <height>10000</height>
            </size>
           </property>
           <property name="sizeIncrement">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>39</width>
+            <height>29</height>
            </size>
           </property>
-          <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
+          <property name="autoFillBackground">
+           <bool>true</bool>
           </property>
           <property name="text">
-           <string>Profile</string>
+           <string/>
           </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="petListButton">
-          <property name="maximumSize">
-           <size>
-            <width>100</width>
-            <height>100</height>
-           </size>
-          </property>
-          <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
-          </property>
-          <property name="text">
-           <string>Pets</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="likedPetsButton">
-          <property name="maximumSize">
-           <size>
-            <width>100</width>
-            <height>100</height>
-           </size>
-          </property>
-          <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
-          </property>
-          <property name="text">
-           <string>Liked Pets</string>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
          </widget>
         </item>
@@ -355,12 +279,92 @@ Bio: Are you a Q-T? Because you make me want to die!</string>
           </item>
          </layout>
         </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QLabel" name="animalCustomBio">
+        <property name="maximumSize">
+         <size>
+          <width>10000</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Name: Sir McQuackinns
+
+Species: Duck
+
+Breed: Cutie
+
+Bio: What time does a duck wake up in the morning? At the quack of dawn!</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QPushButton" name="profileButton">
+          <property name="maximumSize">
+           <size>
+            <width>10000</width>
+            <height>10000</height>
+           </size>
+          </property>
+          <property name="sizeIncrement">
+           <size>
+            <width>0</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>Profile</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="petListButton">
+          <property name="maximumSize">
+           <size>
+            <width>10000</width>
+            <height>10000</height>
+           </size>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>Pets</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="likedPetsButton">
+          <property name="maximumSize">
+           <size>
+            <width>10000</width>
+            <height>10000</height>
+           </size>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>Liked Pets</string>
+          </property>
+         </widget>
+        </item>
         <item>
          <widget class="QPushButton" name="pushButton">
           <property name="maximumSize">
            <size>
-            <width>100</width>
-            <height>100</height>
+            <width>10000</width>
+            <height>10000</height>
            </size>
           </property>
           <property name="layoutDirection">
