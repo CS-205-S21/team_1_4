@@ -3,4 +3,5 @@ TEMPLATE = subdirs
 SUBDIRS += \
     matchmaking \
     gui \
-    unittest
+    unittest \
+    databasemanager
