@@ -9,7 +9,7 @@ Screen::Screen(QWidget *parent) :
 }
 
 void Screen::initialize(){
-    QImage img("/home/montesia/labs/team_1_4/pet_tinder/gui/Duck_gui.jfif");
+    QImage img("/home/demelfid/project/team_1_4/pet_tinder/gui/Duck_gui.jfif");
     QPixmap pic;
     pic.convertFromImage(img.scaled(200, 300, Qt::KeepAspectRatio), 0);
     ui->animalImage->setPixmap(pic);
