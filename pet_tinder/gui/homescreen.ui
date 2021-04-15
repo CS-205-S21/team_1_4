@@ -23,7 +23,7 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QLabel" name="label">
+      <widget class="QLabel" name="Title">
        <property name="font">
         <font>
          <family>Sawasdee</family>
@@ -44,7 +44,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="loginButton">
        <property name="font">
         <font>
          <pointsize>10</pointsize>
