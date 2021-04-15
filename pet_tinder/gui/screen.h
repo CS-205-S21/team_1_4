@@ -1,7 +1,7 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-#include "homescreen.h"
+
 #include <QMainWindow>
 
 namespace Ui {

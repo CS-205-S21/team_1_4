@@ -6,6 +6,7 @@ Screen::Screen(QWidget *parent) :
     ui(new Ui::Screen)
 {
     ui->setupUi(this);
+    initialize();
 }
 
 void Screen::initialize(){
