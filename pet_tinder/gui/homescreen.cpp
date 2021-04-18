@@ -15,7 +15,7 @@ HomeScreen::~HomeScreen()
     delete ui;
 }
 
-void HomeScreen::on_pushButton_clicked()
+void HomeScreen::on_loginButton_clicked()
 {
     this->hide();
     petWindow->showMaximized();

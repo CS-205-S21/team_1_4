@@ -18,7 +18,7 @@ public:
     ~HomeScreen();
 
 private slots:
-    void on_pushButton_clicked();
+    void on_loginButton_clicked();
 
 private:
     Ui::HomeScreen* ui;
