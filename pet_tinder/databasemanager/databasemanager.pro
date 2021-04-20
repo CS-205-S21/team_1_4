@@ -10,3 +10,17 @@ SOURCES += main.cpp \
 
 HEADERS += \
     databasemanager.h
+
+SOURCES += main.cpp
+
+HEADERS +=
+
+DISTFILES += \
+    build_tables.sql
+    drop_tables.sql
+    00_build_db/adoptee.csv
+    00_build_db/adopter.csv
+    00_build_db/likedPet.csv
+    00_build_db/messages.csv
+    00_build_db/pet.csv
+
