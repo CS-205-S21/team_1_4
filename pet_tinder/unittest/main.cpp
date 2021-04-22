@@ -30,10 +30,10 @@ class FooTest : public ::testing::Test {
     // Objects declared here can be used by all tests in the test case for Foo.
 };
 
-TEST(general, TESTSIMPLE) {}
+/*TEST(general, TESTSIMPLE) {}
 
 TEST_F(FooTest, chooseName) { //TEST_F allows you to access objects from the shared FooTest Class
-}
+}*/
 
 int main(int argc, char **argv) {
     //::testing::InitGoogleTest(&argc, argv);
