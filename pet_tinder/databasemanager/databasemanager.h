@@ -40,6 +40,11 @@ struct Pref {
     string prefSex;
     bool prefSexReq;
 };
+struct AdopteeInfo {
+    string username;
+    string group;
+    string OwnedPetIds;
+};
 
 class DatabaseManager
 {
@@ -57,7 +62,7 @@ public:
     void readInPets();
     Pet* findPet(int id);
     Pref* readInAdopter(string username, string password);
-    void readInAdoptee(string username, string password);
+    AdopteeInfo* readInAdoptee(string username, string password);
 };
 
 #endif // DATABASEMANAGER_H

@@ -7,7 +7,7 @@ SOURCES += main.cpp
 
 LIBS += -pthread
 
-//S.OURCES += ../../gtest/googletest/src/gtest-all.cc
+SOURCES += ../../gtest/googletest/src/gtest-all.cc
 
 INCLUDEPATH += ../../gtest \
  ../../gtest/googletest \

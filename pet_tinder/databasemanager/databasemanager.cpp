@@ -48,7 +48,7 @@ Pet* DatabaseManager::findPet(int findId) {
             return &pets.at(i);
         }
     }
-    cout << "Error: Pet searched for does not exist\n";
+    cout << "Error: Pet not found\n";
     return nullptr;
 }
 
@@ -94,9 +94,45 @@ Pref* DatabaseManager::readInAdopter(string username, string password) {
         pref.prefSex = query.value("prefSex").toString().toStdString();
         pref.prefSexReq = query.value("prefSexReq").toBool();
 
+        cout << "Adopter: " + pref.username + "\n";
+
         return &pref;
     } else {
         cout << "Error: Adopter does not exist\n";
         return nullptr;
     }
 }
+
+/**
+ * @brief DatabaseManager::readInAdoptee - Finds adoptee with matching username
+ *  and password
+ * @param username - Username of adoptee to search for
+ * @param password - Password of adoptee to search for
+ * @return Pointer to Pref struct of adoptee's information.
+ *  If adoptee is not found, a nullptr is returned.
+ */
+AdopteeInfo* DatabaseManager::readInAdoptee(string username, string password) {
+    QString qUsername;
+    qUsername.fromStdString(username);
+    QString qPassword;
+    qPassword.fromStdString(password);
+
+    QSqlQuery query;
+    query.prepare("SELECT usernameAdoptee, group, petIds,"
+                  "WHERE usernameAdoptee = \"" + qUsername + "\" AND password = \"" + qPassword + "\";");
+
+    if(query.exec()) {
+        AdopteeInfo info;
+        info.username = query.value("usernameAdoptee").toString().toStdString();
+        info.group = query.value("group").toString().toStdString();
+        info.OwnedPetIds = query.value("petIds").toString().toStdString();
+
+        cout << "Adoptee: " + info.username + info.group + info.OwnedPetIds + "\n";
+
+        return &info;
+    } else {
+        cout << "Error: Adoptee does not exist\n";
+        return nullptr;
+    }
+}
+
