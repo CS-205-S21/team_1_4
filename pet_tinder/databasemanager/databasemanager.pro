@@ -11,10 +11,6 @@ SOURCES += main.cpp \
 HEADERS += \
     databasemanager.h
 
-SOURCES += main.cpp
-
-HEADERS +=
-
 DISTFILES += \
     build_tables.sql
     drop_tables.sql
