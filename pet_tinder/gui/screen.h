@@ -1,7 +1,8 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-
+#include "profilepage.h"
+#include "petlist.h"
 #include <QMainWindow>
 
 namespace Ui {
@@ -19,8 +20,14 @@ public:
 
 private slots:
 
+    void on_profileButton_clicked();
+
+    void on_petListButton_clicked();
+
 private:
     Ui::Screen *ui;
+    profilePage* profileWindow;
+    petList* petListWindow;
 };
 
 #endif // SCREEN_H
