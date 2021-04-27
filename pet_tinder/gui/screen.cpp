@@ -7,6 +7,8 @@ Screen::Screen(QWidget *parent) :
 {
     ui->setupUi(this);
     initialize();
+    profileWindow = new profilePage();
+    petListWindow = new petList();
 }
 
 void Screen::initialize(){
@@ -19,4 +21,16 @@ void Screen::initialize(){
 Screen::~Screen()
 {
     delete ui;
+}
+
+void Screen::on_profileButton_clicked()
+{
+    this->hide();
+    profileWindow->showMaximized();
+}
+
+void Screen::on_petListButton_clicked()
+{
+    this->hide();
+    petListWindow->showMaximized();
 }
