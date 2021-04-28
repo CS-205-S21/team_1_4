@@ -9,6 +9,11 @@ Screen::Screen(QWidget *parent) :
     initialize();
     profileWindow = new profilePage();
     petListWindow = new petList();
+
+    profileWindow->scrptr = this;
+    profileWindow->plptr = petListWindow;
+    petListWindow->scrptr = this;
+    petListWindow->ppptr = profileWindow;
 }
 
 void Screen::initialize(){

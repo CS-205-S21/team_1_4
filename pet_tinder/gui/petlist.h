@@ -3,10 +3,14 @@
 
 #include <QWidget>
 #include "screen.h"
+#include "petlist.h"
 
 namespace Ui {
 class petList;
 }
+
+class Screen;
+class profilePage;
 
 class petList : public QWidget
 {
@@ -15,6 +19,9 @@ class petList : public QWidget
 public:
     explicit petList(QWidget *parent = nullptr);
     ~petList();
+
+    Screen *scrptr;
+    profilePage *ppptr;
 
 signals:
 
