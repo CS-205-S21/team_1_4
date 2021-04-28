@@ -7,7 +7,7 @@ Screen::Screen(QWidget *parent) :
 {
     ui->setupUi(this);
     initialize();
-    profileWindow = new profilePage(this);
+    profileWindow = new profilePage();
     petListWindow = new petList();
 }
 

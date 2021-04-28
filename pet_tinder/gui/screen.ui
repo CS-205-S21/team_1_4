@@ -501,6 +501,9 @@ Breed: Cutie
 
 Bio: What time does a duck wake up in the morning? At the quack of dawn! bgtdg tg trh th th yh g fygj ytj tyj gcjtyh yhj dyjycj fygj tyj ytj yt jygj ty cyj yjtctrh tf hcft tfh cft hg</string>
           </property>
+          <property name="scaledContents">
+           <bool>false</bool>
+          </property>
           <property name="wordWrap">
            <bool>true</bool>
           </property>
