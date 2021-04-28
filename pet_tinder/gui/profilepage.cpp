@@ -12,3 +12,13 @@ profilePage::~profilePage()
 {
     delete ui;
 }
+
+void profilePage::on_homeButton_clicked()
+{
+
+}
+
+void profilePage::on_petListButton_clicked()
+{
+
+}

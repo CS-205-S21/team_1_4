@@ -1229,7 +1229,13 @@
     <item>
      <layout class="QVBoxLayout" name="verticalLayout_2">
       <item>
-       <widget class="QPushButton" name="pushButton_5">
+       <widget class="QPushButton" name="homeButton">
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>150</height>
+         </size>
+        </property>
         <property name="palette">
          <palette>
           <active>
@@ -1654,12 +1660,18 @@
          </font>
         </property>
         <property name="text">
-         <string>PushButton</string>
+         <string>Home</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_6">
+       <widget class="QPushButton" name="profileButton">
+        <property name="minimumSize">
+         <size>
+          <width>80</width>
+          <height>150</height>
+         </size>
+        </property>
         <property name="palette">
          <palette>
           <active>
@@ -2084,7 +2096,7 @@
          </font>
         </property>
         <property name="text">
-         <string>PushButton</string>
+         <string>Profile</string>
         </property>
        </widget>
       </item>

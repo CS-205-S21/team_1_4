@@ -20,6 +20,11 @@ signals:
 
 public slots:
 
+private slots:
+    void on_homeButton_clicked();
+
+    void on_profileButton_clicked();
+
 private:
     Ui::petList *ui;
 };
