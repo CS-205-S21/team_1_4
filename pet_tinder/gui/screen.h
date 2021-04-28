@@ -9,6 +9,9 @@ namespace Ui {
 class Screen;
 }
 
+class profilePage;
+class petList;
+
 class Screen : public QMainWindow
 {
     Q_OBJECT
@@ -26,8 +29,8 @@ private slots:
 
 private:
     Ui::Screen *ui;
-    profilePage* profileWindow;
-    petList* petListWindow;
+    profilePage *profileWindow;
+    petList *petListWindow;
 };
 
 #endif // SCREEN_H

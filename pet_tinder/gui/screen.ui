@@ -511,7 +511,7 @@ Bio: What time does a duck wake up in the morning? At the quack of dawn! bgtdg t
       <item>
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
-         <widget class="QPushButton" name="likedPetsButton">
+         <widget class="QPushButton" name="petListButton">
           <property name="maximumSize">
            <size>
             <width>10000</width>

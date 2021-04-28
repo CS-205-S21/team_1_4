@@ -29,6 +29,7 @@ void Screen::on_profileButton_clicked()
     profileWindow->showMaximized();
 }
 
+
 void Screen::on_petListButton_clicked()
 {
     this->hide();
