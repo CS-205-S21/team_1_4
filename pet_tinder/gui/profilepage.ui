@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>profilePage</class>
- <widget class="QWidget" name="profilePage">
+ <class>ProfilePage</class>
+ <widget class="QWidget" name="ProfilePage">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -18,7 +18,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <layout class="QGridLayout" name="gridLayout">
+    <layout class="QGridLayout" name="gridLayout" columnstretch="2,0">
      <item row="0" column="1">
       <widget class="QPushButton" name="homeButton">
        <property name="minimumSize">

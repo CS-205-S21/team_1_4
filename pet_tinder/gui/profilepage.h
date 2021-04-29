@@ -2,26 +2,26 @@
 #define PROFILEPAGE_H
 
 #include <QWidget>
-#include "screen.h"
+#include "petfinder.h"
 #include "petlist.h"
 
 namespace Ui {
-class profilePage;
+class ProfilePage;
 }
 
-class Screen;
-class petList;
+class PetFinder;
+class PetList;
 
-class profilePage : public QWidget
+class ProfilePage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit profilePage(QWidget *parent = 0);
-    ~profilePage();
+    explicit ProfilePage(QWidget *parent = 0);
+    ~ProfilePage();
 
-    Screen *scrptr;
-    petList *plptr;
+    PetFinder *pfptr;
+    PetList *plptr;
 
 signals:
 
@@ -33,7 +33,7 @@ private slots:
     void on_petListButton_clicked();
 
 private:
-    Ui::profilePage *ui;
+    Ui::ProfilePage *ui;
 };
 
 #endif // PROFILEPAGE_H

@@ -1,27 +1,26 @@
 #include "profilepage.h"
 #include "ui_profilepage.h"
 
-profilePage::profilePage(QWidget *parent) :
+ProfilePage::ProfilePage(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::profilePage)
-{
-    ui->setupUi(this);
-    scrptr = NULL;
-    plptr = NULL;
-}
+    ui(new Ui::ProfilePage) {
+        ui->setupUi(this);
+        pfptr = NULL;
+        plptr = NULL;
+    }
 
-profilePage::~profilePage()
+ProfilePage::~ProfilePage()
 {
     delete ui;
 }
 
-void profilePage::on_homeButton_clicked()
+void ProfilePage::on_homeButton_clicked()
 {
     this->hide();
-    scrptr->showMaximized();
+    pfptr->showMaximized();
 }
 
-void profilePage::on_petListButton_clicked()
+void ProfilePage::on_petListButton_clicked()
 {
     this->hide();
     plptr->showMaximized();

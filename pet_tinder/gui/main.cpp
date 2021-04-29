@@ -1,4 +1,4 @@
-#include "screen.h"
+#include "petfinder.h"
 #include "homescreen.h"
 #include <QApplication>
 
