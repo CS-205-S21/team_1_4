@@ -24,7 +24,6 @@ public:
 
     PetFinder *pfptr;
     ProfilePage *ppptr;
-    MessageScreen *msptr;
 
 signals:
 

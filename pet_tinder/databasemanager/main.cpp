@@ -1,9 +1,15 @@
 #include <iostream>
+#include "databasemanager.h"
 
 using namespace std;
 
 int main()
 {
-    cout << "Hello World!" << endl;
-    return 0;
+    DatabaseManager* dm = new DatabaseManager();
+    dm->readInPets();
+    cout << dm->findPet(0)->name << endl;
+    cout << dm->findPet(1)->name << endl;
+    cout << dm->findPet(2)->name << endl;
+    cout << dm->findPet(3)->name << endl;
+    cout << dm->findPet(5)->name << endl;
 }

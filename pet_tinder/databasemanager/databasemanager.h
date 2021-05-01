@@ -59,10 +59,44 @@ public:
 
     DatabaseManager();
 
+    /**
+     * @brief PetsManager::readInPets - Reads in all pets from pet database
+     */
     void readInPets();
-    Pet* findPet(int id);
+
+    /**
+     * @brief DatabaseManager::readInAdopter - Finds adopter with matching username
+     *  and password
+     * @param username - Username of adopter to search for
+     * @param password - Password of adopter to search for
+     * @return Pointer to Pref struct of adopter's preferences and other info.
+     *  If adopter is not found, a nullptr is returned.
+     */
     Pref* readInAdopter(string username, string password);
+
+    /**
+     * @brief DatabaseManager::readInAdoptee - Finds adoptee with matching username
+     *  and password
+     * @param username - Username of adoptee to search for
+     * @param password - Password of adoptee to search for
+     * @return Pointer to Pref struct of adoptee's information.
+     *  If adoptee is not found, a nullptr is returned.
+     */
     AdopteeInfo* readInAdoptee(string username, string password);
+
+    /**
+     * @brief DatabaseManager::findPet - Finds pet with given id from vector
+     * @param findId - Id of pet to search for
+     * @return Pointer to Pet struct of pet's info. If no pet is found,
+     *  returns a nullptr
+     */
+    Pet* findPet(int id);
+
+    /**
+     * @brief getNumPets - Finds number of pets
+     * @return Number of pets currently in Pets vector
+     */
+    int getNumPets();
 };
 
 #endif // DATABASEMANAGER_H

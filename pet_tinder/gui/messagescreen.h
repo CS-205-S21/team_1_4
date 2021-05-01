@@ -21,7 +21,6 @@ public:
     explicit MessageScreen(QWidget *parent = nullptr);
     ~MessageScreen();
 
-    PetFinder *pfptr;
     PetList *plptr;
 
 signals:

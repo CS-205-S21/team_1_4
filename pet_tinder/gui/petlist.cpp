@@ -10,7 +10,6 @@ PetList::PetList(QWidget *parent) :
     messageWindow->plptr = this;
     pfptr = NULL;
     ppptr = NULL;
-    msptr = NULL;
 }
 
 PetList::~PetList()
@@ -33,5 +32,5 @@ void PetList::on_profileButton_clicked()
 void PetList::on_chatButton1_clicked()
 {
     this->hide();
-    msptr->showMaximized();
+    messageWindow->showMaximized();
 }
