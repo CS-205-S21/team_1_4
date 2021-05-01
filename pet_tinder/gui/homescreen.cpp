@@ -7,7 +7,7 @@ HomeScreen::HomeScreen(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    petWindow = new Screen();
+    petWindow = new PetFinder();
 }
 
 HomeScreen::~HomeScreen()

@@ -3,12 +3,11 @@
 
 ProfilePage::ProfilePage(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::ProfilePage)
-{
-    ui->setupUi(this);
-    scrptr = NULL;
-    plptr = NULL;
-}
+    ui(new Ui::ProfilePage) {
+        ui->setupUi(this);
+        pfptr = NULL;
+        plptr = NULL;
+    }
 
 ProfilePage::~ProfilePage()
 {
@@ -18,7 +17,7 @@ ProfilePage::~ProfilePage()
 void ProfilePage::on_homeButton_clicked()
 {
     this->hide();
-    scrptr->showMaximized();
+    pfptr->showMaximized();
 }
 
 void ProfilePage::on_petListButton_clicked()

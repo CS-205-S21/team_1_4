@@ -6,7 +6,7 @@ PetList::PetList(QWidget *parent) :
     ui(new Ui::PetList)
 {
     ui->setupUi(this);
-    scrptr = NULL;
+    pfptr = NULL;
     ppptr = NULL;
 }
 
@@ -18,7 +18,7 @@ PetList::~PetList()
 void PetList::on_homeButton_clicked()
 {
     this->hide();
-    scrptr->showMaximized();
+    pfptr->showMaximized();
 }
 
 void PetList::on_profileButton_clicked()

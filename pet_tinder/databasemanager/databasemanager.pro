@@ -6,7 +6,8 @@ QT += core
 QT += sql
 
 SOURCES += \
-    databasemanager.cpp
+    databasemanager.cpp \
+    main.cpp
 
 HEADERS += \
     databasemanager.h

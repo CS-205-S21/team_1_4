@@ -25,22 +25,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        screen.cpp \
     homescreen.cpp \
     profilepage.cpp \
-    petlist.cpp
+    petlist.cpp \
+    petfinder.cpp
 
 HEADERS += \
-        screen.h \
     homescreen.h \
     profilepage.h \
-    petlist.h
+    petlist.h \
+    petfinder.h
 
 FORMS += \
-        screen.ui \
     homescreen.ui \
     profilepage.ui \
-    petlist.ui
+    petlist.ui \
+    petfinder.ui
 
 RESOURCES += \
     petpics_gui.qrc

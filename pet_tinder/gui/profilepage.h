@@ -2,7 +2,7 @@
 #define PROFILEPAGE_H
 
 #include <QWidget>
-#include "screen.h"
+#include "petfinder.h"
 #include "petlist.h"
 
 namespace Ui {
@@ -10,6 +10,7 @@ class ProfilePage;
 }
 
 class Screen;
+class PetFinder;
 class PetList;
 
 class ProfilePage : public QWidget
@@ -21,6 +22,7 @@ public:
     ~ProfilePage();
 
     Screen *scrptr;
+    PetFinder *pfptr;
     PetList *plptr;
 
 signals:

@@ -1,7 +1,7 @@
 #ifndef HOMESCREEN_H
 #define HOMESCREEN_H
 
-#include "screen.h"
+#include "petfinder.h"
 #include <QWidget>
 
 namespace Ui {
@@ -21,7 +21,7 @@ private slots:
 
 private:
     Ui::HomeScreen* ui;
-    Screen* petWindow;
+    PetFinder* petWindow;
 };
 
 #endif // HOMESCREEN_H
