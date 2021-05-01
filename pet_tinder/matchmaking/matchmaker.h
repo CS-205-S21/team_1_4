@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <stdlib.h>
+#include "../databasemanager/databasemanager.h"
 
 using namespace std;
 

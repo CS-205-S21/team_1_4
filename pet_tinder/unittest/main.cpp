@@ -1,6 +1,7 @@
 #include <iostream>
 #include "gtest/gtest.h"
 #include "../matchmaking/matchmaker.h"
+#include "../databasemanager/databasemanager.h"
 
 // The fixture for testing class Foo.
 class FooTest : public ::testing::Test {

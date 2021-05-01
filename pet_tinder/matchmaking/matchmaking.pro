@@ -1,3 +1,4 @@
+QT = core sql
 TEMPLATE = app
 CONFIG += console c++11
 CONFIG -= app_bundle
@@ -8,3 +9,6 @@ SOURCES += main.cpp \
 
 HEADERS += \
     matchmaker.h
+
+HEADERS += ../databasemanager/databasemanager.h
+SOURCES += ../databasemanager/databasemanager.cpp

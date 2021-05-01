@@ -9,11 +9,7 @@ namespace Ui {
 class PetList;
 }
 
-<<<<<<< HEAD
-class Screen;
-=======
 class PetFinder;
->>>>>>> 9f62d6c7fa5d73a41bdadbc20d72cc5fe6724d63
 class ProfilePage;
 
 class PetList : public QWidget
@@ -24,11 +20,7 @@ public:
     explicit PetList(QWidget *parent = nullptr);
     ~PetList();
 
-<<<<<<< HEAD
-    Screen *scrptr;
-=======
     PetFinder *pfptr;
->>>>>>> 9f62d6c7fa5d73a41bdadbc20d72cc5fe6724d63
     ProfilePage *ppptr;
 
 signals:
