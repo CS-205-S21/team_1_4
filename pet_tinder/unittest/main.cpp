@@ -2,6 +2,11 @@
 #include "gtest/gtest.h"
 #include "../matchmaking/matchmaker.h"
 #include "../databasemanager/databasemanager.h"
+/*#include "../gui/homescreen.h"
+#include "../gui/messagescreen.h"
+#include "../gui/petfinder.h"
+#include "../gui/petlist.h"
+#include "../gui/profilepage.h"*/
 
 // The fixture for testing class Foo.
 class FooTest : public ::testing::Test {

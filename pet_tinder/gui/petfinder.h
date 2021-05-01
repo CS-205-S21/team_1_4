@@ -5,6 +5,8 @@
 #include "petlist.h"
 #include <QMainWindow>
 
+#include "../matchmaking/matchmaker.h"
+
 namespace Ui {
 class PetFinder;
 }
