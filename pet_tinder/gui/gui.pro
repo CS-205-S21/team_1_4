@@ -28,19 +28,22 @@ SOURCES += \
     homescreen.cpp \
     profilepage.cpp \
     petlist.cpp \
-    petfinder.cpp
+    petfinder.cpp \
+    messagescreen.cpp
 
 HEADERS += \
     homescreen.h \
     profilepage.h \
     petlist.h \
-    petfinder.h
+    petfinder.h \
+    messagescreen.h
 
 FORMS += \
     homescreen.ui \
     profilepage.ui \
     petlist.ui \
-    petfinder.ui
+    petfinder.ui \
+    messagescreen.ui
 
 RESOURCES += \
     petpics_gui.qrc

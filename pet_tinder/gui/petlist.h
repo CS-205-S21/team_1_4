@@ -4,6 +4,7 @@
 #include <QWidget>
 #include "petfinder.h"
 #include "petlist.h"
+#include "messagescreen.h"
 
 namespace Ui {
 class PetList;
@@ -11,6 +12,7 @@ class PetList;
 
 class PetFinder;
 class ProfilePage;
+class MessageScreen;
 
 class PetList : public QWidget
 {
@@ -22,6 +24,7 @@ public:
 
     PetFinder *pfptr;
     ProfilePage *ppptr;
+    MessageScreen *msptr;
 
 signals:
 
@@ -32,8 +35,11 @@ private slots:
 
     void on_profileButton_clicked();
 
+    void on_chatButton1_clicked();
+
 private:
     Ui::PetList *ui;
+    MessageScreen *messageWindow;
 };
 
 #endif // PETLIST_H

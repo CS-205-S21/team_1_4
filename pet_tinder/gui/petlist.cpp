@@ -6,8 +6,11 @@ PetList::PetList(QWidget *parent) :
     ui(new Ui::PetList)
 {
     ui->setupUi(this);
+    messageWindow = new MessageScreen();
+    messageWindow->plptr = this;
     pfptr = NULL;
     ppptr = NULL;
+    msptr = NULL;
 }
 
 PetList::~PetList()
@@ -25,4 +28,10 @@ void PetList::on_profileButton_clicked()
 {
     this->hide();
     ppptr->showMaximized();
+}
+
+void PetList::on_chatButton1_clicked()
+{
+    this->hide();
+    msptr->showMaximized();
 }
