@@ -1,27 +1,27 @@
 #include "petlist.h"
 #include "ui_petlist.h"
 
-petList::petList(QWidget *parent) :
+PetList::PetList(QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::petList)
+    ui(new Ui::PetList)
 {
     ui->setupUi(this);
     scrptr = NULL;
     ppptr = NULL;
 }
 
-petList::~petList()
+PetList::~PetList()
 {
     delete ui;
 }
 
-void petList::on_homeButton_clicked()
+void PetList::on_homeButton_clicked()
 {
     this->hide();
     scrptr->showMaximized();
 }
 
-void petList::on_profileButton_clicked()
+void PetList::on_profileButton_clicked()
 {
     this->hide();
     ppptr->showMaximized();

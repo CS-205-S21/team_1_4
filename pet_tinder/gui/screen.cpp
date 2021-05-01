@@ -7,8 +7,8 @@ Screen::Screen(QWidget *parent) :
 {
     ui->setupUi(this);
     initialize();
-    profileWindow = new profilePage();
-    petListWindow = new petList();
+    profileWindow = new ProfilePage();
+    petListWindow = new PetList();
 
     profileWindow->scrptr = this;
     profileWindow->plptr = petListWindow;

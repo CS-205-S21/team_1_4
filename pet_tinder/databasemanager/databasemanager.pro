@@ -5,7 +5,7 @@ CONFIG -= app_bundle
 QT += core
 QT += sql
 
-SOURCES += main.cpp \
+SOURCES += \
     databasemanager.cpp
 
 HEADERS += \

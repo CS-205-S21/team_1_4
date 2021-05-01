@@ -6,22 +6,22 @@
 #include "petlist.h"
 
 namespace Ui {
-class profilePage;
+class ProfilePage;
 }
 
 class Screen;
-class petList;
+class PetList;
 
-class profilePage : public QWidget
+class ProfilePage : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit profilePage(QWidget *parent = 0);
-    ~profilePage();
+    explicit ProfilePage(QWidget *parent = 0);
+    ~ProfilePage();
 
     Screen *scrptr;
-    petList *plptr;
+    PetList *plptr;
 
 signals:
 
@@ -33,7 +33,7 @@ private slots:
     void on_petListButton_clicked();
 
 private:
-    Ui::profilePage *ui;
+    Ui::ProfilePage *ui;
 };
 
 #endif // PROFILEPAGE_H
