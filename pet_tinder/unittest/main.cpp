@@ -2,11 +2,6 @@
 #include "gtest/gtest.h"
 #include "../matchmaking/matchmaker.h"
 #include "../databasemanager/databasemanager.h"
-/*#include "../gui/homescreen.h"
-#include "../gui/messagescreen.h"
-#include "../gui/petfinder.h"
-#include "../gui/petlist.h"
-#include "../gui/profilepage.h"*/
 
 // The fixture for testing class Foo.
 class FooTest : public ::testing::Test {
@@ -36,9 +31,7 @@ class FooTest : public ::testing::Test {
     // Objects declared here can be used by all tests in the test case for Foo.
 };
 
-/*TEST(general, TESTSIMPLE) {}
-
-TEST_F(FooTest, chooseName) { //TEST_F allows you to access objects from the shared FooTest Class
+/*TEST_F(FooTest, chooseName) { //TEST_F allows you to access objects from the shared FooTest Class
 }*/
 
 int main(int argc, char **argv) {

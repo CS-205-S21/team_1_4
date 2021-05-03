@@ -23,17 +23,3 @@ SOURCES += ../matchmaking/matchmaker.cpp
 HEADERS += ../databasemanager/databasemanager.h
 SOURCES += ../databasemanager/databasemanager.cpp
 
-#HEADERS += ../gui/homescreen.h
-#SOURCES += ../gui/homescreen.cpp
-
-#HEADERS += ../gui/messagescreen.h
-#SOURCES += ../gui/messagescreen.cpp
-
-#HEADERS += ../gui/petfinder.h
-#SOURCES += ../gui/petfinder.cpp
-
-#HEADERS += ../gui/petlist.h
-#SOURCES += ../gui/petlist.cpp
-
-#HEADERS += ../gui/profilepage.h
-#SOURCES += ../gui/profilepage.cpp

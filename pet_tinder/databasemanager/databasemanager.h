@@ -65,7 +65,8 @@ public:
     void readInPets();
 
     /**
-     * @brief DatabaseManager::readInAdopter - Finds adopter with matching username
+     * @brief DatabaseManager::readInusername;
+    string likedPeAdopter - Finds adopter with matching username
      *  and password
      * @param username - Username of adopter to search for
      * @param password - Password of adopter to search for
@@ -97,6 +98,60 @@ public:
      * @return Number of pets currently in Pets vector
      */
     int getNumPets();
+
+    /**
+     * @brief getNumAdopters - Finds number of registered adopters in the database
+     * @return Number of adopters currently in database
+     */
+    int getNumAdopters();
+
+    /**
+     * @brief getNumAdoptees - Finds number of registered adoptees in the database
+     * @return Number of adoptees currently in database
+     */
+    int getNumAdoptees();
+
+    /**
+     * @brief addPet - Adds a pet to the database of pets and to the vector of pets
+     * @param p - the pet that will be added to the database
+     * @return True or false depending on if the pet was successfully added.
+     */
+    bool addPet(Pet p);
+
+    /**
+     * @brief removePet - Removes a pet from the database of pets
+     * @param p - the pet that will be removed from the database
+     * @return True or false depending on if the pet was successfully removed.
+     */
+    bool removePet(Pet p);
+
+    /**
+     * @brief addAdopter - Adds an adopter to the database of adopters, using the pref struct
+     * @param p - the adopter (pref) that will be added to the database.
+     * @return True or false depending on if the adopter was successfully added.
+     */
+    bool addAdopter(Pref p);
+
+    /**
+     * @brief addAdopter - Removes an adopter from the database of adopters
+     * @param p - the adopter that will be removed from the database
+     * @return True or false depending on if the adopter was successfully removed.
+     */
+    bool removeAdopter(Pref p);
+
+    /**
+     * @brief addAdoptee - Adds an "adoptee" to the database of adoptees, using the adoptee info struct
+     * @param p - the adoptee that will be added to the database.
+     * @return True or false depending on if the adoptee was successfully added.
+     */
+    bool addAdoptee(AdopteeInfo p);
+
+    /**
+     * @brief addAdoptee - Removes an adoptee from the database of adoptees
+     * @param p - the adoptee that will be removed from the database
+     * @return True or false depending on if the adoptee was successfully removed.
+     */
+    bool removeAdoptee(AdopteeInfo p);
 };
 
 #endif // DATABASEMANAGER_H
