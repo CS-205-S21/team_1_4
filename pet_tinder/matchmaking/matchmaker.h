@@ -11,9 +11,9 @@ class Matchmaker{
 public:
     Matchmaker();
     //Matchmaker(bool hard,)
-    void make();
+    void innit();
     int DatabaseInterface(string what, string whatTheUserWants);
-
+     DatabaseManager *DM;
 
 
 
