@@ -37,7 +37,7 @@ void DatabaseManager::readInPets() {
 }
 
 //Reads in adopter from database with given username and password
-Pref* DatabaseManager::readInAdopter(string username, string password) {
+Adopter* DatabaseManager::readInAdopter(string username, string password) {
     //Prepares username and password for use in query
     QString qUsername;
     qUsername.fromStdString(username);
@@ -54,37 +54,37 @@ Pref* DatabaseManager::readInAdopter(string username, string password) {
                   "WHERE usernameAdopter = \"" + qUsername + "\" AND password = \"" + qPassword + "\";");
 
     if(query.exec()) {
-        //Creates and fills pref struct
-        Pref *pref;
-        pref->username = query.value("usernameAdopter").toString().toStdString();
-        pref->likedPetIds = query.value("likedPetIds").toString().toStdString();
-        pref->dislikedPetIds = query.value("dislikedPetIds").toString().toStdString();
+        //Creates and fills adopter struct
+        Adopter *adopter;
+        adopter->username = query.value("usernameAdopter").toString().toStdString();
+        adopter->likedPetIds = stringToIntVector(query.value("likedPetIds").toString().toStdString());
+        adopter->dislikedPetIds = stringToIntVector(query.value("dislikedPetIds").toString().toStdString());
 
-        pref->prefSpecies = query.value("prefSpecies").toString().toStdString();
-        pref->prefSpeciesReq = query.value("prefSpeciesReq").toBool();
-        pref->prefBreed = query.value("prefBreed").toString().toStdString();
-        pref->prefBreedReq = query.value("prefBreedReq").toBool();
-        pref->prefAge = query.value("prefBreed").toInt();
-        pref->prefAgeReq = query.value("prefBreedReq").toBool();
-        pref->prefWeight = query.value("prefWeight").toDouble();
-        pref->prefWeightReq = query.value("prefWeightReq").toBool();
-        pref->prefColor = query.value("prefColor").toString().toStdString();
-        pref->prefColorReq = query.value("prefColorReq").toBool();
-        pref->prefHypoallergenic = query.value("prefHypoallergenic").toBool();
-        pref->prefHypoallergenicReq = query.value("prefHypoallergenicReq").toBool();
-        pref->prefSex = query.value("prefSex").toString().toStdString();
-        pref->prefSexReq = query.value("prefSexReq").toBool();
+        adopter->prefSpecies = query.value("prefSpecies").toString().toStdString();
+        adopter->prefSpeciesReq = query.value("prefSpeciesReq").toBool();
+        adopter->prefBreed = query.value("prefBreed").toString().toStdString();
+        adopter->prefBreedReq = query.value("prefBreedReq").toBool();
+        adopter->prefAge = query.value("prefBreed").toInt();
+        adopter->prefAgeReq = query.value("prefBreedReq").toBool();
+        adopter->prefWeight = query.value("prefWeight").toDouble();
+        adopter->prefWeightReq = query.value("prefWeightReq").toBool();
+        adopter->prefColor = query.value("prefColor").toString().toStdString();
+        adopter->prefColorReq = query.value("prefColorReq").toBool();
+        adopter->prefHypoallergenic = query.value("prefHypoallergenic").toBool();
+        adopter->prefHypoallergenicReq = query.value("prefHypoallergenicReq").toBool();
+        adopter->prefSex = query.value("prefSex").toString().toStdString();
+        adopter->prefSexReq = query.value("prefSexReq").toBool();
 
-        cout << "Adopter: " + pref->username + "\n";
+        cout << "Adopter: " + adopter->username + "\n";
 
-        return pref; //Returns pref struct
+        return adopter; //Returns adopter struct
     } else {
         cout << "Error: Adopter does not exist\n";
         return nullptr;
     }
 }
 
-AdopteeInfo* DatabaseManager::readInAdoptee(string username, string password) {
+Adoptee* DatabaseManager::readInAdoptee(string username, string password) {
     //Prepares username and password for use in query
     QString qUsername;
     qUsername.fromStdString(username);
@@ -98,18 +98,16 @@ AdopteeInfo* DatabaseManager::readInAdoptee(string username, string password) {
 
     if(query.exec()) {
         //Creates and fills info struct
-        AdopteeInfo *info;
-        info->username = query.value("usernameAdoptee").toString().toStdString();
-        info->group = query.value("group").toString().toStdString();
-        info->OwnedPetIds = query.value("petIds").toString().toStdString();
+        Adoptee *adoptee;
+        adoptee->username = query.value("usernameAdoptee").toString().toStdString();
+        adoptee->shelter = query.value("shelter").toString().toStdString();
+        adoptee->ownedPetIds = stringToIntVector(query.value("petIds").toString().toStdString());
 
-        cout << "Adoptee: " + info->username + info->group + info->OwnedPetIds + "\n";
-
-        return info; //Returns info struct
+        return adoptee; //Returns adoptee struct
     } else {
         cout << "Error: Adoptee does not exist\n";
         return nullptr;
-    }int
+    }
 }
 
 //Finds pet with given id
@@ -136,41 +134,195 @@ int DatabaseManager::getNumPets() {
 }
 
 //Finds number of registered adopters in the database
-int DatabaseManager::getNumAdopters(){
+int DatabaseManager::getNumAdopters() {
+    //Prepares a query to run in Sql
+    //Finds number of unique usernames in the adopter database
+    QSqlQuery query;
+    query.prepare("SELECT COUNT(usernameAdopter) FROM adopter;");
+
+    if(query.exec()) {
+        //Returns value found
+        return query.value(0).toInt();
+    }
+    cout << "Error: Cannot find number of adopters, you really screwed the pooch on this one\n";
     return -1;
 }
 
 //Finds number of registered adoptees in the database
-int DatabaseManager::getNumAdoptees(){
+int DatabaseManager::getNumAdoptees() {
+    //Prepares a query to run in Sql
+    //Finds number of unique usernames in the adoptee database
+    QSqlQuery query;
+    query.prepare("SELECT COUNT(usernameAdoptee) FROM adoptee;");
+
+    if(query.exec()) {
+        //Returns value found
+        return query.value(0).toInt();
+    }
+    cout << "Error: Cannot find number of adoptees, you really screwed the pooch on this one\n";
     return -1;
 }
 
 //Adds a pet to the database of pets and to the vector pf pets
-bool DatabaseManager::addPet(Pet p){
-    return false;
+bool DatabaseManager::addPet(Pet pet) {
+    //Prepares a query that inserts all pet info from pet struct
+    QSqlQuery q;
+        q.prepare("INSERT INTO pet(petId, name, species, breed,"
+                  "age, weight, color, hypoallergenic, sex, bio);");
+        q.bindValue(":petId", pet.id);
+        QString name; name.fromStdString(pet.name);
+        q.bindValue(":name", name);
+        QString species; name.fromStdString(pet.species);
+        q.bindValue(":species", species);
+        QString breed; name.fromStdString(pet.breed);
+        q.bindValue(":breed", breed);
+        q.bindValue(":age", pet.age);
+        q.bindValue(":weight", pet.weight);
+        QString color; name.fromStdString(pet.color);
+        q.bindValue(":color", color);
+        q.bindValue(":hypoallergenic", pet.hypoallergenic);
+        QString sex; name.fromStdString(pet.sex);
+        q.bindValue(":sex", sex);
+        QString bio; name.fromStdString(pet.bio);
+        q.bindValue(":bio", bio);
+    if(q.exec()) {
+          pets.push_back(pet); //Adds pet struct to pets vector
+          return true;
+      }
+      return false;
 }
 
 //Removes a pet from the database of pets
-bool DatabaseManager::removePet(Pet p){
+bool DatabaseManager::removePet(int petId) {
+    QString qPetId = "" + petId;
+
+    QSqlQuery q;
+    q.prepare("DELETE FROM pet WHERE petId = \"" + qPetId + "\";");
+
+    if(q.exec()) {
+        //Searches through pets vector to find pet with given id
+        for(int i = 0; i < pets.size(); i++) {
+            //When pet with matching id is found, return it
+            if(pets.at(i).id == petId) {
+                pets.erase(pets.begin() + i);
+            }
+        }
+        return true;
+    }
     return false;
 }
 
 //Adds an adopter to the database of adopters, using the pref struct
-bool DatabaseManager::addAdopter(Pref p){
+bool DatabaseManager::addAdopter(Adopter a, string password) {
+    //Prepares a query that inserts given adopter
+    QSqlQuery q;
+        q.prepare("INSERT INTO pet (usernameAdopter, password,"
+                  "likedPetIds, dislikedPetIds,"
+                  "prefSpecies, prefSpeciesReq,"
+                  "prefBreed, prefBreedReq, prefAge, prefAgeReq"
+                  "prefWeight, prefWeightReq, prefColor, prefColorReq"
+                  "prefHypoallergenic, prefHypoallergenicReq,"
+                  "prefSex, prefSexReq);");
+        QString username; username.fromStdString(a.username);
+        q.bindValue(":usernameAdopter", username);
+        QString qPassword; qPassword.fromStdString(password);
+        q.bindValue(":password", qPassword);
+        q.bindValue(":likedPetIds", intVectorToQString(a.likedPetIds));
+        q.bindValue(":dislikedPetIds", intVectorToQString(a.dislikedPetIds));
+        QString prefSpecies; prefSpecies.fromStdString(a.prefSpecies);
+        q.bindValue(":prefSpecies", prefSpecies);
+        q.bindValue(":prefSpeciesReq", a.prefSpeciesReq);
+        QString prefBreed; prefBreed.fromStdString(a.prefBreed);
+        q.bindValue(":prefBreed", prefBreed);
+        q.bindValue(":prefBreedReq", a.prefBreedReq);
+        q.bindValue(":prefAge", a.prefAge);
+        q.bindValue(":prefAgeReq", a.prefAgeReq);
+        q.bindValue(":prefWeight", a.prefWeight);
+        q.bindValue(":prefWeightReq", a.prefWeightReq);
+        QString prefColor; prefColor.fromStdString(a.prefColor);
+        q.bindValue(":prefColor", prefColor);
+        q.bindValue(":prefColorReq", a.prefColorReq);
+        q.bindValue(":prefHypoallergenic", a.prefHypoallergenic);
+        q.bindValue(":prefHypoallergenicReq", a.prefHypoallergenicReq);
+        QString prefSex; prefSex.fromStdString(a.prefSex);
+        q.bindValue(":prefSex", prefSex);
+        q.bindValue(":prefSexReq", a.prefSexReq);
+    if(q.exec()) {
+        return true;
+    }
     return false;
 }
 
 //Removes an adopter from the database of adopters
-bool DatabaseManager::removeAdopter(Pref p){
+bool DatabaseManager::removeAdopter(string username) {
+    QString qUsername;
+    qUsername.fromStdString(username);
+
+    QSqlQuery q;
+    q.prepare("DELETE FROM adopter WHERE usernameAdopter = \"" + qUsername + "\";");
+
+    if(q.exec()) {
+        return true;
+    }
     return false;
 }
 
 //Adds an "adoptee" to the database of adoptees, using the adoptee info struct
-bool DatabaseManager::addAdoptee(AdopteeInfo p){
+bool DatabaseManager::addAdoptee(Adoptee a, string password) {
+    //Prepares a query that inserts given adoptee
+    QSqlQuery q;
+        q.prepare("INSERT INTO pet (usernameAdoptee, password, shelter, petIds);");
+        QString username; username.fromStdString(a.username);
+        q.bindValue(":usernameAdopter", username);
+        QString qPassword; qPassword.fromStdString(password);
+        q.bindValue(":password", qPassword);
+        QString shelter; shelter.fromStdString(a.shelter);
+        q.bindValue(":shelter", shelter);
+        q.bindValue(":petIds", intVectorToQString(a.ownedPetIds));
+    if(q.exec()) {
+        return true;
+    }
     return false;
 }
 
 //Removes an adoptee from the database of adoptees
-bool DatabaseManager::removeAdoptee(AdopteeInfo p){
+bool DatabaseManager::removeAdoptee(string username) {
+    QString qUsername;
+    qUsername.fromStdString(username);
+
+    QSqlQuery q;
+    q.prepare("DELETE FROM adoptee WHERE usernameAdoptee = \"" + qUsername + "\";");
+
+    if(q.exec()) {
+        return true;
+    }
     return false;
+}
+
+//Takes a string of ints split by ' ' characters and builds it into a vector
+vector<int> DatabaseManager::stringToIntVector(string str) {
+    //char c[s.size() + 1];
+    //strcpy(c, s.c_str());
+
+    vector<int> vector;
+
+    //Create stream of str string
+    istringstream stream(str);
+    int num;
+    //Pushes ints into num variable, split by ' ' character
+    while(stream >> num) {
+         vector.push_back(num);
+    }
+    return vector;
+}
+
+//Takes an int vector and creates a QString out of its ints, seperated by ' ' characters
+QString DatabaseManager::intVectorToQString(vector<int> vec) {
+    QString str;
+
+    str += str.fromStdString(to_string(vec.front()));
+    for(int i = 1; i < vec.size(); i++) {
+        str += " " + str.fromStdString(to_string(vec.at(i)));
+    }
+    return str;
 }

@@ -1,6 +1,6 @@
 TEMPLATE = subdirs
 
-SUBDIRS += \
+SUBDIRS += gui\
     matchmaking \
     unittest \
     databasemanager
