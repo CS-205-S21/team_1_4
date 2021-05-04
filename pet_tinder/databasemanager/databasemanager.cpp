@@ -109,7 +109,7 @@ AdopteeInfo* DatabaseManager::readInAdoptee(string username, string password) {
     } else {
         cout << "Error: Adoptee does not exist\n";
         return nullptr;
-    }int
+    }
 }
 
 //Finds pet with given id
