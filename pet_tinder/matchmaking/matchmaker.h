@@ -4,17 +4,20 @@
 #include <iostream>
 #include <stdlib.h>
 #include "../databasemanager/databasemanager.h"
-
+#include <vector>
 using namespace std;
 
 class Matchmaker{
 public:
     Matchmaker();
-    //Matchmaker(bool hard,)
     void innit();
-    int DatabaseInterface(string what, string whatTheUserWants);
+    vector<Pet> DatabaseInterface(string username, string passwords);
+    void refreshPetList();
      DatabaseManager *DM;
-
+     Adopter *currentUser;
+     vector<Pet> sortablePets;
+     vector<int> discardedPetIds;
+     vector<Pet> Queue;
 
 
 
@@ -37,3 +40,5 @@ public:
 };
 
 #endif // MATCHMAKER_H
+
+
