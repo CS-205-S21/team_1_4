@@ -4,6 +4,7 @@
 #include "profilepage.h"
 #include "petlist.h"
 #include <QMainWindow>
+#include <QWidget>
 
 #include "../matchmaking/matchmaker.h"
 
@@ -19,6 +20,8 @@ class PetFinder : public QMainWindow
     Q_OBJECT
 
 public:
+    Matchmaker *matchmaker;
+
     explicit PetFinder(QWidget *parent = 0);
     ~PetFinder();
     void initialize();
@@ -26,7 +29,6 @@ public:
 private slots:
 
     void on_profileButton_clicked();
-
     void on_petListButton_clicked();
 
 private:
