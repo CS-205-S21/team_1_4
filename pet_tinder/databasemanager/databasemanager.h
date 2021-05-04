@@ -156,14 +156,21 @@ public:
     bool removeAdoptee(string username);
 
     /**
-     * @brief stringToIntVector
-     * @return
+     * @brief stringToIntVector - Turns a string of ints seperated by ' ' characters
+     *  into a vector of those ints
+     * @param str - String to make into a vector. Must contain only integers seperated
+     *  by single ' ' characters, e.g. "1 3 5 12 543"
+     * @return vector<int> - Vector of ints from the passed string
      */
     vector<int> stringToIntVector(string str);
 
     /**
-     * @brief intVectorToQString
-     * @return
+     * @brief intVectorToQString - Takes a vector of ints and converts it to
+     *  a QString of numbers seperated by ' ' characters
+     * @param vec - Vector of integers
+     * @return QString - QString of numbers seperated by ' ' characters,
+     *  e.g. "1 3 5 12 543". If a standard string is desired instead, use the
+     *  QString's .toStdString function on the return value.
      */
     QString intVectorToQString(vector<int> vec);
 };
