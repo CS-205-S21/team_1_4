@@ -1,7 +1,7 @@
 #include "databasemanager.h"
 
 DatabaseManager::DatabaseManager() {
-    db.setDatabaseName(QString::fromStdString("./mydatabase.sqlite"));
+    db.setDatabaseName(QString::fromStdString("../../database/mydatabase.sqlite"));
     if(!db.open()) {
         cerr << "Database does not open -- " << db.lastError().text().toStdString()
              << std::endl;
