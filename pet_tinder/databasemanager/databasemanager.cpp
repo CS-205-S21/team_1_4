@@ -167,7 +167,7 @@ int DatabaseManager::getNumAdoptees() {
 bool DatabaseManager::addPet(Pet pet) {
     //Prepares a query that inserts all pet info from pet struct
     QSqlQuery q;
-        q.prepare("INSERT INTO pet(petId, name, species, breed,"
+        q.prepare("INSERT INTO pet (petId, name, species, breed,"
                   "age, weight, color, hypoallergenic, sex, bio);");
         q.bindValue(":petId", pet.id);
         QString name; name.fromStdString(pet.name);
