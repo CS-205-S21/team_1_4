@@ -220,9 +220,9 @@ bool DatabaseManager::removePet(int petId) {
             //When pet with matching id is found, return it
             if(pets.at(i).id == petId) {
                 pets.erase(pets.begin() + i);
+                return true;
             }
         }
-        return true;
     }
     return false;
 }
