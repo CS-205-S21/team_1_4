@@ -6,11 +6,19 @@
 #include "../databasemanager/databasemanager.h"
 #include <vector>
 using namespace std;
+struct AllPrefs {
+    vector<string> species;
+    vector<string> breeds;
+    vector<int> ages;
+    vector<double> weights;
+    vector<string> colors;
 
+};
 class Matchmaker{
 public:
     Matchmaker();
     void innit();
+    void sortPrefs();
     vector<Pet> DatabaseInterface(string username, string passwords);
     void refreshPetList();
      DatabaseManager *DM;
@@ -18,7 +26,7 @@ public:
      vector<Pet> sortablePets;
      vector<int> discardedPetIds;
      vector<Pet> Queue;
-
+     AllPrefs total;
 
 
 
