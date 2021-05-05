@@ -12,7 +12,7 @@ Matchmaker::Matchmaker(){
 //reads in pets to the correct areas
 void Matchmaker::innit(){
     DM->readInPets();
-
+    sortPrefs();
 
 }
 //this is called to return a queue of pets for the petfinder screen
@@ -61,10 +61,6 @@ vector<Pet> Matchmaker::DatabaseInterface(string username, string password){
                  continue;
              }
          }
-
-
-
-
          else{
              Queue.push_back(sortablePets.at(i));
          }
@@ -124,6 +120,96 @@ void Matchmaker::refreshPetList(){
 
         }
     }
+
+
+}
+void Matchmaker::sortPrefs(){
+
+
+    total.species.push_back(DM->pets.at(0).species);
+    for(int i = 0; i < DM->getNumPets(); i++){
+            int flag = 0;
+            for(int j = 0; j< (int)total.species.size(); j++){
+                if(DM->pets.at(i).species != total.species.at(j)){
+                    flag++;
+                }
+                else{
+                }
+            }
+            if(flag == (int)total.species.size()-1){
+                total.species.push_back(DM->pets.at(i).species);
+            }
+            else{
+            }
+        }
+
+    total.breeds.push_back(DM->pets.at(0).breed);
+    for(int i = 0; i < DM->getNumPets(); i++){
+            int flag = 0;
+            for(int j = 0; j< (int)total.breeds.size(); j++){
+                if(DM->pets.at(i).breed != total.breeds.at(j)){
+                    flag++;
+                }
+                else{
+                }
+            }
+            if(flag == (int)total.breeds.size()-1){
+                total.breeds.push_back(DM->pets.at(i).breed);
+            }
+            else{
+            }
+        }
+
+    total.ages.push_back(DM->pets.at(0).age);
+    for(int i = 0; i < DM->getNumPets(); i++){
+            int flag = 0;
+            for(int j = 0; j< (int)total.ages.size(); j++){
+                if(DM->pets.at(i).age != total.ages.at(j)){
+                    flag++;
+                }
+                else{
+                }
+            }
+            if(flag == (int)total.ages.size()-1){
+                total.ages.push_back(DM->pets.at(i).age);
+            }
+            else{
+            }
+        }
+
+    total.weights.push_back(DM->pets.at(0).weight);
+    for(int i = 0; i < DM->getNumPets(); i++){
+            int flag = 0;
+            for(int j = 0; j< (int)total.weights.size(); j++){
+                if(DM->pets.at(i).weight != total.weights.at(j)){
+                    flag++;
+                }
+                else{
+                }
+            }
+            if(flag == (int)total.weights.size()-1){
+                total.weights.push_back(DM->pets.at(i).weight);
+            }
+            else{
+            }
+        }
+
+    total.colors.push_back(DM->pets.at(0).color);
+    for(int i = 0; i < DM->getNumPets(); i++){
+            int flag = 0;
+            for(int j = 0; j< (int)total.colors.size(); j++){
+                if(DM->pets.at(i).color != total.colors.at(j)){
+                    flag++;
+                }
+                else{
+                }
+            }
+            if(flag == (int)total.colors.size()-1){
+                total.colors.push_back(DM->pets.at(i).color);
+            }
+            else{
+            }
+        }
 
 
 }
