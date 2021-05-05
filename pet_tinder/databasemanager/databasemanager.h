@@ -56,9 +56,6 @@ public:
     //Vector which holds all current pets. Ordered by id, but with possible gaps
     vector<Pet> pets;
 
-    //Current highest pet id. Maximum value of 18,446,744,073,709,551,615
-    unsigned long long int maxId;
-
     DatabaseManager();
 
     /**
@@ -173,6 +170,13 @@ public:
      *  QString's .toStdString function on the return value.
      */
     QString intVectorToQString(vector<int> vec);
+
+    int getPetIdMax();
+
+private:
+    //Tracks the maximum pet id, given to new pets to avoid repeat ids
+    //Maximum value of 18,446,744,073,709,551,615
+    unsigned long long int petIdMax;
 };
 
 #endif // DATABASEMANAGER_H

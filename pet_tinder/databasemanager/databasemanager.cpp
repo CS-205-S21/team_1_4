@@ -7,6 +7,7 @@ DatabaseManager::DatabaseManager() {
              << std::endl;
         exit(0);
     }
+    petIdMax = 0;
 }
 
 //Reads in all pets from database
@@ -30,6 +31,11 @@ void DatabaseManager::readInPets() {
             pet.hypoallergenic = query.value("hypoallergenic").toBool();
             pet.sex = query.value("sex").toString().toStdString();
             pet.bio = query.value("bio").toString().toStdString();
+
+            //Tracks pet ids, will hold highest current pet id by end of while loop
+            if(pet.id > petIdMax) {
+                petIdMax = pet.id;
+            }
 
             pets.push_back(pet); //Adds pet struct to pets vector
         }
@@ -165,31 +171,40 @@ int DatabaseManager::getNumAdoptees() {
 
 //Adds a pet to the database of pets and to the vector pf pets
 bool DatabaseManager::addPet(Pet pet) {
+    pet.id = petIdMax++; //Sets given pet's id to max id + 1
+
+    //Tests for bad data
+    if(pet.age <= 0 || pet.weight <= 0) {
+        return false;
+    }
+
     //Prepares a query that inserts all pet info from pet struct
     QSqlQuery q;
-        q.prepare("INSERT INTO pet(petId, name, species, breed,"
+        q.prepare("INSERT INTO pet (petId, name, species, breed,"
                   "age, weight, color, hypoallergenic, sex, bio);");
         q.bindValue(":petId", pet.id);
         QString name; name.fromStdString(pet.name);
         q.bindValue(":name", name);
-        QString species; name.fromStdString(pet.species);
+        QString species; species.fromStdString(pet.species);
         q.bindValue(":species", species);
-        QString breed; name.fromStdString(pet.breed);
+        QString breed; breed.fromStdString(pet.breed);
         q.bindValue(":breed", breed);
         q.bindValue(":age", pet.age);
         q.bindValue(":weight", pet.weight);
-        QString color; name.fromStdString(pet.color);
+        QString color; color.fromStdString(pet.color);
         q.bindValue(":color", color);
         q.bindValue(":hypoallergenic", pet.hypoallergenic);
-        QString sex; name.fromStdString(pet.sex);
+        QString sex; sex.fromStdString(pet.sex);
         q.bindValue(":sex", sex);
-        QString bio; name.fromStdString(pet.bio);
+        QString bio; bio.fromStdString(pet.bio);
         q.bindValue(":bio", bio);
     if(q.exec()) {
           pets.push_back(pet); //Adds pet struct to pets vector
           return true;
-      }
-      return false;
+    }
+    cerr << "Adding pet failed -- " << db.lastError().text().toStdString()
+         << std::endl;
+    return false;
 }
 
 //Removes a pet from the database of pets
@@ -325,4 +340,8 @@ QString DatabaseManager::intVectorToQString(vector<int> vec) {
         str += " " + str.fromStdString(to_string(vec.at(i)));
     }
     return str;
+}
+
+int DatabaseManager::getPetIdMax() {
+    return petIdMax;
 }
