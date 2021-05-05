@@ -172,24 +172,26 @@ bool DatabaseManager::addPet(Pet pet) {
         q.bindValue(":petId", pet.id);
         QString name; name.fromStdString(pet.name);
         q.bindValue(":name", name);
-        QString species; name.fromStdString(pet.species);
+        QString species; species.fromStdString(pet.species);
         q.bindValue(":species", species);
-        QString breed; name.fromStdString(pet.breed);
+        QString breed; breed.fromStdString(pet.breed);
         q.bindValue(":breed", breed);
         q.bindValue(":age", pet.age);
         q.bindValue(":weight", pet.weight);
-        QString color; name.fromStdString(pet.color);
+        QString color; color.fromStdString(pet.color);
         q.bindValue(":color", color);
         q.bindValue(":hypoallergenic", pet.hypoallergenic);
-        QString sex; name.fromStdString(pet.sex);
+        QString sex; sex.fromStdString(pet.sex);
         q.bindValue(":sex", sex);
-        QString bio; name.fromStdString(pet.bio);
+        QString bio; bio.fromStdString(pet.bio);
         q.bindValue(":bio", bio);
     if(q.exec()) {
           pets.push_back(pet); //Adds pet struct to pets vector
           return true;
-      }
-      return false;
+    }
+    cerr << "Adding pet failed -- " << db.lastError().text().toStdString()
+         << std::endl;
+    return false;
 }
 
 //Removes a pet from the database of pets

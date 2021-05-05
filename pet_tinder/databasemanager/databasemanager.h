@@ -55,6 +55,7 @@ public:
 
     //Vector which holds all current pets. Ordered by id, but with possible gaps
     vector<Pet> pets;
+    static int id_count; //Tracks ids across all pets
 
     //Current highest pet id. Maximum value of 18,446,744,073,709,551,615
     unsigned long long int maxId;
