@@ -7,6 +7,7 @@ DatabaseManager::DatabaseManager() {
              << std::endl;
         exit(0);
     }
+    petIdMax = 0;
 }
 
 //Reads in all pets from database
@@ -30,6 +31,11 @@ void DatabaseManager::readInPets() {
             pet.hypoallergenic = query.value("hypoallergenic").toBool();
             pet.sex = query.value("sex").toString().toStdString();
             pet.bio = query.value("bio").toString().toStdString();
+
+            //Tracks pet ids, will hold highest current pet id by end of while loop
+            if(pet.id > petIdMax) {
+                petIdMax = pet.id;
+            }
 
             pets.push_back(pet); //Adds pet struct to pets vector
         }
@@ -165,6 +171,13 @@ int DatabaseManager::getNumAdoptees() {
 
 //Adds a pet to the database of pets and to the vector pf pets
 bool DatabaseManager::addPet(Pet pet) {
+    pet.id = petIdMax++; //Sets given pet's id to max id + 1
+
+    //Tests for bad data
+    if(pet.age <= 0 || pet.weight <= 0) {
+        return false;
+    }
+
     //Prepares a query that inserts all pet info from pet struct
     QSqlQuery q;
         q.prepare("INSERT INTO pet (petId, name, species, breed,"
@@ -327,4 +340,8 @@ QString DatabaseManager::intVectorToQString(vector<int> vec) {
         str += " " + str.fromStdString(to_string(vec.at(i)));
     }
     return str;
+}
+
+int DatabaseManager::getPetIdMax() {
+    return petIdMax;
 }
