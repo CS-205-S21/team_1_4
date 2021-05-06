@@ -14,12 +14,11 @@ PetFinder::PetFinder(QWidget *parent) : QMainWindow(parent), ui(new Ui::PetFinde
 }
 
 void PetFinder::initialize() {
-    QImage img("/home/demelfid/project/team_1_4/pet_tinder/gui/Duck_gui.jfif");
+    QImage img(":/Duck_gui.jfif");
     QPixmap pic;
     pic.convertFromImage(img.scaled(200, 300, Qt::KeepAspectRatio), 0);
     ui->animalImage->setPixmap(pic);
     //matchmaker = new Matchmaker();
-    //matchmaker->DatabaseInterface("")
 }
 
 PetFinder::~PetFinder() {
