@@ -179,7 +179,7 @@ bool DatabaseManager::addPet(Pet pet) {
     //Prepares a query that inserts all pet info from pet struct
     QSqlQuery q;
         q.prepare("INSERT INTO pet (petId, name, species, breed,"
-                  "age, weight, color, hypoallergenic, sex, bio);");
+                  "age, weight, color, hypoallergenic, sex, bio)");
         q.bindValue(":petId", pet.id);
         QString name; name.fromStdString(pet.name);
         q.bindValue(":name", name);
@@ -196,6 +196,7 @@ bool DatabaseManager::addPet(Pet pet) {
         q.bindValue(":sex", sex);
         QString bio; bio.fromStdString(pet.bio);
         q.bindValue(":bio", bio);
+        q.exec();
     if(q.exec()) {
           pets.push_back(pet); //Adds pet struct to pets vector
           return true;
