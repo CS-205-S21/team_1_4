@@ -7,7 +7,7 @@
 #include <QWidget>
 
 #include "../matchmaking/matchmaker.h"
-//#include "../matchmaking/matchmaker.cpp"
+#include "../databasemanager/databasemanager.h"
 
 namespace Ui {
 class PetFinder;
@@ -21,11 +21,13 @@ class PetFinder : public QMainWindow
     Q_OBJECT
 
 public:
-    Matchmaker *matchmaker;
-
     explicit PetFinder(QWidget *parent = 0);
     ~PetFinder();
     void initialize();
+
+    Matchmaker *matchmaker;
+    ProfilePage *profileWindow;
+    PetList *petListWindow;
 
 private slots:
 
@@ -34,8 +36,6 @@ private slots:
 
 private:
     Ui::PetFinder *ui;
-    ProfilePage *profileWindow;
-    PetList *petListWindow;
 };
 
 #endif //PETFINDER_H

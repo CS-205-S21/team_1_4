@@ -64,8 +64,6 @@ vector<Pet> Matchmaker::DatabaseInterface(string username, string password){
          else{
              Queue.push_back(sortablePets.at(i));
          }
-
-
      }
 
      if(Queue.size() != 0){
@@ -78,11 +76,7 @@ vector<Pet> Matchmaker::DatabaseInterface(string username, string password){
         error->color = "Please adjust preferences to see more potential pets";
          Queue.push_back(*error);
          return Queue;
-
-
      }
-
-
 }
 //re reads in pets and creates a list of all non liked/ disliked pets for database interface
 void Matchmaker::refreshPetList(){

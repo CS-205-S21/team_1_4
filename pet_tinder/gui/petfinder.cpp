@@ -18,7 +18,7 @@ void PetFinder::initialize() {
     QPixmap pic;
     pic.convertFromImage(img.scaled(200, 300, Qt::KeepAspectRatio), 0);
     ui->animalImage->setPixmap(pic);
-    //matchmaker = new Matchmaker();
+    matchmaker = new Matchmaker();
 }
 
 PetFinder::~PetFinder() {

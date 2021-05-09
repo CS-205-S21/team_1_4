@@ -45,19 +45,17 @@ void DatabaseManager::readInPets() {
 //Reads in adopter from database with given username and password
 Adopter* DatabaseManager::readInAdopter(string username, string password) {
     //Prepares username and password for use in query
-    QString qUsername;
-    qUsername.fromStdString(username);
-    QString qPassword;
-    qPassword.fromStdString(password);
+    QString qUsername = QString::fromStdString(username);
+    QString qPassword = QString::fromStdString(password);
 
     //Prepares a query that will read in all pets ordered by id.
     QSqlQuery query;
-    query.prepare("SELECT usernameAdopter, likedPetIds, dislikedPetIds,"
-                  " prefSpecies, prefSpeciesReq, prefBreed, prefBreedReq,"
-                  "prefAge, prefAgeReq, prefWeight, prefWeightReq,"
-                  "prefColor, prefColorReq, prefHypoallergenic, prefHypoallergenicReq,"
-                  "prefSex, prefSexReq FROM adopter"
-                  "WHERE usernameAdopter = \"" + qUsername + "\" AND password = \"" + qPassword + "\";");
+    query.prepare("SELECT usernameAdopter, likedPetIds, dislikedPetIds, "
+                  "prefSpecies, prefSpeciesReq, prefBreed, prefBreedReq, "
+                  "prefAge, prefAgeReq, prefWeight, prefWeightReq, "
+                  "prefColor, prefColorReq, prefHypoallergenic, prefHypoallergenicReq, "
+                  "prefSex, prefSexReq FROM adopter "
+                  "WHERE usernameAdopter = '" + qUsername + "' AND password = '" + qUsername + "';");
 
     if(query.exec()) {
         //Creates and fills adopter struct

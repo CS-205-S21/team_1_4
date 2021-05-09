@@ -5,6 +5,8 @@
 #include "petfinder.h"
 #include "petlist.h"
 
+#include "../databasemanager/databasemanager.h"
+
 namespace Ui {
 class ProfilePage;
 }
@@ -24,6 +26,9 @@ public:
     Screen *scrptr;
     PetFinder *pfptr;
     PetList *plptr;
+
+    Adopter* userInfoAdopter;
+    Adoptee* userInfoAdoptee;
 
 signals:
 

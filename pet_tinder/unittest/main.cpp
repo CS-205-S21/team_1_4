@@ -11,6 +11,7 @@ class DatabaseManager_Test : public::testing::Test {
     protected:
 
     DatabaseManager_Test() {
+        cout << "test" << endl;
         dm = new DatabaseManager();
         dm->readInPets();
         numPets = dm->getNumPets();

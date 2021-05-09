@@ -60,6 +60,7 @@ public:
 
     /**
      * @brief PetsManager::readInPets - Reads in all pets from pet database
+     *  Should only be read in once near beggining of run
      */
     void readInPets();
 

@@ -46,6 +46,12 @@ FORMS += \
     petfinder.ui \
     messagescreen.ui
 
+HEADERS += ../matchmaking/matchmaker.h
+SOURCES += ../matchmaking/matchmaker.cpp
+HEADERS += ../databasemanager/databasemanager.h
+SOURCES += ../databasemanager/databasemanager.cpp
+
 RESOURCES += \
     petpics_gui.qrc
+
 
