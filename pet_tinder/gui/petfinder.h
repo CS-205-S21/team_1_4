@@ -29,6 +29,8 @@ public:
     ProfilePage *profileWindow;
     PetList *petListWindow;
 
+    bool isUserAdopter;
+
 private slots:
 
     void on_profileButton_clicked();

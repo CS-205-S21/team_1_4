@@ -15,11 +15,13 @@ HomeScreen::~HomeScreen() {
 }
 
 void HomeScreen::on_loginButton_clicked() {
+    cout << username << endl;
+    cout << password << endl;
     //Tests if user in an adopter
     Adopter* userInfoAdopter = petWindow->matchmaker->DM->readInAdopter(username, password);
     //Checks if this adopter exists
     if(userInfoAdopter != nullptr) {
-        cout << "Test1" << endl;
+
         //Passes adopter to database to begin matchmaking
         //petWindow->matchmaker->DatabaseInterface(username, password);
         //Passes adopter to profileWindow to display their info
@@ -29,6 +31,7 @@ void HomeScreen::on_loginButton_clicked() {
     } else {
         //Tests if user in an adoptee
         Adoptee* userInfoAdoptee = petWindow->matchmaker->DM->readInAdoptee(username, password);
+        //Tests if this adoptee exists
         if(userInfoAdoptee != nullptr) {
             //Passes adoptee to profileWindow to display their info
             petWindow->profileWindow->userInfoAdoptee = userInfoAdoptee;

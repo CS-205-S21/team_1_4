@@ -62,12 +62,14 @@ Adopter* DatabaseManager::readInAdopter(string username, string password) {
                   "prefColor, prefColorReq, prefHypoallergenic, prefHypoallergenicReq, "
                   "prefSex, prefSexReq FROM adopter "
                   "WHERE usernameAdopter = '" + qUsername + "' AND password = '" + qPassword + "';");
-
-    if(query.exec()) {
+    query.exec();
+    query.next();
+    if(query.value("usernameAdopter").toString().toStdString().compare("") != 0) {
         //Creates and fills adopter struct
         Adopter *adopter = new Adopter;
         adopter->username = query.value("usernameAdopter").toString().toStdString();
         adopter->likedPetIds = stringToIntVector(query.value("likedPetIds").toString().toStdString());
+
         adopter->dislikedPetIds = stringToIntVector(query.value("dislikedPetIds").toString().toStdString());
 
         adopter->prefSpecies = query.value("prefSpecies").toString().toStdString();
@@ -103,8 +105,8 @@ Adoptee* DatabaseManager::readInAdoptee(string username, string password) {
 
     //Prepares a query that will read in all pets ordered by id.
     QSqlQuery query;
-    query.prepare("SELECT usernameAdoptee, group, petIds,"
-                  "WHERE usernameAdoptee = \"" + qUsername + "\" AND password = \"" + qPassword + "\";");
+    query.prepare("SELECT usernameAdoptee, group, petIds, "
+                  "WHERE usernameAdoptee = '" + qUsername + "' AND password = '" + qPassword + "';");
 
     if(query.exec()) {
         //Creates and fills info struct
