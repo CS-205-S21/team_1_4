@@ -96,7 +96,7 @@ void Matchmaker::refreshPetList(){
     }
 
 
-    //discardedPetIds.insert(discardedPetIds.back(),currentUser->likedPetIds.begin(),currentUser->likedPetIds.end());
+
     //sorts through all pets and adds to a vector if they are not liked/disliked
     for(int j = 0; j < DM->getNumPets(); j++){
         int flag = 0;
@@ -204,6 +204,15 @@ void Matchmaker::sortPrefs(){
             else{
             }
         }
+        arrangePrefs();
+
+}
+void Matchmaker::arrangePrefs(){
+    sort(total.species.begin(),total.species.end());
+    sort(total.breeds.begin(),total.breeds.end());
+    sort(total.colors.begin(),total.colors.end());
+    sort(total.ages.begin(),total.ages.end());
+    sort(total.weights.begin(),total.weights.end());
 
 
 }
