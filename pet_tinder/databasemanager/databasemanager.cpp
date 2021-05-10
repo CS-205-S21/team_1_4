@@ -7,7 +7,7 @@ DatabaseManager::DatabaseManager() {
              << std::endl;
         exit(0);
     }
-    petIdMax = 0;
+    petIdMax = -1;
 }
 
 //Reads in all pets from database
@@ -55,13 +55,15 @@ Adopter* DatabaseManager::readInAdopter(string username, string password) {
                   "prefAge, prefAgeReq, prefWeight, prefWeightReq, "
                   "prefColor, prefColorReq, prefHypoallergenic, prefHypoallergenicReq, "
                   "prefSex, prefSexReq FROM adopter "
-                  "WHERE usernameAdopter = '" + qUsername + "' AND password = '" + qUsername + "';");
-
-    if(query.exec()) {
+                  "WHERE usernameAdopter = '" + qUsername + "' AND password = '" + qPassword + "';");
+    query.exec();
+    query.next();
+    if(query.value("usernameAdopter").toString().toStdString().compare("") != 0) {
         //Creates and fills adopter struct
         Adopter *adopter = new Adopter;
         adopter->username = query.value("usernameAdopter").toString().toStdString();
         adopter->likedPetIds = stringToIntVector(query.value("likedPetIds").toString().toStdString());
+        //HOW COPY VECTORS???
         adopter->dislikedPetIds = stringToIntVector(query.value("dislikedPetIds").toString().toStdString());
 
         adopter->prefSpecies = query.value("prefSpecies").toString().toStdString();
@@ -97,8 +99,8 @@ Adoptee* DatabaseManager::readInAdoptee(string username, string password) {
 
     //Prepares a query that will read in all pets ordered by id.
     QSqlQuery query;
-    query.prepare("SELECT usernameAdoptee, group, petIds,"
-                  "WHERE usernameAdoptee = \"" + qUsername + "\" AND password = \"" + qPassword + "\";");
+    query.prepare("SELECT usernameAdoptee, group, petIds, "
+                  "WHERE usernameAdoptee = '" + qUsername + "' AND password = '" + qPassword + "';");
 
     if(query.exec()) {
         //Creates and fills info struct
@@ -171,7 +173,9 @@ int DatabaseManager::getNumAdoptees() {
 bool DatabaseManager::addPet(Pet pet) {
     petIdMax++;
     pet.id = petIdMax; //Sets given pet's id to max id + 1
-    //cout << pet.id << std::endl;
+    cout << "Pet ID: " + pet.id << endl;
+    cout << "Pet ID: " + pet.id << endl;
+    cout << "PET NAME: " + pet.name << endl;
 
     //Tests for bad data
     if(pet.age <= 0 || pet.weight <= 0) {
@@ -212,9 +216,10 @@ bool DatabaseManager::addPet(Pet pet) {
 //Removes a pet from the database of pets
 bool DatabaseManager::removePet(int petId) {
     QString qPetId = "" + petId;
+    cout << "Remove Pet Id: " + petId << endl;
 
     QSqlQuery q;
-    q.prepare("DELETE FROM pet WHERE petId = \"" + qPetId + "\";");
+    q.prepare("DELETE FROM pet WHERE petId = '" + qPetId + "';");
 
     if(q.exec()) {
         //Searches through pets vector to find pet with given id
