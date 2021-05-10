@@ -33,7 +33,7 @@ void DatabaseManager::readInPets() {
             pet.bio = query.value("bio").toString().toStdString();
 
             //Tracks pet ids, will hold highest current pet id by end of while loop
-            if(pet.id > petIdMax) {
+            if(pet.id > (int)petIdMax) {
                 petIdMax = pet.id;
             }
 
@@ -59,7 +59,7 @@ Adopter* DatabaseManager::readInAdopter(string username, string password) {
 
     if(query.exec()) {
         //Creates and fills adopter struct
-        Adopter *adopter;
+        Adopter *adopter = new Adopter;
         adopter->username = query.value("usernameAdopter").toString().toStdString();
         adopter->likedPetIds = stringToIntVector(query.value("likedPetIds").toString().toStdString());
         adopter->dislikedPetIds = stringToIntVector(query.value("dislikedPetIds").toString().toStdString());
@@ -102,7 +102,7 @@ Adoptee* DatabaseManager::readInAdoptee(string username, string password) {
 
     if(query.exec()) {
         //Creates and fills info struct
-        Adoptee *adoptee;
+        Adoptee *adoptee = new Adoptee;
         adoptee->username = query.value("usernameAdoptee").toString().toStdString();
         adoptee->shelter = query.value("shelter").toString().toStdString();
         adoptee->ownedPetIds = stringToIntVector(query.value("petIds").toString().toStdString());
@@ -122,7 +122,7 @@ Pet* DatabaseManager::findPet(int findId) {
         return nullptr;
     }
     //Searches through pets vector to find pet with given id
-    for(int i = 0; i < pets.size(); i++) {
+    for(int i = 0; i < (int)pets.size(); i++) {
         //When pet with matching id is found, return it
         if(pets.at(i).id == findId) {
             return &pets.at(i);
@@ -169,7 +169,9 @@ int DatabaseManager::getNumAdoptees() {
 
 //Adds a pet to the database of pets and to the vector pf pets
 bool DatabaseManager::addPet(Pet pet) {
-    pet.id = petIdMax++; //Sets given pet's id to max id + 1
+    petIdMax++;
+    pet.id = petIdMax; //Sets given pet's id to max id + 1
+    //cout << pet.id << std::endl;
 
     //Tests for bad data
     if(pet.age <= 0 || pet.weight <= 0) {
@@ -179,31 +181,32 @@ bool DatabaseManager::addPet(Pet pet) {
     //Prepares a query that inserts all pet info from pet struct
     QSqlQuery q;
         q.prepare("INSERT INTO pet (petId, name, species, breed,"
-                  "age, weight, color, hypoallergenic, sex, bio)");
+                  "age, weight, color, hypoallergenic, sex, bio)"
+                  "VALUES (:petId, :name, :species, :breed, :age,"
+                  ":weight, :color, :hypoallergenic, :sex, :bio)");
         q.bindValue(":petId", pet.id);
-        QString name; name.fromStdString(pet.name);
+        QString name = QString::fromStdString(pet.name);
         q.bindValue(":name", name);
-        QString species; species.fromStdString(pet.species);
+        QString species = QString::fromStdString(pet.species);
         q.bindValue(":species", species);
-        QString breed; breed.fromStdString(pet.breed);
+        QString breed = QString::fromStdString(pet.breed);
         q.bindValue(":breed", breed);
         q.bindValue(":age", pet.age);
         q.bindValue(":weight", pet.weight);
-        QString color; color.fromStdString(pet.color);
+        QString color = QString::fromStdString(pet.color);
         q.bindValue(":color", color);
         q.bindValue(":hypoallergenic", pet.hypoallergenic);
-        QString sex; sex.fromStdString(pet.sex);
+        QString sex = QString::fromStdString(pet.sex);
         q.bindValue(":sex", sex);
-        QString bio; bio.fromStdString(pet.bio);
+        QString bio = QString::fromStdString(pet.bio);
         q.bindValue(":bio", bio);
-        q.exec();
-    if(q.exec()) {
-          pets.push_back(pet); //Adds pet struct to pets vector
-          return true;
+    if(q.exec()){
+        pets.push_back(pet); //Adds pet struct to pets vector
+        return true;
+    } else {
+        qDebug() << "Add Pet Error" << q.lastError();
+        return false;
     }
-    cerr << "Adding pet failed -- " << db.lastError().text().toStdString()
-         << std::endl;
-    return false;
 }
 
 //Removes a pet from the database of pets
@@ -215,7 +218,7 @@ bool DatabaseManager::removePet(int petId) {
 
     if(q.exec()) {
         //Searches through pets vector to find pet with given id
-        for(int i = 0; i < pets.size(); i++) {
+        for(int i = 0; i < (int)pets.size(); i++) {
             //When pet with matching id is found, return it
             if(pets.at(i).id == petId) {
                 pets.erase(pets.begin() + i);
@@ -230,41 +233,50 @@ bool DatabaseManager::removePet(int petId) {
 bool DatabaseManager::addAdopter(Adopter a, string password) {
     //Prepares a query that inserts given adopter
     QSqlQuery q;
-        q.prepare("INSERT INTO pet (usernameAdopter, password,"
+        q.prepare("INSERT INTO adopter (usernameAdopter, password,"
                   "likedPetIds, dislikedPetIds,"
                   "prefSpecies, prefSpeciesReq,"
                   "prefBreed, prefBreedReq, prefAge, prefAgeReq"
                   "prefWeight, prefWeightReq, prefColor, prefColorReq"
                   "prefHypoallergenic, prefHypoallergenicReq,"
-                  "prefSex, prefSexReq);");
-        QString username; username.fromStdString(a.username);
+                  "prefSex, prefSexReq)"
+                  "VALUES :usernameAdopter, :password,"
+                  ":likedPetIds, :dislikedPetIds,"
+                  ":prefSpecies, :prefSpeciesReq,"
+                  ":prefBreed, :prefBreedReq, :prefAge, :prefAgeReq"
+                  ":prefWeight, :prefWeightReq, :prefColor, :prefColorReq"
+                  ":prefHypoallergenic, :prefHypoallergenicReq,"
+                  ":prefSex, :prefSexReq)");
+        QString username = QString::fromStdString(a.username);
         q.bindValue(":usernameAdopter", username);
-        QString qPassword; qPassword.fromStdString(password);
+        QString qPassword = QString::fromStdString(password);
         q.bindValue(":password", qPassword);
         q.bindValue(":likedPetIds", intVectorToQString(a.likedPetIds));
         q.bindValue(":dislikedPetIds", intVectorToQString(a.dislikedPetIds));
-        QString prefSpecies; prefSpecies.fromStdString(a.prefSpecies);
+        QString prefSpecies = QString::fromStdString(a.prefSpecies);
         q.bindValue(":prefSpecies", prefSpecies);
         q.bindValue(":prefSpeciesReq", a.prefSpeciesReq);
-        QString prefBreed; prefBreed.fromStdString(a.prefBreed);
+        QString prefBreed = QString::fromStdString(a.prefBreed);
         q.bindValue(":prefBreed", prefBreed);
         q.bindValue(":prefBreedReq", a.prefBreedReq);
         q.bindValue(":prefAge", a.prefAge);
         q.bindValue(":prefAgeReq", a.prefAgeReq);
         q.bindValue(":prefWeight", a.prefWeight);
         q.bindValue(":prefWeightReq", a.prefWeightReq);
-        QString prefColor; prefColor.fromStdString(a.prefColor);
+        QString prefColor = QString::fromStdString(a.prefColor);
         q.bindValue(":prefColor", prefColor);
         q.bindValue(":prefColorReq", a.prefColorReq);
         q.bindValue(":prefHypoallergenic", a.prefHypoallergenic);
         q.bindValue(":prefHypoallergenicReq", a.prefHypoallergenicReq);
-        QString prefSex; prefSex.fromStdString(a.prefSex);
+        QString prefSex = QString::fromStdString(a.prefSex);
         q.bindValue(":prefSex", prefSex);
         q.bindValue(":prefSexReq", a.prefSexReq);
     if(q.exec()) {
         return true;
+    } else {
+        qDebug() << "Add Pet Error" << q.lastError();
+        return false;
     }
-    return false;
 }
 
 //Removes an adopter from the database of adopters
@@ -285,12 +297,13 @@ bool DatabaseManager::removeAdopter(string username) {
 bool DatabaseManager::addAdoptee(Adoptee a, string password) {
     //Prepares a query that inserts given adoptee
     QSqlQuery q;
-        q.prepare("INSERT INTO pet (usernameAdoptee, password, shelter, petIds);");
-        QString username; username.fromStdString(a.username);
+        q.prepare("INSERT INTO adoptee (usernameAdoptee, password, shelter, petIds)"
+                  "VALUES (:usernameAdoptee, :password, :shelter, :petIds);");
+        QString username = QString::fromStdString(a.username);
         q.bindValue(":usernameAdopter", username);
-        QString qPassword; qPassword.fromStdString(password);
+        QString qPassword = QString::fromStdString(password);
         q.bindValue(":password", qPassword);
-        QString shelter; shelter.fromStdString(a.shelter);
+        QString shelter = QString::fromStdString(a.shelter);
         q.bindValue(":shelter", shelter);
         q.bindValue(":petIds", intVectorToQString(a.ownedPetIds));
     if(q.exec()) {
@@ -335,7 +348,7 @@ QString DatabaseManager::intVectorToQString(vector<int> vec) {
     QString str;
 
     str += str.fromStdString(to_string(vec.front()));
-    for(int i = 1; i < vec.size(); i++) {
+    for(int i = 1; i < (int)vec.size(); i++) {
         str += " " + str.fromStdString(to_string(vec.at(i)));
     }
     return str;

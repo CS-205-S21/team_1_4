@@ -35,6 +35,7 @@ class Matchmaking_Test : public::testing::Test {
 
     Matchmaking_Test() {
         mm = new Matchmaker();
+        dm = mm->DM;
     }
 
     virtual void TearDown() {
@@ -42,6 +43,7 @@ class Matchmaking_Test : public::testing::Test {
     }
 
     Matchmaker *mm;
+    DatabaseManager *dm;
 };
 
 //*********************************************************************************************************************
@@ -135,8 +137,8 @@ TEST_F(DatabaseManager_Test, ADD_EMPTY_PET) {
     frog.name = "";
     frog.species = "";
     frog.breed = "";
-    frog.age = 0;
-    frog.weight = 0.0;
+    frog.age = 1;
+    frog.weight = 0.1;
     frog.color = "";
     frog.hypoallergenic = false;
     frog.sex = "";
@@ -491,7 +493,7 @@ TEST_F(DatabaseManager_Test, READ_IN_ADOPTER) {
     ASSERT_EQ(numAdopters+1, dm->getNumAdopters())
                         << "Adopters should have one addition.";
     ASSERT_EQ(js, dm->readInAdopter("Justin Smith", "ButterIsGorgeous72"))
-                        << "Read in Adopter should return the same aadopter";
+                        << "Read in Adopter should return the same adopter";
     ASSERT_TRUE(dm->removeAdopter(js->username))
                         << "Justin Smith the adopter should have been removed.";
 }
@@ -604,6 +606,16 @@ TEST_F(DatabaseManager_Test, READ_IN_ADOPTEE) {
                         << "Read in Adoptee should return the same adoptee";
     ASSERT_TRUE(dm->removeAdoptee(butter->username))
                         << "Butter the adoptee should have been removed.";
+}
+
+//*********************************************************************************************************************
+//*********************************************************************************************************************
+//*****************************************TESTS FOR MATCHMAKER********************************************************
+//*********************************************************************************************************************
+//*********************************************************************************************************************
+//This test will be a basic test for Matchmaker
+TEST_F(Matchmaking_Test, TEST_NAME){
+
 }
 
 int main(int argc, char **argv) {
