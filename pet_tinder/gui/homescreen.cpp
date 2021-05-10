@@ -21,7 +21,7 @@ void HomeScreen::on_loginButton_clicked() {
     if(userInfoAdopter != nullptr) {
         cout << "Test1" << endl;
         //Passes adopter to database to begin matchmaking
-        petWindow->matchmaker->DatabaseInterface(username, password);
+        //petWindow->matchmaker->DatabaseInterface(username, password);
         //Passes adopter to profileWindow to display their info
         petWindow->profileWindow->userInfoAdopter = userInfoAdopter;
         this->hide();

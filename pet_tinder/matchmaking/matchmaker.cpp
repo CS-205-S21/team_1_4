@@ -3,12 +3,12 @@
 
 //creates an instance of the database
 Matchmaker::Matchmaker(){
-    DM = new DatabaseManager();
-    innit();
+    //DM = new DatabaseManager();
+    //innit();
 
 
 
-}
+}/*
 //reads in pets to the correct areas
 void Matchmaker::innit(){
     DM->readInPets();
@@ -206,4 +206,4 @@ void Matchmaker::sortPrefs(){
         }
 
 
-}
+}*/

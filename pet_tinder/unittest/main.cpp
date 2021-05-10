@@ -52,18 +52,18 @@ class Matchmaking_Test : public::testing::Test {
 //This test is assuming that this is being run before anything else was added
 //to the database.
 TEST_F(DatabaseManager_Test, ADD_AND_REMOVE_PET) {
-    Pet bear;
+    Pet *bear = new Pet;
     ASSERT_EQ(numPets, dm->getNumPets())
                     << "Pet should have no additions.";
-    bear.name = "Trinket";
-    bear.species = "Large";
-    bear.breed = "Fuzzy";
-    bear.age = 6;
-    bear.weight = 200.0;
-    bear.color = "Brown";
-    bear.hypoallergenic = false;
-    bear.sex = "Male";
-    bear.bio = "The companion to Lady Vex'ahlia, Mistress of the Grey Hunt. Accompanying her,"
+    bear->name = "Trinket";
+    bear->species = "Large";
+    bear->breed = "Fuzzy";
+    bear->age = 6;
+    bear->weight = 200.0;
+    bear->color = "Brown";
+    bear->hypoallergenic = false;
+    bear->sex = "Male";
+    bear->bio = "The companion to Lady Vex'ahlia, Mistress of the Grey Hunt. Accompanying her,"
                "Trinket has seen a great many adventure and receieved special treatment as the"
                "bear that aided Vox Machina through several adventures that would save all of Tal"
                "Dore. THis is probably the most well-known bear in the world, for good reason. ";
@@ -71,29 +71,30 @@ TEST_F(DatabaseManager_Test, ADD_AND_REMOVE_PET) {
                         << "Bear should have been added.";
     ASSERT_EQ(numPets+1, dm->getNumPets())
                     << "Pets should have one addition.";
-    ASSERT_TRUE(dm->removePet(bear.id))
+    ASSERT_TRUE(dm->removePet(bear->id))
                         << "Bear should have been removed.";
     ASSERT_EQ(numPets, dm->getNumPets())
                     << "Pets should be back to original size.";
 }
 
+
 //This will not only test to make sure that the database can handle spaces between entries,
 //but will also test to make sure that two pets, with the same id will not both be added.
 TEST_F(DatabaseManager_Test, ADD_MULTIPLE_IDS) {
-    Pet animal;
-    Pet animalA;
+    Pet *animal = new Pet;
+    Pet *animalA = new Pet;
     ASSERT_EQ(numPets, dm->getNumPets())
                     << "Pets should have no additions.";
-    animal.id = numPets+1;
-    animal.name = "Jyken Deydhall";
-    animal.species = "Human";
-    animal.breed = "Conquest Paladin";
-    animal.age = 28;
-    animal.weight = 190.0;
-    animal.color = "Pale Orange/Pink";
-    animal.hypoallergenic = false;
-    animal.sex = "Male";
-    animal.bio = "The champion to The Mockery, Jyken Deydhall found his demis to the dracolich"
+    animal->id = numPets+1;
+    animal->name = "Jyken Deydhall";
+    animal->species = "Human";
+    animal->breed = "Conquest Paladin";
+    animal->age = 28;
+    animal->weight = 190.0;
+    animal->color = "Pale Orange/Pink";
+    animal->hypoallergenic = false;
+    animal->sex = "Male";
+    animal->bio = "The champion to The Mockery, Jyken Deydhall found his demis to the dracolich"
                  "commanded by the notorious undead king. He has since woken up, with a renewed"
                  "vow and motivation to seek out his brother's murderer, and his mentor, Enrico"
                  "Brando, the leader of the Diashad order of Paladins. Jyken has sworn to make"
@@ -101,16 +102,16 @@ TEST_F(DatabaseManager_Test, ADD_MULTIPLE_IDS) {
     ASSERT_TRUE(dm->addPet(animal))
                     << "Animal should have been added.";
 
-    animalA.id = animal.id;
-    animalA.name = "Red Valley Mist";
-    animalA.species = "Tabaxi";
-    animalA.breed = "Mercy Monk";
-    animalA.age = 22;
-    animalA.weight = 120.0;
-    animalA.color = "Light Orange";
-    animalA.hypoallergenic = true;
-    animalA.sex = "Female";
-    animalA.bio = "This monk has studied under the tutelage of Master Ba, a monk that has adopted"
+    animalA->id = animal->id;
+    animalA->name = "Red Valley Mist";
+    animalA->species = "Tabaxi";
+    animalA->breed = "Mercy Monk";
+    animalA->age = 22;
+    animalA->weight = 120.0;
+    animalA->color = "Light Orange";
+    animalA->hypoallergenic = true;
+    animalA->sex = "Female";
+    animalA->bio = "This monk has studied under the tutelage of Master Ba, a monk that has adopted"
                   "Mist when he was very young. Mist has almost no memories of his childhood, but"
                   "trusts the word of his master that he does not need to know anything. However,"
                   "master Ba had mysteriously passed away, leaving Mist to his own devices. He then"
@@ -118,9 +119,9 @@ TEST_F(DatabaseManager_Test, ADD_MULTIPLE_IDS) {
                   "to learn who he is.";
     ASSERT_TRUE(dm->addPet(animalA))
                 << "AnimalA should have an id overwritten and added anyway";
-    ASSERT_TRUE(dm->removePet(animal.id))
+    ASSERT_TRUE(dm->removePet(animal->id))
                 << "Animal should have been removed.";
-    ASSERT_TRUE(dm->removePet(animalA.id))
+    ASSERT_TRUE(dm->removePet(animalA->id))
                 << "AnimalA should have been removed.";
     ASSERT_EQ(numPets, dm->getNumPets())
                     << "Pets should be back to the original number.";
@@ -129,24 +130,23 @@ TEST_F(DatabaseManager_Test, ADD_MULTIPLE_IDS) {
 //This will test to see if you can add a pet with almost empty parameters, then test to see if
 //it works with empty parameters, but with a non-empty id.
 TEST_F(DatabaseManager_Test, ADD_EMPTY_PET) {
-    Pet frog;
+    Pet *frog = new Pet;
     ASSERT_EQ(numPets, dm->getNumPets())
                     << "Pets should have no additions";
-    ASSERT_FALSE(dm->addPet(frog));
 
-    frog.name = "";
-    frog.species = "";
-    frog.breed = "";
-    frog.age = 1;
-    frog.weight = 0.1;
-    frog.color = "";
-    frog.hypoallergenic = false;
-    frog.sex = "";
-    frog.bio = "";
+    frog->name = "";
+    frog->species = "";
+    frog->breed = "";
+    frog->age = 1;
+    frog->weight = 0.1;
+    frog->color = "";
+    frog->hypoallergenic = false;
+    frog->sex = "";
+    frog->bio = "";
 
     ASSERT_TRUE(dm->addPet(frog))
                     << "Pets should accept parameters if there are some non-applicable information.";
-    ASSERT_TRUE(dm->removePet(frog.id))
+    ASSERT_TRUE(dm->removePet(frog->id))
                     << "Frog should be deleted.";
     ASSERT_EQ(numPets, dm->getNumPets())
                     << "Pets should be back to the original number.";
@@ -154,55 +154,55 @@ TEST_F(DatabaseManager_Test, ADD_EMPTY_PET) {
 
 //Try to add and remove a pet that isn't in the table
 TEST_F(DatabaseManager_Test, ADD_NONEXISTENT_PET) {
-    Pet knowledgeOfHowToCode;
-    knowledgeOfHowToCode.id = -1;
+    Pet *knowledgeOfHowToCode = new Pet;
+    knowledgeOfHowToCode->id = -1;
     ASSERT_EQ(numPets, dm->getNumPets())
                     << "Pets should have no additions.";
-    ASSERT_FALSE(dm->removePet(knowledgeOfHowToCode.id))
+    ASSERT_FALSE(dm->removePet(knowledgeOfHowToCode->id))
                 << "You cannot remove what does not exist.";
 }
 
 //This will test to see if you can add a pet with weird data such as a negative id number
 TEST_F(DatabaseManager_Test, WEIRD_DATA) {
-    Pet animal;
+    Pet *animal = new Pet;
     ASSERT_EQ(numPets, dm->getNumPets())
                     << "Pets should have normal amount of pets";
-    animal.id = -1;
-    animal.name = "Rdame Ylepse";
-    animal.species = "Updog";
-    animal.breed = "Sawcawn";
-    animal.age = -9;
-    animal.weight = -4;
-    animal.color = "Spotted";
-    animal.hypoallergenic = true;
-    animal.sex = "Non-Binary";
-    animal.bio = "N/A";
+    animal->id = -1;
+    animal->name = "Rdame Ylepse";
+    animal->species = "Updog";
+    animal->breed = "Sawcawn";
+    animal->age = -9;
+    animal->weight = -4;
+    animal->color = "Spotted";
+    animal->hypoallergenic = true;
+    animal->sex = "Non-Binary";
+    animal->bio = "N/A";
     ASSERT_FALSE(dm->addPet(animal))
                     << "Pets should not accept parameters with weird information";
     //just in case it was not removed yet
-    dm->removePet(animal.id);
+    dm->removePet(animal->id);
     ASSERT_EQ(numPets, dm->getNumPets())
                     << "Pets should now have the original amout of pets";
 }
 
 //This will test the search method for database manager
 TEST_F(DatabaseManager_Test, FIND_PETS) {
-    Pet pika;
-    Pet tepi;
-    Pet sniv;
-    Pet osha;
+    Pet *pika = new Pet;
+    Pet *tepi = new Pet;
+    Pet *sniv = new Pet;
+    Pet *osha = new Pet;
 
     ASSERT_EQ(numPets, dm->getNumPets())
                     << "Pets should have no additions";
-    pika.name = "Pikachu";
-    pika.species = "Mouse";
-    pika.breed = "Brave";
-    pika.age = 12;
-    pika.weight = 19.0;
-    pika.color = "Yellow";
-    pika.hypoallergenic = false;
-    pika.sex = "Male";
-    pika.bio = "Pikachu is an electric type pokemon, probably best known as the companion to"
+    pika->name = "Pikachu";
+    pika->species = "Mouse";
+    pika->breed = "Brave";
+    pika->age = 12;
+    pika->weight = 19.0;
+    pika->color = "Yellow";
+    pika->hypoallergenic = false;
+    pika->sex = "Male";
+    pika->bio = "Pikachu is an electric type pokemon, probably best known as the companion to"
                "Ash Ketchum, or Red, who is known as the worl'd greatest Pokemon trainer. "
                "In the stories, Pikachu was Ash's first pokemon, and though their relationship"
                "was rocky at first, they grew to be the closest of friends and swore to become the"
@@ -210,46 +210,45 @@ TEST_F(DatabaseManager_Test, FIND_PETS) {
     ASSERT_TRUE(dm->addPet(pika))
                     << "Pets should now contain only 1 addition";
 
-    tepi.name = "Tepig";
-    tepi.species = "Pig";
-    tepi.breed = "Humble";
-    tepi.age = 6;
-    tepi.weight = 22.5;
-    tepi.color = "Orange";
-    tepi.hypoallergenic = true;
-    tepi.sex = "Male";
-    tepi.bio = "Tepig is a fire type pig-like pokemon that is a starter for generation 5. Tepig "
+    tepi->name = "Tepig";
+    tepi->species = "Pig";
+    tepi->breed = "Humble";
+    tepi->age = 6;
+    tepi->weight = 22.5;
+    tepi->color = "Orange";
+    tepi->hypoallergenic = true;
+    tepi->sex = "Male";
+    tepi->bio = "Tepig is a fire type pig-like pokemon that is a starter for generation 5. Tepig "
                "also joined Ash Ketchum in his quest to become the ultimate pokemon trainer, but"
                "tepig is objectively one of the best starters of all pokemon. The final evolution"
                "is Emboar.";
     ASSERT_TRUE(dm->addPet(tepi))
                     << "Pets should now contain only 2 additions";
 
-    sniv.name = "Snivy";
-    sniv.species = "Snake";
-    sniv.breed = "Shy";
-    sniv.age = 8;
-    sniv.weight = 12.2;
-    sniv.color = "Green";
-    sniv.hypoallergenic = false;
-    sniv.sex = "Female";
-    sniv.bio = "Snivy is a grass snake, and juts like the other gen 5 starters, has also joined"
+    sniv->name = "Snivy";
+    sniv->species = "Snake";
+    sniv->breed = "Shy";
+    sniv->age = 8;
+    sniv->weight = 12.2;
+    sniv->color = "Green";
+    sniv->hypoallergenic = false;
+    sniv->sex = "Female";
+    sniv->bio = "Snivy is a grass snake, and juts like the other gen 5 starters, has also joined"
                "Ash for a brief period. Snivy can evolve into the graceful Serperior, the superior"
                "grass serpent that can slither around and capture its foes with its grassy entanglement."
                "Snivy is a beautiful pokemon with great evolutions for a fresh design in generation 5.";
-    dm->addPet(sniv);
     ASSERT_TRUE(dm->addPet(sniv))
                     << "Pets should now contain only 3 additions";
 
-    osha.name = "Oshawott";
-    osha.species = "Turtle?";
-    osha.breed = "Reckless";
-    osha.age = 5;
-    osha.weight = 21.8;
-    osha.color = "Blue and White";
-    osha.hypoallergenic = true;
-    osha.sex = "Male";
-    osha.bio = "Oshawott is a generation 5 starter, who also breifly joined Ash Ketchum's adventure,"
+    osha->name = "Oshawott";
+    osha->species = "Turtle?";
+    osha->breed = "Reckless";
+    osha->age = 5;
+    osha->weight = 21.8;
+    osha->color = "Blue and White";
+    osha->hypoallergenic = true;
+    osha->sex = "Male";
+    osha->bio = "Oshawott is a generation 5 starter, who also breifly joined Ash Ketchum's adventure,"
                "but is another yet amazing starter. I do not know what type of animal Oshawott resembles,"
                "but it might be some sort of turtle. Oshawott has some sort of boomerang weapon that "
                "can come off its body, but evolves into Samurott, a large and intimidating pokemon with"
@@ -257,26 +256,26 @@ TEST_F(DatabaseManager_Test, FIND_PETS) {
     ASSERT_TRUE(dm->addPet(osha))
                     << "Pets should now contain only 4 additions";
 
-    ASSERT_EQ(&pika, dm->findPet(pika.id));
-    ASSERT_EQ(&tepi, dm->findPet(tepi.id));
-    ASSERT_EQ(&sniv, dm->findPet(sniv.id));
-    ASSERT_EQ(&osha, dm->findPet(osha.id));
+    ASSERT_EQ(pika->name, dm->findPet(pika->id)->name);
+    ASSERT_EQ(tepi->name, dm->findPet(tepi->id)->name);
+    ASSERT_EQ(sniv->name, dm->findPet(sniv->id)->name);
+    ASSERT_EQ(osha->name, dm->findPet(osha->id)->name);
 
     ASSERT_EQ(numPets+4, dm->getNumPets())
                     << "Pets should have all new pokemon";
-    ASSERT_TRUE(dm->removePet(pika.id))
+    ASSERT_TRUE(dm->removePet(pika->id))
                     << "Pika should be deleted.";
     ASSERT_EQ(numPets+3, dm->getNumPets())
                     << "Pets should have three pokemon";
-    ASSERT_TRUE(dm->removePet(tepi.id))
+    ASSERT_TRUE(dm->removePet(tepi->id))
                     << "Tepi should be deleted.";
     ASSERT_EQ(numPets+2, dm->getNumPets())
                     << "Pets should have two pokemon";
-    ASSERT_TRUE(dm->removePet(sniv.id))
+    ASSERT_TRUE(dm->removePet(sniv->id))
                     << "Sniv should be deleted.";
     ASSERT_EQ(numPets+1, dm->getNumPets())
                     << "Pets should have one pokemon";
-    ASSERT_TRUE(dm->removePet(osha.id))
+    ASSERT_TRUE(dm->removePet(osha->id))
                     << "Osha should be deleted.";
     ASSERT_EQ(numPets, dm->getNumPets())
                     << "Pets should be back to original number";
@@ -289,7 +288,9 @@ TEST_F(DatabaseManager_Test, FIND_PETS) {
 TEST_F(DatabaseManager_Test, ADD_AND_REMOVE_ADOPTER) {
     Adopter dan;
     vector<int> likedPets;
+    likedPets.push_back(1);
     vector<int> dislikedPets;
+    dislikedPets.push_back(2);
     ASSERT_EQ(numAdopters, dm->getNumAdopters())
                     << "This should never be false";
     dan.username = "Danny";

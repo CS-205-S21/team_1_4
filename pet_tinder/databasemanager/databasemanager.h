@@ -54,9 +54,10 @@ public:
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
 
     //Vector which holds all current pets. Ordered by id, but with possible gaps
-    vector<Pet> pets;
+    vector<Pet*> pets;
 
     DatabaseManager();
+    ~DatabaseManager();
 
     /**
      * @brief PetsManager::readInPets - Reads in all pets from pet database
@@ -116,7 +117,7 @@ public:
      * @param p - the pet that will be added to the database
      * @return True or false depending on if the pet was successfully added.
      */
-    bool addPet(Pet p);
+    bool addPet(Pet *p);
 
     /**
      * @brief removePet - Removes a pet from the database of pets
