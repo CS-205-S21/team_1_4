@@ -2,7 +2,8 @@ create table adoptee (
       usernameAdoptee CHAR NOT NULL UNIQUE,
       password        CHAR NOT NULL,
       shelter         CHAR,
-      petIds          CHAR NOT NULL         );
+      petIds          CHAR NOT NULL,   
+      bio             CHAR                   );
       
 create table adopter (
       usernameAdopter       CHAR NOT NULL UNIQUE,
@@ -10,19 +11,20 @@ create table adopter (
       likedPetIds           CHAR NOT NULL,
       dislikedPetIds        CHAR NOT NULL,
       prefSpecies           CHAR NOT NULL,
-      prefSpeciesReq        BOOLEAN NOT NULL,
+      prefSpeciesReq        INT NOT NULL,
       prefBreed             CHAR NOT NULL, 
-      prefBreedReq          BOOLEAN NOT NULL,  
+      prefBreedReq          INT NOT NULL,  
       prefAge               CHAR NOT NULL, 
-      prefAgeReq            BOOLEAN NOT NULL,
+      prefAgeReq            INT NOT NULL,
       prefWeight            DOUBLE NOT NULL,
-      prefWeightReq         BOOLEAN NOT NULL,
+      prefWeightReq         INT NOT NULL,
       prefColor             DOUBLE NOT NULL,
-      prefColorReq          BOOLEAN NOT NULL,
-      prefHypoallergenic    BOOLEAN NOT NULL, 
-      prefHypoallergenicReq BOOLEAN NOT NULL,
+      prefColorReq          INT NOT NULL,
+      prefHypoallergenic    INT NOT NULL, 
+      prefHypoallergenicReq INT NOT NULL,
       prefSex               CHAR NOT NULL,
-      prefSexReq            BOOLEAN NOT NULL    );
+      prefSexReq            INT NOT NULL,
+      bio                   CHAR                );
 
 create table messages (
       messagesId      INT NOT NULL UNIQUE,
@@ -39,19 +41,19 @@ create table pet (
       age            INT NOT NULL,
       weight         DOUBLE NOT NULL,
       color          CHAR NOT NULL,
-      hypoallergenic BOOLEAN NOT NULL, 
+      hypoallergenic INT NOT NULL, 
       sex            CHAR NOT NULL, 
       bio            CHAR NOT NULL          );
       
 create table likedPet (
       likedPetId        INT NOT NULL UNIQUE,
       adopter           CHAR NOT NULL,
-      adoptionConfirmed BOOLEAN NOT NULL    );
+      adoptionConfirmed INT NOT NULL    );
       
 .separator ","
 .mode csv
-.import "00_build_db/adoptee.csv"     adoptee
-.import "00_build_db/adopter.csv"     adopter
-.import "00_build_db/messages.csv"     messages
-.import "00_build_db/pet.csv"         pet
+.import "00_build_db/adoptee.csv"  adoptee
+.import "00_build_db/adopter.csv"  adopter
+.import "00_build_db/messages.csv" messages
+.import "00_build_db/pet.csv"      pet
 .import "00_build_db/likedPet.csv" likedPet

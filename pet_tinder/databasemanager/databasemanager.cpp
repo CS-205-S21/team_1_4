@@ -99,8 +99,6 @@ Adopter* DatabaseManager::readInAdopter(string username, string password) {
         adopter->prefSex = query.value("prefSex").toString().toStdString();
         adopter->prefSexReq = query.value("prefSexReq").toInt();
 
-        cout << "Adopter: " + adopter->username + "\n";
-
         return adopter; //Returns adopter struct
     } else if(!exists){
         qDebug() << "Adopter cannot be found using Select" << endl;
