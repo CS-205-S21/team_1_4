@@ -18,20 +18,31 @@ void PetFinder::initialize() {
     QPixmap pic;
     pic.convertFromImage(img.scaled(200, 300, Qt::KeepAspectRatio), 0);
     ui->animalImage->setPixmap(pic);
-
-    isUserAdopter = false;
     ui->homeButton->setEnabled(false);
-    if(isUserAdopter == true){
+
+    isUserAdopter = true;
+
+    setup();
+}
+
+void PetFinder::setup() {
+    if(isUserAdopter == true) {
         ui->deleteButton->setVisible(false);
-    }
-    if(isUserAdopter == false){
+        QPalette test;
+        test.setColor(QPalette::Button, QColor(140,0,0,255));
+        ui->likeButton->setText("like");
+        ui->dislikeButton->setText("X");
+        ui->dislikeButton->setPalette(test);
+        test.setColor(QPalette::Button, QColor(0,140,0,255));
+        ui->likeButton->setPalette(test);
+    } else {
+        ui->deleteButton->setVisible(true);
         QPalette test;
         test.setColor(QPalette::Button, QColor(0,140,0,255));
         ui->likeButton->setText("->");
         ui->dislikeButton->setText("<-");
         ui->dislikeButton->setPalette(test);
         ui->likeButton->setPalette(test);
-
     }
 }
 

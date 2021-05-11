@@ -24,6 +24,7 @@ public:
     explicit PetFinder(QWidget *parent = 0);
     ~PetFinder();
     void initialize();
+    void setup();
 
     Matchmaker *matchmaker;
     ProfilePage *profileWindow;

@@ -26,10 +26,17 @@ void HomeScreen::on_loginButton_clicked() {
     Adopter* userInfoAdopter = databaseManager->readInAdopter(username, password);
     //Checks if this adopter exists
     if(userInfoAdopter != nullptr) {
+        //Lets rest of gui know that user is an adopter
+        petWindow->isUserAdopter = true;
         //Passes adopter to database to begin matchmaking
         //petWindow->matchmaker->DatabaseInterface(username, password);
         //Passes adopter to profileWindow to display their info
         petWindow->profileWindow->userInfoAdopter = userInfoAdopter;
+
+        //Set up pet window
+        petWindow->setup();
+
+        //Change window to pet window
         this->hide();
         petWindow->showMaximized();
     } else {
@@ -37,8 +44,17 @@ void HomeScreen::on_loginButton_clicked() {
         Adoptee* userInfoAdoptee = databaseManager->readInAdoptee(username, password);
         //Tests if this adoptee exists
         if(userInfoAdoptee != nullptr) {
+            cout << "Adoptee Login Successful!" << endl;
+            //Lets rest of gui know that user is an adoptee
+            petWindow->isUserAdopter = false;
+
             //Passes adoptee to profileWindow to display their info
             petWindow->profileWindow->userInfoAdoptee = userInfoAdoptee;
+
+            //Set up pet window
+            petWindow->setup();
+
+            //Change window to pet window
             this->hide();
             petWindow->showMaximized();
         } else {
