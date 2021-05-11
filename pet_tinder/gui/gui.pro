@@ -31,7 +31,8 @@ SOURCES += \
     petlist.cpp \
     petfinder.cpp \
     messagescreen.cpp \
-    adopteeaddpet.cpp
+    adopteeaddpet.cpp \
+    preftab.cpp
 
 HEADERS += \
     homescreen.h \
@@ -39,7 +40,8 @@ HEADERS += \
     petlist.h \
     petfinder.h \
     messagescreen.h \
-    adopteeaddpet.h
+    adopteeaddpet.h \
+    preftab.h
 
 FORMS += \
     homescreen.ui \
@@ -47,7 +49,8 @@ FORMS += \
     petlist.ui \
     petfinder.ui \
     messagescreen.ui \
-    adopteeaddpet.ui
+    adopteeaddpet.ui \
+    preftab.ui
 
 HEADERS += ../matchmaking/matchmaker.h
 SOURCES += ../matchmaking/matchmaker.cpp

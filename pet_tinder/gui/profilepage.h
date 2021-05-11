@@ -5,13 +5,13 @@
 #include "petfinder.h"
 #include "petlist.h"
 #include "adopteeaddpet.h"
-
+#include "preftab.h"
 #include "../databasemanager/databasemanager.h"
 
 namespace Ui {
 class ProfilePage;
 }
-
+class PrefTab;
 class Screen;
 class PetFinder;
 class PetList;
@@ -27,7 +27,7 @@ public:
     Screen *scrptr;
     PetFinder *pfptr;
     PetList *plptr;
-
+    PrefTab *ptpnter;
     Adopter* userInfoAdopter;
     Adoptee* userInfoAdoptee;
 
@@ -41,6 +41,8 @@ private slots:
     void on_petListButton_clicked();
 
     void on_pushButton_2_clicked();
+
+    void on_PrefsButton_clicked();
 
 private:
     Ui::ProfilePage *ui;

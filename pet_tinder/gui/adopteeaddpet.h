@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QFileDialog>
 #include "petfinder.h"
-
+#include "../databasemanager/databasemanager.h"
 namespace Ui {
 class AdopteeAddPet;
 }

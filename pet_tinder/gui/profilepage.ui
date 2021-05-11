@@ -99,149 +99,23 @@
          </property>
         </widget>
        </item>
-       <item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="1" column="0">
+        <widget class="QPushButton" name="PrefsButton">
+         <property name="text">
+          <string>Prefs</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
         <widget class="QPushButton" name="pushButton_2">
          <property name="text">
           <string>AddPet</string>
          </property>
         </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QGridLayout" name="gridLayout_4">
-       <item row="4" column="0">
-        <widget class="QLabel" name="weightLabel">
-         <property name="text">
-          <string>Weight</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QComboBox" name="colorChoice"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="ageLabel">
-         <property name="text">
-          <string>Age</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QComboBox" name="speciesChoice"/>
-       </item>
-       <item row="7" column="1">
-        <widget class="QComboBox" name="sexChoice"/>
-       </item>
-       <item row="2" column="1">
-        <widget class="QComboBox" name="breedChoice"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="speciesLabel">
-         <property name="text">
-          <string>Species</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="breedLabel">
-         <property name="text">
-          <string>Breed</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="preferencesLabel">
-         <property name="text">
-          <string>Preferences</string>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="1">
-        <widget class="QComboBox" name="hypoallergenicChoice"/>
-       </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="hypoallergenicLabel">
-         <property name="text">
-          <string>Hypoallergenic</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="colorLabel">
-         <property name="text">
-          <string>Color</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="sexLabel">
-         <property name="text">
-          <string>Sex</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QCheckBox" name="checkBox">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2">
-        <widget class="QCheckBox" name="checkBox_2">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QCheckBox" name="checkBox_3">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="2">
-        <widget class="QCheckBox" name="checkBox_4">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="2">
-        <widget class="QCheckBox" name="checkBox_5">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="2">
-        <widget class="QCheckBox" name="checkBox_6">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="2">
-        <widget class="QCheckBox" name="checkBox_7">
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QLabel" name="requiredLabel">
-         <property name="text">
-          <string>Required?</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="1">
-        <widget class="QComboBox" name="ageChoice"/>
-       </item>
-       <item row="4" column="1">
-        <widget class="QComboBox" name="weightChoice"/>
        </item>
       </layout>
      </item>

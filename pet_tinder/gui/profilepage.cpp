@@ -8,6 +8,7 @@ ProfilePage::ProfilePage(QWidget *parent) :
         pfptr = NULL;
         plptr = NULL;
          aap = new AdopteeAddPet();
+         ptpnter = new PrefTab();
     }
 
 ProfilePage::~ProfilePage()
@@ -31,4 +32,10 @@ void ProfilePage::on_pushButton_2_clicked()
 {
     aap->pnter = pfptr;
     aap->show();
+}
+
+void ProfilePage::on_PrefsButton_clicked()
+{
+    ptpnter->pnter = pfptr;
+    ptpnter->show();
 }
