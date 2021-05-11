@@ -7,6 +7,7 @@ ProfilePage::ProfilePage(QWidget *parent) :
         ui->setupUi(this);
         pfptr = NULL;
         plptr = NULL;
+         aap = new AdopteeAddPet();
     }
 
 ProfilePage::~ProfilePage()
@@ -24,4 +25,10 @@ void ProfilePage::on_petListButton_clicked()
 {
     this->hide();
     plptr->showMaximized();
+}
+
+void ProfilePage::on_pushButton_2_clicked()
+{
+    aap->pnter = pfptr;
+    aap->show();
 }

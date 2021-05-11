@@ -30,11 +30,18 @@ public:
     PetList *petListWindow;
 
     bool isUserAdopter;
+    bool deleteClicked = false;
 
 private slots:
 
     void on_profileButton_clicked();
     void on_petListButton_clicked();
+
+    void on_deleteButton_clicked();
+
+    void on_likeButton_clicked();
+
+    void on_dislikeButton_clicked();
 
 private:
     Ui::PetFinder *ui;

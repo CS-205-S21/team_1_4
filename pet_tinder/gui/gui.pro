@@ -30,21 +30,24 @@ SOURCES += \
     profilepage.cpp \
     petlist.cpp \
     petfinder.cpp \
-    messagescreen.cpp
+    messagescreen.cpp \
+    adopteeaddpet.cpp
 
 HEADERS += \
     homescreen.h \
     profilepage.h \
     petlist.h \
     petfinder.h \
-    messagescreen.h
+    messagescreen.h \
+    adopteeaddpet.h
 
 FORMS += \
     homescreen.ui \
     profilepage.ui \
     petlist.ui \
     petfinder.ui \
-    messagescreen.ui
+    messagescreen.ui \
+    adopteeaddpet.ui
 
 HEADERS += ../matchmaking/matchmaker.h
 SOURCES += ../matchmaking/matchmaker.cpp
