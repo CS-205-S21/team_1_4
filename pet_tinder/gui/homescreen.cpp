@@ -8,6 +8,11 @@ HomeScreen::HomeScreen(QWidget *parent):QWidget(parent), ui(new Ui::HomeScreen) 
 
     username = "";
     password = "";
+
+    QImage img(":/claws.png");
+    QPixmap pic2;
+    pic2.convertFromImage(img.scaled(829, 786, Qt::KeepAspectRatio), 0);
+    ui->logo->setPixmap(pic2);
 }
 
 HomeScreen::~HomeScreen() {

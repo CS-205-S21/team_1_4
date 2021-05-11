@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>Duck_gui.jfif</file>
+        <file>claws.png</file>
     </qresource>
 </RCC>
