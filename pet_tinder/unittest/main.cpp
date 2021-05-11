@@ -76,7 +76,6 @@ TEST_F(DatabaseManager_Test, ADD_AND_REMOVE_PET) {
                     << "Pets should be back to original size.";
 }
 
-
 //This will not only test to make sure that the database can handle spaces between entries,
 //but will also test to make sure that two pets, with the same id will not both be added.
 TEST_F(DatabaseManager_Test, ADD_MULTIPLE_IDS) {
@@ -372,16 +371,13 @@ TEST_F(DatabaseManager_Test, ADD_SAME_ADOPTER_INFO) {
                         << "addison the adopter was not added.";
     ASSERT_EQ(numAdopters+1, dm->getNumAdopters())
                         << "Adopters should have one addition.";
-    //This test will crash the program, so it is commented out.
-    //It does not work because if the username and password already exists, it does not let that be tested.
-    //Maybe implement way to check if it is in there, then return false
-    /*ASSERT_FALSE(dm->addAdopter(copy, "Password"))
-                        << "Copy was added, but with the same info as addison.";*/
+    ASSERT_FALSE(dm->addAdopter(copy, "Password"))
+                        << "Copy was added, but with the same info as addison.";
     ASSERT_EQ(numAdopters+1, dm->getNumAdopters())
                         << "Adopters should have one addition.";
     ASSERT_TRUE(dm->removeAdopter(addison->username))
                         << "Addison the adopter should have been removed.";
-    ASSERT_TRUE(dm->removeAdopter(copy->username))
+    ASSERT_FALSE(dm->removeAdopter(copy->username))
                         << "Copy the adopter should not be able to be removed.";
     ASSERT_EQ(numAdopters, dm->getNumAdopters())
                         << "Adopters should be back to original size.";
@@ -429,7 +425,7 @@ TEST_F(DatabaseManager_Test, ADD_NONEXISTENT_ADOPTER) {
     Adopter *nonexistent = new Adopter;
     ASSERT_EQ(numAdopters, dm->getNumAdopters())
                         << "Adopters should have no additions.";
-    ASSERT_TRUE(dm->removeAdopter(nonexistent->username))
+    ASSERT_FALSE(dm->removeAdopter(nonexistent->username))
                         << "Nonexistent adopter should not have been added or removed.";
 }
 
@@ -472,7 +468,7 @@ TEST_F(DatabaseManager_Test, ADD_WEIRD_ADOPTER) {
 
 //This will test the read in adopter method
 TEST_F(DatabaseManager_Test, READ_IN_ADOPTER) {
-    Adopter *js;
+    Adopter *js = new Adopter;
     vector<int> likedPets;
     likedPets.push_back(1);
     vector<int> dislikedPets;
@@ -483,25 +479,25 @@ TEST_F(DatabaseManager_Test, READ_IN_ADOPTER) {
     js->likedPetIds = likedPets;
     js->dislikedPetIds = dislikedPets;
     js->prefSpecies = "Cat";
-    js->prefSpeciesReq = true;
+    js->prefSpeciesReq = 1;
     js->prefBreed = "Butter";
-    js->prefBreedReq = true;
+    js->prefBreedReq = 1;
     js->prefAge = 2;
-    js->prefAgeReq = false;
+    js->prefAgeReq = 0;
     js->prefWeight = 10.0;
-    js->prefWeightReq = false;
+    js->prefWeightReq = 0;
     js->prefColor = "Silver";
-    js->prefColorReq = true;
-    js->prefHypoallergenic = true;
-    js->prefHypoallergenicReq = false;
+    js->prefColorReq = 1;
+    js->prefHypoallergenic = 1;
+    js->prefHypoallergenicReq = 0;
     js->prefSex = "Female";
-    js->prefSexReq = true;
+    js->prefSexReq = 1;
 
-    ASSERT_TRUE(dm->addAdopter(*js, "ButterIsGorgeous72"))
+    ASSERT_TRUE(dm->addAdopter(js, "ButterIsGorgeous72"))
                         << "Justin Smith the adopter was not added.";
     ASSERT_EQ(numAdopters+1, dm->getNumAdopters())
                         << "Adopters should have one addition.";
-    ASSERT_EQ(js, dm->readInAdopter("Justin Smith", "ButterIsGorgeous72"))
+    ASSERT_EQ(js->username, dm->readInAdopter("Justin Smith", "ButterIsGorgeous72")->username)
                         << "Read in Adopter should return the same adopter";
     ASSERT_TRUE(dm->removeAdopter(js->username))
                         << "Justin Smith the adopter should have been removed.";
@@ -549,7 +545,7 @@ TEST_F(DatabaseManager_Test, ADD_SAME_ADOPTEE_INFO) {
     ASSERT_FALSE(dm->addAdoptee(copy, "Monke"))
                         << "Copy of apee the adoptee was added.";
     ASSERT_TRUE(dm->removeAdoptee(apee->username))
-                        << "Peta the adoptee should have been removed.";
+                        << "Apee the adoptee should have been removed.";
     ASSERT_EQ(numAdoptees, dm->getNumAdoptees())
                         << "Adoptees should be back to normal amount.";
 }
@@ -576,12 +572,8 @@ TEST_F(DatabaseManager_Test, ADD_EMPTY_ADOPTEE) {
 //This will test adding and removing a nonexistent adoptee in the table
 TEST_F(DatabaseManager_Test, ADD_NONEXISTENT_ADOPTEE) {
     Adoptee *happinessWhileWorkingOnCSWork = new Adoptee;
-    //Cannot add something that does not exist, but does not return false. It just crashes
-    //ASSERT_FALSE(dm->addAdoptee(happinessWhileWorkingOnCSWork, "Password"))
-                        //<< "This Does not exist.";
-    //It returns true even if the row does not exist
-    ASSERT_TRUE(dm->removeAdoptee(happinessWhileWorkingOnCSWork->username))
-                        << "If not true, delete did not work.";
+    ASSERT_FALSE(dm->removeAdoptee(happinessWhileWorkingOnCSWork->username))
+                        << "If not false, delete did not work.";
     ASSERT_EQ(numAdoptees, dm->getNumAdoptees())
                         << "Adoptees should be back to normal amount.";
 }
@@ -606,7 +598,7 @@ TEST_F(DatabaseManager_Test, ADD_WEIRD_ADOPTEE) {
 }
 
 //This will test the read in adoptee method
-/*TEST_F(DatabaseManager_Test, READ_IN_ADOPTEE) {
+TEST_F(DatabaseManager_Test, READ_IN_ADOPTEE) {
     Adoptee *butter = new Adoptee;
     vector<int> ownedPetIds;
     ownedPetIds.push_back(1);
@@ -622,7 +614,7 @@ TEST_F(DatabaseManager_Test, ADD_WEIRD_ADOPTEE) {
                         << "Read in Adoptee should return the same adoptee";
     ASSERT_TRUE(dm->removeAdoptee(butter->username))
                         << "Butter the adoptee should have been removed.";
-}*/
+}
 
 //*********************************************************************************************************************
 //*********************************************************************************************************************
@@ -637,5 +629,4 @@ TEST_F(DatabaseManager_Test, ADD_WEIRD_ADOPTEE) {
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
-    return 0;
 }

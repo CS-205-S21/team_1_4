@@ -49,57 +49,57 @@ void AdopteeAddPet::on_saveButton_clicked()
 
 void AdopteeAddPet::on_nameInput_textChanged(const QString &arg1)
 {
-    input.name = arg1.toStdString();
+    //input.name = arg1.toStdString();
 }
 
 void AdopteeAddPet::on_speciesInput_textChanged(const QString &arg1)
 {
-    input.species = arg1.toStdString();
+    //input.species = arg1.toStdString();
 }
 
 void AdopteeAddPet::on_breedInput_textChanged(const QString &arg1)
 {
-    input.breed = arg1.toStdString();
+    //input.breed = arg1.toStdString();
 }
 
 void AdopteeAddPet::on_ageInput_textChanged(const QString &arg1)
 {
-    input.age =  arg1.toInt();
+    //input.age =  arg1.toInt();
 
 }
 
 void AdopteeAddPet::on_weightInput_textChanged(const QString &arg1)
 {
-    input.weight = arg1.toDouble();
+    //input.weight = arg1.toDouble();
 }
 
 void AdopteeAddPet::on_colorInput_textChanged(const QString &arg1)
 {
-    input.color = arg1.toStdString();
+    //input.color = arg1.toStdString();
 }
 
 
 void AdopteeAddPet::on_comboBox_currentIndexChanged(int index)
 {
-    if(index == 0){
+    /*if(index == 0){
         input.hypoallergenic = true;
     }
     else{
         input.hypoallergenic = false;
-    }
+    }*/
 }
 
 void AdopteeAddPet::on_comboBox_2_currentIndexChanged(int index)
 {
-    if(index == 0){
+    /*if(index == 0){
         input.sex = "male";
     }
     else{
         input.sex = "female";
-    }
+    }*/
 }
 
 void AdopteeAddPet::on_bioBox_textChanged(const QString &arg1)
 {
-    input.bio = arg1.toStdString();
+    //input.bio = arg1.toStdString();
 }
