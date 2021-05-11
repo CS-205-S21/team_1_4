@@ -59,9 +59,9 @@ public:
 
     DatabaseManager *DM;
     Adopter *currentUser;
-    vector<Pet> sortablePets;
+    vector<Pet> *sortablePets;
     vector<int> discardedPetIds;
-    vector<Pet> Queue;
+    vector<Pet> *Queue;
     AllPrefs total;
 };
 

@@ -3,12 +3,12 @@
 
 //creates an instance of the database
 Matchmaker::Matchmaker(){
-    //DM = new DatabaseManager();
-    //innit();
+    DM = new DatabaseManager();
+    innit();
 
 
 
-}/*
+}
 //reads in pets to the correct areas
 void Matchmaker::innit(){
     DM->readInPets();
@@ -24,58 +24,58 @@ vector<Pet> Matchmaker::DatabaseInterface(string username, string password){
 
     //cycles through all pets to find pets that match preferences and adds them to the queue
      //continue breaks loop and is triggers for when a pet doesnt match a hard preference
-     for(int i = 0; i < (int)sortablePets.size(); i++){
+     for(int i = 0; i < (int)sortablePets->size(); i++){
 
          if(currentUser->prefSpeciesReq == true){
-             if(currentUser->prefSpecies != sortablePets.at(i).species){
+             if(currentUser->prefSpecies != sortablePets->at(i).species){
                  continue;
              }
          }
          if(currentUser->prefBreedReq == true){
-             if(currentUser->prefBreed != sortablePets.at(i).breed){
+             if(currentUser->prefBreed != sortablePets->at(i).breed){
                  continue;
              }
          }
          if(currentUser->prefAgeReq == true){
-             if(currentUser->prefAge != sortablePets.at(i).age){
+             if(currentUser->prefAge != sortablePets->at(i).age){
                  continue;
              }
          }
          if(currentUser->prefWeightReq == true){
-             if(currentUser->prefWeight != sortablePets.at(i).weight){
+             if(currentUser->prefWeight != sortablePets->at(i).weight){
                  continue;
              }
          }
          if(currentUser->prefColorReq == true){
-             if(currentUser->prefColor != sortablePets.at(i).color){
+             if(currentUser->prefColor != sortablePets->at(i).color){
                  continue;
              }
          }
          if(currentUser->prefHypoallergenicReq == true){
-             if(currentUser->prefHypoallergenic != sortablePets.at(i).hypoallergenic){
+             if(currentUser->prefHypoallergenic != sortablePets->at(i).hypoallergenic){
                  continue;
              }
          }
          if(currentUser->prefSexReq == true){
-             if(currentUser->prefSex != sortablePets.at(i).sex){
+             if(currentUser->prefSex != sortablePets->at(i).sex){
                  continue;
              }
          }
          else{
-             Queue.push_back(sortablePets.at(i));
+             Queue->push_back(sortablePets->at(i));
          }
      }
 
-     if(Queue.size() != 0){
-         return Queue;
+     if(Queue->size() != 0){
+         return *Queue;
      }
      //if the queue is empty creates an error pet (just populates current fields to save time"
      else{
          Pet *error;
         error->name = "No more pets matching current preferences";
         error->color = "Please adjust preferences to see more potential pets";
-         Queue.push_back(*error);
-         return Queue;
+         Queue->push_back(*error);
+         return *Queue;
      }
 }
 //re reads in pets and creates a list of all non liked/ disliked pets for database interface
@@ -101,14 +101,14 @@ void Matchmaker::refreshPetList(){
     for(int j = 0; j < DM->getNumPets(); j++){
         int flag = 0;
         for(int k = 0; k < (int)discardedPetIds.size(); k++){
-            if(DM->pets.at(j).id == discardedPetIds.at(k)) {
+            if(DM->pets.at(j)->id == discardedPetIds.at(k)) {
                 flag =1;
             }
              else{
             }
         }
         if(flag == 0){
-            sortablePets.push_back(DM->pets.at(j));
+            sortablePets->push_back(*DM->pets.at(j));
         }
         else{
 
@@ -120,86 +120,86 @@ void Matchmaker::refreshPetList(){
 void Matchmaker::sortPrefs(){
 
 
-    total.species.push_back(DM->pets.at(0).species);
+    total.species.push_back(DM->pets.at(0)->species);
     for(int i = 0; i < DM->getNumPets(); i++){
             int flag = 0;
             for(int j = 0; j< (int)total.species.size(); j++){
-                if(DM->pets.at(i).species != total.species.at(j)){
+                if(DM->pets.at(i)->species != total.species.at(j)){
                     flag++;
                 }
                 else{
                 }
             }
             if(flag == (int)total.species.size()-1){
-                total.species.push_back(DM->pets.at(i).species);
+                total.species.push_back(DM->pets.at(i)->species);
             }
             else{
             }
         }
 
-    total.breeds.push_back(DM->pets.at(0).breed);
+    total.breeds.push_back(DM->pets.at(0)->breed);
     for(int i = 0; i < DM->getNumPets(); i++){
             int flag = 0;
             for(int j = 0; j< (int)total.breeds.size(); j++){
-                if(DM->pets.at(i).breed != total.breeds.at(j)){
+                if(DM->pets.at(i)->breed != total.breeds.at(j)){
                     flag++;
                 }
                 else{
                 }
             }
             if(flag == (int)total.breeds.size()-1){
-                total.breeds.push_back(DM->pets.at(i).breed);
+                total.breeds.push_back(DM->pets.at(i)->breed);
             }
             else{
             }
         }
 
-    total.ages.push_back(DM->pets.at(0).age);
+    total.ages.push_back(DM->pets.at(0)->age);
     for(int i = 0; i < DM->getNumPets(); i++){
             int flag = 0;
             for(int j = 0; j< (int)total.ages.size(); j++){
-                if(DM->pets.at(i).age != total.ages.at(j)){
+                if(DM->pets.at(i)->age != total.ages.at(j)){
                     flag++;
                 }
                 else{
                 }
             }
             if(flag == (int)total.ages.size()-1){
-                total.ages.push_back(DM->pets.at(i).age);
+                total.ages.push_back(DM->pets.at(i)->age);
             }
             else{
             }
         }
 
-    total.weights.push_back(DM->pets.at(0).weight);
+    total.weights.push_back(DM->pets.at(0)->weight);
     for(int i = 0; i < DM->getNumPets(); i++){
             int flag = 0;
             for(int j = 0; j< (int)total.weights.size(); j++){
-                if(DM->pets.at(i).weight != total.weights.at(j)){
+                if(DM->pets.at(i)->weight != total.weights.at(j)){
                     flag++;
                 }
                 else{
                 }
             }
             if(flag == (int)total.weights.size()-1){
-                total.weights.push_back(DM->pets.at(i).weight);
+                total.weights.push_back(DM->pets.at(i)->weight);
             }
             else{
             }
         }
 
-    total.colors.push_back(DM->pets.at(0).color);
+    total.colors.push_back(DM->pets.at(0)->color);
     for(int i = 0; i < DM->getNumPets(); i++){
             int flag = 0;
             for(int j = 0; j< (int)total.colors.size(); j++){
-                if(DM->pets.at(i).color != total.colors.at(j)){
+                if(DM->pets.at(i)->color != total.colors.at(j)){
                     flag++;
                 }
                 else{
                 }
             }
             if(flag == (int)total.colors.size()-1){
-                total.colors.push_back(DM->pets.at(i).color);
+                total.colors.push_back(DM->pets.at(i)->color);
             }
             else{
             }
@@ -215,4 +215,4 @@ void Matchmaker::arrangePrefs(){
     sort(total.weights.begin(),total.weights.end());
 
 
-}*/
+}
