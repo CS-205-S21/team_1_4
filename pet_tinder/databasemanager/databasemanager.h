@@ -28,19 +28,19 @@ struct Adopter {
     vector<int> dislikedPetIds;
 
     string prefSpecies;
-    bool prefSpeciesReq;
+    int prefSpeciesReq;
     string prefBreed;
-    bool prefBreedReq;
+    int prefBreedReq;
     int prefAge;
-    bool prefAgeReq;
+    int prefAgeReq;
     double prefWeight;
-    bool prefWeightReq;
+    int prefWeightReq;
     string prefColor;
-    bool prefColorReq;
-    bool prefHypoallergenic;
-    bool prefHypoallergenicReq;
+    int prefColorReq;
+    int prefHypoallergenic;
+    int prefHypoallergenicReq;
     string prefSex;
-    bool prefSexReq;
+    int prefSexReq;
 };
 struct Adoptee {
     string username;
@@ -131,7 +131,7 @@ public:
      * @param p - the adopter (pref) that will be added to the database.
      * @return True or false depending on if the adopter was successfully added.
      */
-    bool addAdopter(Adopter p, string password);
+    bool addAdopter(Adopter *p, string password);
 
     /**
      * @brief removeAdopter - Removes an adopter from the database of adopters
@@ -145,7 +145,7 @@ public:
      * @param p - the adoptee that will be added to the database.
      * @return True or false depending on if the adoptee was successfully added.
      */
-    bool addAdoptee(Adoptee p, string password);
+    bool addAdoptee(Adoptee *p, string password);
 
     /**
      * @brief removeAdoptee - Removes an adoptee from the database of adoptees

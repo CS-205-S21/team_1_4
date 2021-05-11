@@ -96,18 +96,18 @@ Adopter* DatabaseManager::readInAdopter(string username, string password) {
     }
 }
 
+//WARNING: THIS DOES NOT WORK
 Adoptee* DatabaseManager::readInAdoptee(string username, string password) {
     //Prepares username and password for use in query
-    QString qUsername;
-    qUsername.fromStdString(username);
-    QString qPassword;
-    qPassword.fromStdString(password);
+    QString qUsername = QString::fromStdString(username);
+    QString qPassword = QString::fromStdString(password);
 
     //Prepares a query that will read in all pets ordered by id.
     QSqlQuery query;
-    query.prepare("SELECT usernameAdoptee, group, petIds, "
-                  "WHERE usernameAdoptee = '" + qUsername + "' AND password = '" + qPassword + "';");
-
+    query.prepare("SELECT usernameAdoptee, shelter, petIds FROM adoptee"
+                  "WHERE (usernameAdoptee = :usernameAdoptee AND password = :password);");
+    query.bindValue(":usernameAdoptee", qUsername);
+    query.bindValue(":password", qPassword);
     if(query.exec()) {
         //Creates and fills info struct
         Adoptee *adoptee = new Adoptee;
@@ -117,8 +117,8 @@ Adoptee* DatabaseManager::readInAdoptee(string username, string password) {
 
         return adoptee; //Returns adoptee struct
     } else {
-        cout << "Error: Adoptee does not exist\n";
-        return nullptr;
+         qDebug() << "Read Adoptee Error" << query.lastError();
+         return nullptr;
     }
 }
 
@@ -150,13 +150,16 @@ int DatabaseManager::getNumAdopters() {
     //Prepares a query to run in Sql
     //Finds number of unique usernames in the adopter database
     QSqlQuery query;
-    query.prepare("SELECT COUNT(usernameAdopter) FROM adopter;");
+    query.prepare("SELECT COUNT (*) FROM adopter;");
+    int rowCount = 0;
 
     if(query.exec()) {
-        //Returns value found
-        return query.value(0).toInt();
+        if(query.first()){
+            rowCount = query.value(0).toInt();
+        }
+        return rowCount;
     }
-    cout << "Error: Cannot find number of adopters, you really screwed the pooch on this one\n";
+    cout << "Error: Cannot find number of adopters\n";
     return -1;
 }
 
@@ -165,13 +168,16 @@ int DatabaseManager::getNumAdoptees() {
     //Prepares a query to run in Sql
     //Finds number of unique usernames in the adoptee database
     QSqlQuery query;
-    query.prepare("SELECT COUNT(usernameAdoptee) FROM adoptee;");
+    query.prepare("SELECT COUNT (*) FROM adoptee;");
+    int rowCount = 0;
 
     if(query.exec()) {
-        //Returns value found
-        return query.value(0).toInt();
+        if(query.first()){
+            rowCount = query.value(0).toInt();
+        }
+        return rowCount;
     }
-    cout << "Error: Cannot find number of adoptees, you really screwed the pooch on this one\n";
+    cout << "Error: Cannot find number of adoptees\n";
     return -1;
 }
 
@@ -210,7 +216,6 @@ bool DatabaseManager::addPet(Pet *pet) {
         q.bindValue(":bio", bio);
     if(q.exec()){
         pets.push_back(pet); //Adds pet struct to pets vector
-        q.next();
         return true;
     } else {
         qDebug() << "Add Pet Error" << q.lastError();
@@ -234,52 +239,60 @@ bool DatabaseManager::removePet(int petId) {
             }
         }
     }
-    qDebug() << "Remove Pet Error" << q.lastError();
     return false;
 }
 
 //Adds an adopter to the database of adopters, using the pref struct
-bool DatabaseManager::addAdopter(Adopter a, string password) {
+bool DatabaseManager::addAdopter(Adopter *a, string password) {
     //Prepares a query that inserts given adopter
     QSqlQuery q;
         q.prepare("INSERT INTO adopter (usernameAdopter, password,"
                   "likedPetIds, dislikedPetIds,"
                   "prefSpecies, prefSpeciesReq,"
-                  "prefBreed, prefBreedReq, prefAge, prefAgeReq"
-                  "prefWeight, prefWeightReq, prefColor, prefColorReq"
+                  "prefBreed, prefBreedReq, prefAge, prefAgeReq,"
+                  "prefWeight, prefWeightReq, prefColor, prefColorReq,"
                   "prefHypoallergenic, prefHypoallergenicReq,"
                   "prefSex, prefSexReq)"
-                  "VALUES :usernameAdopter, :password,"
+                  "VALUES (:usernameAdopter, :password,"
                   ":likedPetIds, :dislikedPetIds,"
                   ":prefSpecies, :prefSpeciesReq,"
-                  ":prefBreed, :prefBreedReq, :prefAge, :prefAgeReq"
-                  ":prefWeight, :prefWeightReq, :prefColor, :prefColorReq"
+                  ":prefBreed, :prefBreedReq, :prefAge, :prefAgeReq,"
+                  ":prefWeight, :prefWeightReq, :prefColor, :prefColorReq,"
                   ":prefHypoallergenic, :prefHypoallergenicReq,"
-                  ":prefSex, :prefSexReq)");
-        QString username = QString::fromStdString(a.username);
-        q.bindValue(":usernameAdopter", username);
+                  ":prefSex, :prefSexReq);");
+        QString qUsername = QString::fromStdString(a->username);
+        q.bindValue(":usernameAdopter", qUsername);
+
         QString qPassword = QString::fromStdString(password);
         q.bindValue(":password", qPassword);
-        q.bindValue(":likedPetIds", intVectorToQString(a.likedPetIds));
-        q.bindValue(":dislikedPetIds", intVectorToQString(a.dislikedPetIds));
-        QString prefSpecies = QString::fromStdString(a.prefSpecies);
-        q.bindValue(":prefSpecies", prefSpecies);
-        q.bindValue(":prefSpeciesReq", a.prefSpeciesReq);
-        QString prefBreed = QString::fromStdString(a.prefBreed);
-        q.bindValue(":prefBreed", prefBreed);
-        q.bindValue(":prefBreedReq", a.prefBreedReq);
-        q.bindValue(":prefAge", a.prefAge);
-        q.bindValue(":prefAgeReq", a.prefAgeReq);
-        q.bindValue(":prefWeight", a.prefWeight);
-        q.bindValue(":prefWeightReq", a.prefWeightReq);
-        QString prefColor = QString::fromStdString(a.prefColor);
-        q.bindValue(":prefColor", prefColor);
-        q.bindValue(":prefColorReq", a.prefColorReq);
-        q.bindValue(":prefHypoallergenic", a.prefHypoallergenic);
-        q.bindValue(":prefHypoallergenicReq", a.prefHypoallergenicReq);
-        QString prefSex = QString::fromStdString(a.prefSex);
-        q.bindValue(":prefSex", prefSex);
-        q.bindValue(":prefSexReq", a.prefSexReq);
+
+        q.bindValue(":likedPetIds", intVectorToQString(a->likedPetIds));
+        q.bindValue(":dislikedPetIds", intVectorToQString(a->dislikedPetIds));
+
+        QString qPrefSpecies = QString::fromStdString(a->prefSpecies);
+        q.bindValue(":prefSpecies", qPrefSpecies);
+        q.bindValue(":prefSpeciesReq", a->prefSpeciesReq);
+
+        QString qPrefBreed = QString::fromStdString(a->prefBreed);
+        q.bindValue(":prefBreed", qPrefBreed);
+        q.bindValue(":prefBreedReq", a->prefBreedReq);
+
+        q.bindValue(":prefAge", a->prefAge);
+        q.bindValue(":prefAgeReq", a->prefAgeReq);
+
+        q.bindValue(":prefWeight", a->prefWeight);
+        q.bindValue(":prefWeightReq", a->prefWeightReq);
+
+        QString qPrefColor = QString::fromStdString(a->prefColor);
+        q.bindValue(":prefColor", qPrefColor);
+        q.bindValue(":prefColorReq", a->prefColorReq);
+
+        q.bindValue(":prefHypoallergenic", a->prefHypoallergenic);
+        q.bindValue(":prefHypoallergenicReq", a->prefHypoallergenicReq);
+
+        QString qPrefSex = QString::fromStdString(a->prefSex);
+        q.bindValue(":prefSex", qPrefSex);
+        q.bindValue(":prefSexReq", a->prefSexReq);
     if(q.exec()) {
         return true;
     } else {
@@ -290,8 +303,7 @@ bool DatabaseManager::addAdopter(Adopter a, string password) {
 
 //Removes an adopter from the database of adopters
 bool DatabaseManager::removeAdopter(string username) {
-    QString qUsername;
-    qUsername.fromStdString(username);
+    QString qUsername = QString::fromStdString(username);
 
     QSqlQuery q;
     q.prepare("DELETE FROM adopter WHERE usernameAdopter = (:usernameAdopter);");
@@ -304,31 +316,33 @@ bool DatabaseManager::removeAdopter(string username) {
 }
 
 //Adds an "adoptee" to the database of adoptees, using the adoptee info struct
-bool DatabaseManager::addAdoptee(Adoptee a, string password) {
+bool DatabaseManager::addAdoptee(Adoptee *a, string password) {
     //Prepares a query that inserts given adoptee
     QSqlQuery q;
         q.prepare("INSERT INTO adoptee (usernameAdoptee, password, shelter, petIds)"
                   "VALUES (:usernameAdoptee, :password, :shelter, :petIds);");
-        QString username = QString::fromStdString(a.username);
-        q.bindValue(":usernameAdopter", username);
+        QString username = QString::fromStdString(a->username);
+        q.bindValue(":usernameAdoptee", username);
         QString qPassword = QString::fromStdString(password);
         q.bindValue(":password", qPassword);
-        QString shelter = QString::fromStdString(a.shelter);
+        QString shelter = QString::fromStdString(a->shelter);
         q.bindValue(":shelter", shelter);
-        q.bindValue(":petIds", intVectorToQString(a.ownedPetIds));
+        q.bindValue(":petIds", intVectorToQString(a->ownedPetIds));
     if(q.exec()) {
         return true;
+    } else {
+        qDebug() << "Add Adoptee Error" << q.lastError();
+        return false;
     }
-    return false;
 }
 
 //Removes an adoptee from the database of adoptees
 bool DatabaseManager::removeAdoptee(string username) {
-    QString qUsername;
-    qUsername.fromStdString(username);
+    QString qUsername = QString::fromStdString(username);
 
     QSqlQuery q;
-    q.prepare("DELETE FROM adoptee WHERE usernameAdoptee = \"" + qUsername + "\";");
+    q.prepare("DELETE FROM adoptee WHERE usernameAdoptee = (:usernameAdoptee);");
+    q.bindValue(":usernameAdoptee", qUsername);
 
     if(q.exec()) {
         return true;
