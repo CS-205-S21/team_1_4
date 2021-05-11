@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>623</width>
-    <height>417</height>
+    <width>727</width>
+    <height>508</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -337,7 +337,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,3,0">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="3,0">
+       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="3,0,0">
         <item>
          <widget class="QLabel" name="animalImage">
           <property name="sizePolicy">
@@ -366,6 +366,13 @@
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="deleteWarning">
+          <property name="text">
+           <string/>
           </property>
          </widget>
         </item>
@@ -412,6 +419,50 @@
             </property>
             <property name="text">
              <string>X</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="deleteButton">
+            <property name="palette">
+             <palette>
+              <active>
+               <colorrole role="Button">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
+                  <red>140</red>
+                  <green>0</green>
+                  <blue>0</blue>
+                 </color>
+                </brush>
+               </colorrole>
+              </active>
+              <inactive>
+               <colorrole role="Button">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
+                  <red>140</red>
+                  <green>0</green>
+                  <blue>0</blue>
+                 </color>
+                </brush>
+               </colorrole>
+              </inactive>
+              <disabled>
+               <colorrole role="Button">
+                <brush brushstyle="SolidPattern">
+                 <color alpha="255">
+                  <red>140</red>
+                  <green>0</green>
+                  <blue>0</blue>
+                 </color>
+                </brush>
+               </colorrole>
+              </disabled>
+             </palette>
+            </property>
+            <property name="text">
+             <string>Delete</string>
             </property>
            </widget>
           </item>
@@ -476,8 +527,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>251</width>
-           <height>336</height>
+           <width>303</width>
+           <height>427</height>
           </rect>
          </property>
          <widget class="QLabel" name="animalCustomBio">
@@ -536,9 +587,9 @@ Bio: What time does a duck wake up in the morning? At the quack of dawn! bgtdg t
              <colorrole role="Button">
               <brush brushstyle="SolidPattern">
                <color alpha="255">
-                <red>0</red>
+                <red>50</red>
                 <green>85</green>
-                <blue>0</blue>
+                <blue>19</blue>
                </color>
               </brush>
              </colorrole>
@@ -547,9 +598,9 @@ Bio: What time does a duck wake up in the morning? At the quack of dawn! bgtdg t
              <colorrole role="Button">
               <brush brushstyle="SolidPattern">
                <color alpha="255">
-                <red>0</red>
+                <red>50</red>
                 <green>85</green>
-                <blue>0</blue>
+                <blue>19</blue>
                </color>
               </brush>
              </colorrole>
@@ -558,9 +609,9 @@ Bio: What time does a duck wake up in the morning? At the quack of dawn! bgtdg t
              <colorrole role="Button">
               <brush brushstyle="SolidPattern">
                <color alpha="255">
-                <red>0</red>
+                <red>50</red>
                 <green>85</green>
-                <blue>0</blue>
+                <blue>19</blue>
                </color>
               </brush>
              </colorrole>
@@ -597,9 +648,9 @@ Bio: What time does a duck wake up in the morning? At the quack of dawn! bgtdg t
              <colorrole role="Button">
               <brush brushstyle="SolidPattern">
                <color alpha="255">
-                <red>47</red>
-                <green>79</green>
-                <blue>47</blue>
+                <red>38</red>
+                <green>59</green>
+                <blue>18</blue>
                </color>
               </brush>
              </colorrole>
@@ -608,9 +659,9 @@ Bio: What time does a duck wake up in the morning? At the quack of dawn! bgtdg t
              <colorrole role="Button">
               <brush brushstyle="SolidPattern">
                <color alpha="255">
-                <red>47</red>
-                <green>79</green>
-                <blue>47</blue>
+                <red>38</red>
+                <green>59</green>
+                <blue>18</blue>
                </color>
               </brush>
              </colorrole>
@@ -619,9 +670,9 @@ Bio: What time does a duck wake up in the morning? At the quack of dawn! bgtdg t
              <colorrole role="Button">
               <brush brushstyle="SolidPattern">
                <color alpha="255">
-                <red>47</red>
-                <green>79</green>
-                <blue>47</blue>
+                <red>38</red>
+                <green>59</green>
+                <blue>18</blue>
                </color>
               </brush>
              </colorrole>
@@ -655,9 +706,9 @@ Bio: What time does a duck wake up in the morning? At the quack of dawn! bgtdg t
              <colorrole role="Button">
               <brush brushstyle="SolidPattern">
                <color alpha="255">
-                <red>0</red>
+                <red>50</red>
                 <green>85</green>
-                <blue>0</blue>
+                <blue>19</blue>
                </color>
               </brush>
              </colorrole>
@@ -666,9 +717,9 @@ Bio: What time does a duck wake up in the morning? At the quack of dawn! bgtdg t
              <colorrole role="Button">
               <brush brushstyle="SolidPattern">
                <color alpha="255">
-                <red>0</red>
+                <red>50</red>
                 <green>85</green>
-                <blue>0</blue>
+                <blue>19</blue>
                </color>
               </brush>
              </colorrole>
@@ -677,9 +728,9 @@ Bio: What time does a duck wake up in the morning? At the quack of dawn! bgtdg t
              <colorrole role="Button">
               <brush brushstyle="SolidPattern">
                <color alpha="255">
-                <red>0</red>
+                <red>50</red>
                 <green>85</green>
-                <blue>0</blue>
+                <blue>19</blue>
                </color>
               </brush>
              </colorrole>
@@ -921,7 +972,7 @@ Bio: What time does a duck wake up in the morning? At the quack of dawn! bgtdg t
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>623</width>
+     <width>727</width>
      <height>20</height>
     </rect>
    </property>

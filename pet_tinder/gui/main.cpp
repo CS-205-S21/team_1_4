@@ -1,6 +1,7 @@
 #include "petfinder.h"
 #include "homescreen.h"
 #include <QApplication>
+#include "adopteeaddpet.h"
 
 int main(int argc, char *argv[])
 {

@@ -8,6 +8,11 @@ HomeScreen::HomeScreen(QWidget *parent):QWidget(parent), ui(new Ui::HomeScreen) 
 
     username = "";
     password = "";
+
+    QImage img(":/claws.png");
+    QPixmap pic2;
+    pic2.convertFromImage(img.scaled(829, 786, Qt::KeepAspectRatio), 0);
+    ui->logo->setPixmap(pic2);
 }
 
 HomeScreen::~HomeScreen() {
@@ -15,32 +20,34 @@ HomeScreen::~HomeScreen() {
 }
 
 void HomeScreen::on_loginButton_clicked() {
-    cout << username << endl;
-    cout << password << endl;
-    //Tests if user in an adopter
-    Adopter* userInfoAdopter = petWindow->matchmaker->DM->readInAdopter(username, password);
-    //Checks if this adopter exists
-    if(userInfoAdopter != nullptr) {
+      this->hide();
+    petWindow->showMaximized();
+//    cout << username << endl;
+//    cout << password << endl;
+//    //Tests if user in an adopter
+//    Adopter* userInfoAdopter = petWindow->matchmaker->DM->readInAdopter(username, password);
+//    //Checks if this adopter exists
+//    if(userInfoAdopter != nullptr) {
 
-        //Passes adopter to database to begin matchmaking
-        //petWindow->matchmaker->DatabaseInterface(username, password);
-        //Passes adopter to profileWindow to display their info
-        petWindow->profileWindow->userInfoAdopter = userInfoAdopter;
-        this->hide();
-        petWindow->showMaximized();
-    } else {
-        //Tests if user in an adoptee
-        Adoptee* userInfoAdoptee = petWindow->matchmaker->DM->readInAdoptee(username, password);
-        //Tests if this adoptee exists
-        if(userInfoAdoptee != nullptr) {
-            //Passes adoptee to profileWindow to display their info
-            petWindow->profileWindow->userInfoAdoptee = userInfoAdoptee;
-            this->hide();
-            petWindow->showMaximized();
-        } else {
-            cout << "Login failed!" << endl; //DISPLAY ON SCREEN LATER
-        }
-    }
+//        //Passes adopter to database to begin matchmaking
+//        //petWindow->matchmaker->DatabaseInterface(username, password);
+//        //Passes adopter to profileWindow to display their info
+//        petWindow->profileWindow->userInfoAdopter = userInfoAdopter;
+//        this->hide();
+//        petWindow->showMaximized();
+//    } else {
+//        //Tests if user in an adoptee
+//        Adoptee* userInfoAdoptee = petWindow->matchmaker->DM->readInAdoptee(username, password);
+//        //Tests if this adoptee exists
+//        if(userInfoAdoptee != nullptr) {
+//            //Passes adoptee to profileWindow to display their info
+//            petWindow->profileWindow->userInfoAdoptee = userInfoAdoptee;
+//            this->hide();
+//            petWindow->showMaximized();
+//        } else {
+//            cout << "Login failed!" << endl; //DISPLAY ON SCREEN LATER
+//        }
+//    }
 }
 
 void HomeScreen::on_usernameInput_textEdited(const QString &arg1) {

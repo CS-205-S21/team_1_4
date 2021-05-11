@@ -18,9 +18,21 @@ void PetFinder::initialize() {
     QPixmap pic;
     pic.convertFromImage(img.scaled(200, 300, Qt::KeepAspectRatio), 0);
     ui->animalImage->setPixmap(pic);
-    matchmaker = new Matchmaker();
 
-    isUserAdopter = true;
+    isUserAdopter = false;
+    ui->homeButton->setEnabled(false);
+    if(isUserAdopter == true){
+        ui->deleteButton->setVisible(false);
+    }
+    if(isUserAdopter == false){
+        QPalette test;
+        test.setColor(QPalette::Button, QColor(0,140,0,255));
+        ui->likeButton->setText("->");
+        ui->dislikeButton->setText("<-");
+        ui->dislikeButton->setPalette(test);
+        ui->likeButton->setPalette(test);
+
+    }
 }
 
 PetFinder::~PetFinder() {
@@ -36,4 +48,56 @@ void PetFinder::on_profileButton_clicked() {
 void PetFinder::on_petListButton_clicked() {
     this->hide();
     petListWindow->showMaximized();
+}
+
+void PetFinder::on_deleteButton_clicked()
+{
+    deleteClicked = true;
+   // ui->deleteButton->setEnabled(false);
+    ui->deleteButton->setVisible(false);
+    ui->deleteWarning->setText("Are you sure you want to delete this pet?");
+    QPalette test;
+    test.setColor(QPalette::Button, QColor(0,140,0,255));
+    ui->dislikeButton->setText("NO");
+    ui->dislikeButton->setPalette(test);
+    test.setColor(QPalette::Button, QColor(140,0,0,255));
+    ui->likeButton->setPalette(test);
+     ui->likeButton->setText("YES");
+
+}
+
+void PetFinder::on_likeButton_clicked()
+{
+    if(deleteClicked == true){
+      ui->deleteWarning->setText("");
+   //  ui->deleteButton->setEnabled(true);
+     ui->deleteButton->setVisible(true);
+       QPalette test;
+      test.setColor(QPalette::Button, QColor(0,140,0,255));
+      ui->likeButton->setText("->");
+      ui->dislikeButton->setText("<-");
+      ui->dislikeButton->setPalette(test);
+      ui->likeButton->setPalette(test);
+
+      deleteClicked = false;
+    }
+
+}
+
+void PetFinder::on_dislikeButton_clicked()
+{
+    if(deleteClicked == true){
+         ui->deleteWarning->setText("");
+       // ui->deleteButton->setEnabled(true);
+        ui->deleteButton->setVisible(true);
+        QPalette test;
+       test.setColor(QPalette::Button, QColor(0,140,0,255));
+       ui->likeButton->setText("->");
+       ui->dislikeButton->setText("<-");
+       ui->dislikeButton->setPalette(test);
+       ui->likeButton->setPalette(test);
+
+        deleteClicked = false;
+
+    }
 }
