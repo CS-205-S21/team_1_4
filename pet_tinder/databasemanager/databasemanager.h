@@ -173,6 +173,8 @@ public:
      */
     QString intVectorToQString(vector<int> vec);
 
+    vector<string> messageParse(string message);
+
     int getPetIdMax();
 
 private:

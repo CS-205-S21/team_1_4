@@ -34,7 +34,7 @@ void DatabaseManager::readInPets() {
             pet.age = query.value("age").toInt();
             pet.weight = query.value("weight").toDouble();
             pet.color = query.value("color").toString().toStdString();
-            pet.hypoallergenic = query.value("hypoallergenic").toBool();
+            pet.hypoallergenic = query.value("hypoallergenic").toInt();
             pet.sex = query.value("sex").toString().toStdString();
             pet.bio = query.value("bio").toString().toStdString();
 
@@ -463,6 +463,18 @@ QString DatabaseManager::intVectorToQString(vector<int> vec) {
         str += " " + str.fromStdString(to_string(vec.at(i)));
     }
     return str;
+}
+
+vector<string> DatabaseManager::messageParse(string message) {
+    string delimeterSender = ":";
+    string delimeterEndMessage = "|";
+
+    while(message.length() > 0) {
+        string senderReciever = message.substr(0, message.find(delimeterSender));
+        cout << senderReciever << endl;
+        message.erase(0, message.find(delimeterSender));
+        if(senderReciever == "S");
+    }
 }
 
 int DatabaseManager::getPetIdMax() {
