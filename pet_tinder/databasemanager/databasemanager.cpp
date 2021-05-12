@@ -210,6 +210,7 @@ int DatabaseManager::getNumAdoptees() {
 
 //Adds a pet to the database of pets and to the vector pf pets
 bool DatabaseManager::addPet(Pet *pet) {
+    cout<<pet->name<<" Has been added"<<endl;
     petIdMax++;
     pet->id = petIdMax; //Sets given pet's id to max id + 1
     //cout << pet->id << std::endl;

@@ -16,7 +16,7 @@ class AdopteeAddPet : public QWidget
 public:
     explicit AdopteeAddPet(QWidget *parent = 0);
     ~AdopteeAddPet();
-    //Pet input;
+    Pet *input = new Pet;
     PetFinder *pnter;
 private slots:
     void on_btn_image_clicked();
