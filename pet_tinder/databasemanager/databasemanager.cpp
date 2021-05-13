@@ -210,22 +210,26 @@ int DatabaseManager::getNumAdoptees() {
 
 //Adds a pet to the database of pets and to the vector pf pets
 bool DatabaseManager::addPet(Pet *pet) {
-    petIdMax++;
-    pet->id = petIdMax; //Sets given pet's id to max id + 1
-    //cout << pet->id << std::endl;
     QSqlQuery sel;
-    sel.prepare("SELECT petId FROM pet WHERE petId = (:pid)");
-    sel.bindValue(":pid", pet->id);
+    sel.prepare("SELECT name, species, breed FROM pet WHERE name = (:name) AND species = (:species) AND breed = (:breed)");
+    QString n = QString::fromStdString(pet->name);
+    sel.bindValue(":name", n);
+    QString s = QString::fromStdString(pet->name);
+    sel.bindValue(":species", s);
+    QString b = QString::fromStdString(pet->name);
+    sel.bindValue(":breed", b);
     if(sel.exec()){
         if(sel.next()){
             return false;
         }
     }
-
     //Tests for bad data
     if(pet->age <= 0 || pet->weight <= 0) {
         return false;
     }
+    petIdMax++;
+    pet->id = petIdMax; //Sets given pet's id to max id + 1
+    //cout << pet->id << std::endl;
 
     //Prepares a query that inserts all pet info from pet struct
     QSqlQuery q;

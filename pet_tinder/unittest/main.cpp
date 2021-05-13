@@ -448,19 +448,19 @@ TEST_F(DatabaseManager_Test, ADD_AND_REMOVE_ADOPTER) {
     dan->likedPetIds = likedPets;
     dan->dislikedPetIds = dislikedPets;
     dan->prefSpecies = "Dog";
-    dan->prefSpeciesReq = 1;
+    dan->prefSpeciesReq = true;
     dan->prefBreed = "Shorkie";
-    dan->prefBreedReq = 0;
+    dan->prefBreedReq = false;
     dan->prefAge = 3;
-    dan->prefAgeReq = 0;
+    dan->prefAgeReq = false;
     dan->prefWeight = 2.0;
-    dan->prefWeightReq = 0;
+    dan->prefWeightReq = false;
     dan->prefColor = "Brown";
-    dan->prefColorReq = 0;
-    dan->prefHypoallergenic = 1;
-    dan->prefHypoallergenicReq = 1;
+    dan->prefColorReq = false;
+    dan->prefHypoallergenic = true;
+    dan->prefHypoallergenicReq = true;
     dan->prefSex = "Female";
-    dan->prefSexReq = 0;
+    dan->prefSexReq = false;
 
     ASSERT_TRUE(dm->addAdopter(dan, "Password"))
                         << "dan the adopter was not added.";
@@ -485,19 +485,19 @@ TEST_F(DatabaseManager_Test, ADD_SAME_ADOPTER_INFO) {
     addison->likedPetIds = likedPets;
     addison->dislikedPetIds = dislikedPets;
     addison->prefSpecies = "Cat";
-    addison->prefSpeciesReq = 0;
+    addison->prefSpeciesReq = false;
     addison->prefBreed = "Mao";
-    addison->prefBreedReq = 0;
+    addison->prefBreedReq = false;
     addison->prefAge = 2;
-    addison->prefAgeReq = 0;
+    addison->prefAgeReq = false;
     addison->prefWeight = 20.9;
-    addison->prefWeightReq = 0;
+    addison->prefWeightReq = false;
     addison->prefColor = "gray";
-    addison->prefColorReq = 1;
-    addison->prefHypoallergenic = 0;
-    addison->prefHypoallergenicReq = 0;
+    addison->prefColorReq = true;
+    addison->prefHypoallergenic = false;
+    addison->prefHypoallergenicReq = false;
     addison->prefSex = "Male";
-    addison->prefSexReq = 1;
+    addison->prefSexReq = true;
 
     Adopter *copy = new Adopter;
     ASSERT_EQ(numAdopters, dm->getNumAdopters())
@@ -506,19 +506,19 @@ TEST_F(DatabaseManager_Test, ADD_SAME_ADOPTER_INFO) {
     copy->likedPetIds = addison->likedPetIds;
     copy->dislikedPetIds = addison->dislikedPetIds;
     copy->prefSpecies = "Cat";
-    copy->prefSpeciesReq = 0;
+    copy->prefSpeciesReq = false;
     copy->prefBreed = "Mao";
-    copy->prefBreedReq = 0;
+    copy->prefBreedReq = false;
     copy->prefAge = 2;
-    copy->prefAgeReq = 0;
+    copy->prefAgeReq = false;
     copy->prefWeight = 20.9;
-    copy->prefWeightReq = 0;
+    copy->prefWeightReq = false;
     copy->prefColor = "gray";
-    copy->prefColorReq = 1;
-    copy->prefHypoallergenic = 0;
-    copy->prefHypoallergenicReq = 0;
+    copy->prefColorReq = true;
+    copy->prefHypoallergenic = false;
+    copy->prefHypoallergenicReq = false;
     copy->prefSex = "Male";
-    copy->prefSexReq = 1;
+    copy->prefSexReq = true;
 
     ASSERT_TRUE(dm->addAdopter(addison, "Password"))
                         << "addison the adopter was not added.";
@@ -549,19 +549,19 @@ TEST_F(DatabaseManager_Test, ADD_EMPTY_ADOPTER) {
     alex->likedPetIds = likedPets;
     alex->dislikedPetIds = dislikedPets;
     alex->prefSpecies = "";
-    alex->prefSpeciesReq = 0;
+    alex->prefSpeciesReq = false;
     alex->prefBreed = "";
-    alex->prefBreedReq = 0;
+    alex->prefBreedReq = false;
     alex->prefAge = 0;
-    alex->prefAgeReq = 0;
+    alex->prefAgeReq = false;
     alex->prefWeight = 0.0;
-    alex->prefWeightReq = 0;
+    alex->prefWeightReq = false;
     alex->prefColor = "";
-    alex->prefColorReq = 0;
-    alex->prefHypoallergenic = 0;
-    alex->prefHypoallergenicReq = 0;
+    alex->prefColorReq = false;
+    alex->prefHypoallergenic = false;
+    alex->prefHypoallergenicReq = false;
     alex->prefSex = "";
-    alex->prefSexReq = 1;
+    alex->prefSexReq = true;
 
     ASSERT_TRUE(dm->addAdopter(alex, ""))
                         << "Alex the adopter was not added.";
@@ -595,19 +595,19 @@ TEST_F(DatabaseManager_Test, ADD_WEIRD_ADOPTER) {
     ally->likedPetIds = likedPets;
     ally->dislikedPetIds = dislikedPets;
     ally->prefSpecies = "gray";
-    ally->prefSpeciesReq = 1;
+    ally->prefSpeciesReq = true;
     ally->prefBreed = "yellow";
-    ally->prefBreedReq = 1;
+    ally->prefBreedReq = true;
     ally->prefAge = -100;
-    ally->prefAgeReq = 1;
+    ally->prefAgeReq = true;
     ally->prefWeight = -100.0;
-    ally->prefWeightReq = 1;
+    ally->prefWeightReq = true;
     ally->prefColor = "Abraham Lincoln";
-    ally->prefColorReq = 1;
-    ally->prefHypoallergenic = 0;
-    ally->prefHypoallergenicReq = 1;
+    ally->prefColorReq = true;
+    ally->prefHypoallergenic = false;
+    ally->prefHypoallergenicReq = true;
     ally->prefSex = "Gay";
-    ally->prefSexReq = 1;
+    ally->prefSexReq = true;
 
     ASSERT_TRUE(dm->addAdopter(ally, ""))
                         << "Ally the adopter was not added.";
@@ -632,19 +632,19 @@ TEST_F(DatabaseManager_Test, READ_IN_ADOPTER) {
     js->likedPetIds = likedPets;
     js->dislikedPetIds = dislikedPets;
     js->prefSpecies = "Cat";
-    js->prefSpeciesReq = 1;
+    js->prefSpeciesReq = true;
     js->prefBreed = "Butter";
-    js->prefBreedReq = 1;
+    js->prefBreedReq = true;
     js->prefAge = 2;
-    js->prefAgeReq = 0;
+    js->prefAgeReq = false;
     js->prefWeight = 10.0;
-    js->prefWeightReq = 0;
+    js->prefWeightReq = false;
     js->prefColor = "Silver";
-    js->prefColorReq = 1;
-    js->prefHypoallergenic = 1;
-    js->prefHypoallergenicReq = 0;
+    js->prefColorReq = true;
+    js->prefHypoallergenic = true;
+    js->prefHypoallergenicReq = false;
     js->prefSex = "Female";
-    js->prefSexReq = 1;
+    js->prefSexReq = true;
 
     ASSERT_TRUE(dm->addAdopter(js, "ButterIsGorgeous72"))
                         << "Justin Smith the adopter was not added.";
