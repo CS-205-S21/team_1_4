@@ -14,11 +14,11 @@ struct AllPrefs {
     vector<int> ages;
     vector<double> weights;
     vector<string> colors;
-
 };
 
 class Matchmaker{
 public:
+
     /**
      * @brief Matchmaker- Sets up database
      */
@@ -28,12 +28,6 @@ public:
      * @brief innit- Reads in Pets and calls the sortPrefs
      */
     void innit();
-
-    /**
-     * @brief sortPrefs- sorts all available preferencs for use in
-     * comboboxes
-     */
-    void sortPrefs();
 
     /**
      * @brief DatabaseInterface- interfaces with the database to sort viable
@@ -52,8 +46,14 @@ public:
     void refreshPetList();
 
     /**
+     * @brief sortPrefs- sorts all unique available preferencs for use in
+     * comboboxes
+     */
+    void sortPrefs();
+
+    /**
      * @brief arrangePrefs- arranages available user preferences
-     * alphabetically
+     * alphabetically for use in comboboxes
      */
     void arrangePrefs();
 

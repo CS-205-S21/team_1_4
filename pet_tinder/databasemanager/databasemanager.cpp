@@ -26,24 +26,24 @@ void DatabaseManager::readInPets() {
     if(query.exec()) {
         while(query.next()) {
             //Creates and fills pet struct
-            Pet pet;
-            pet.id = query.value("petId").toInt();
-            pet.name = query.value("name").toString().toStdString();
-            pet.species = query.value("species").toString().toStdString();
-            pet.breed = query.value("breed").toString().toStdString();
-            pet.age = query.value("age").toInt();
-            pet.weight = query.value("weight").toDouble();
-            pet.color = query.value("color").toString().toStdString();
-            pet.hypoallergenic = query.value("hypoallergenic").toBool();
-            pet.sex = query.value("sex").toString().toStdString();
-            pet.bio = query.value("bio").toString().toStdString();
+            Pet *pet = new Pet;
+            pet->id = query.value("petId").toInt();
+            pet->name = query.value("name").toString().toStdString();
+            pet->species = query.value("species").toString().toStdString();
+            pet->breed = query.value("breed").toString().toStdString();
+            pet->age = query.value("age").toInt();
+            pet->weight = query.value("weight").toDouble();
+            pet->color = query.value("color").toString().toStdString();
+            pet->hypoallergenic = query.value("hypoallergenic").toBool();
+            pet->sex = query.value("sex").toString().toStdString();
+            pet->bio = query.value("bio").toString().toStdString();
 
             //Tracks pet ids, will hold highest current pet id by end of while loop
-            if(pet.id > (int)petIdMax) {
-                petIdMax = pet.id;
+            if(pet->id > (int)petIdMax) {
+                petIdMax = pet->id;
             }
 
-            pets.push_back(&pet); //Adds pet struct to pets vector
+            pets.push_back(pet); //Adds pet struct to pets vector
         }
     }
 }
@@ -210,7 +210,6 @@ int DatabaseManager::getNumAdoptees() {
 
 //Adds a pet to the database of pets and to the vector pf pets
 bool DatabaseManager::addPet(Pet *pet) {
-    cout<<pet->name<<" Has been added"<<endl;
     petIdMax++;
     pet->id = petIdMax; //Sets given pet's id to max id + 1
     //cout << pet->id << std::endl;
@@ -261,11 +260,21 @@ bool DatabaseManager::addPet(Pet *pet) {
 
 //Removes a pet from the database of pets
 bool DatabaseManager::removePet(int petId) {
+    bool exists = false;
+    QSqlQuery sel;
+    sel.prepare("SELECT petId FROM pet WHERE petId = (:id);");
+    sel.bindValue(":id", petId);
+    if(sel.exec()){
+        if(sel.next()){
+            exists = true;
+        }
+    }
+
     QSqlQuery q;
     q.prepare("DELETE FROM pet WHERE petId = (:petId);");
     q.bindValue(":petId", petId);
 
-    if(q.exec()) {
+    if(q.exec() && exists) {
         //Searches through pets vector to find pet with given id
         for(int i = 0; i < (int)pets.size(); i++) {
             //When pet with matching id is found, return it
