@@ -57,16 +57,7 @@ vector<Pet> Matchmaker::DatabaseInterface(string username, string password){
         }
         Queue->push_back(sortablePets->at(i));
     }
-
-    if(Queue->size() != 0){
-        return *Queue;
-    } else { //if the queue is empty creates an error pet (just populates current fields to save time"
-        Pet *error = new Pet;
-        error->name = "No more pets matching current preferences";
-        error->color = "Please adjust preferences to see more potential pets";
-        Queue->push_back(*error);
-        return *Queue;
-    }
+    return *Queue;
 }
 
 //rereads in pets and creates a list of all non liked/disliked pets for database interface
@@ -110,7 +101,7 @@ void Matchmaker::sortPrefs(){
                 flag++;
             }
         }
-        if(flag == (int)total.species.size()-1){
+        if(flag != (int)total.species.size()-1){
             total.species.push_back(DM->pets.at(i)->species);
         }
     }
@@ -124,7 +115,7 @@ void Matchmaker::sortPrefs(){
                 flag++;
             }
         }
-        if(flag == (int)total.breeds.size()-1){
+        if(flag != (int)total.breeds.size()-1){
             total.breeds.push_back(DM->pets.at(i)->breed);
         }
     }
@@ -138,7 +129,7 @@ void Matchmaker::sortPrefs(){
                 flag++;
             }
         }
-        if(flag == (int)total.ages.size()-1){
+        if(flag != (int)total.ages.size()-1){
             total.ages.push_back(DM->pets.at(i)->age);
         }
     }
@@ -152,7 +143,7 @@ void Matchmaker::sortPrefs(){
                 flag++;
             }
         }
-        if(flag == (int)total.weights.size()-1){
+        if(flag != (int)total.weights.size()-1){
             total.weights.push_back(DM->pets.at(i)->weight);
         }
     }
@@ -166,7 +157,7 @@ void Matchmaker::sortPrefs(){
                 flag++;
             }
         }
-        if(flag == (int)total.colors.size()-1){
+        if(flag != (int)total.colors.size()-1){
             total.colors.push_back(DM->pets.at(i)->color);
         }
     }

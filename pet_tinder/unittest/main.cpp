@@ -32,14 +32,21 @@ class Matchmaking_Test : public::testing::Test {
     Matchmaking_Test() {
         mm = new Matchmaker();
         dm = mm->DM;
-        addTestPets();
         addTestAdopters();
+
+        dm->pets.clear();
+        mm->total.species.clear();
+        mm->total.breeds.clear();
+        mm->total.colors.clear();
+        mm->total.ages.clear();
+        mm->total.weights.clear();
+        addTestPets();
     }
 
     void addTestPets(){
         tPet1 = new Pet;
         tPet1->name = "Loki";
-        tPet1->species = "dog";
+        tPet1->species = "Dog";
         tPet1->breed = "Shorkie";
         tPet1->age = 1;
         tPet1->weight = 12.5;
@@ -89,27 +96,29 @@ class Matchmaking_Test : public::testing::Test {
     void addTestAdopters(){
         vector<int> likedPets;
         vector<int> dislikedPets;
-        likedPets.push_back(0);
-        dislikedPets.push_back(1);
+        for(int i = 1; i<dm->getNumPets(); i++){
+            likedPets.push_back(i);
+        }
+        dislikedPets.push_back(0);
 
         dan = new Adopter;
         dan->username = "Danny_Admin";
         dan->likedPetIds = likedPets;
         dan->dislikedPetIds = dislikedPets;
         dan->prefSpecies = "Dog";
-        dan->prefSpeciesReq = 0;
+        dan->prefSpeciesReq = false;
         dan->prefBreed = "Shorkie";
-        dan->prefBreedReq = 0;
+        dan->prefBreedReq = false;
         dan->prefAge = 1;
-        dan->prefAgeReq = 0;
+        dan->prefAgeReq = false;
         dan->prefWeight = 12.5;
-        dan->prefWeightReq = 0;
+        dan->prefWeightReq = false;
         dan->prefColor = "Brown";
-        dan->prefColorReq = 0;
-        dan->prefHypoallergenic = 0;
-        dan->prefHypoallergenicReq = 0;
+        dan->prefColorReq = false;
+        dan->prefHypoallergenic = false;
+        dan->prefHypoallergenicReq = false;
         dan->prefSex = "Female";
-        dan->prefSexReq = 0;
+        dan->prefSexReq = false;
         dm->addAdopter(dan, "D1a2N3");
 
         alex = new Adopter;
@@ -117,19 +126,19 @@ class Matchmaking_Test : public::testing::Test {
         alex->likedPetIds = likedPets;
         alex->dislikedPetIds = dislikedPets;
         alex->prefSpecies = "Duck";
-        alex->prefSpeciesReq = 1;
+        alex->prefSpeciesReq = true;
         alex->prefBreed = "Domestic";
-        alex->prefBreedReq = 1;
+        alex->prefBreedReq = true;
         alex->prefAge = 4;
-        alex->prefAgeReq = 1;
+        alex->prefAgeReq = true;
         alex->prefWeight = 9.0;
-        alex->prefWeightReq = 1;
+        alex->prefWeightReq = true;
         alex->prefColor = "White";
-        alex->prefColorReq = 1;
-        alex->prefHypoallergenic = 0;
-        alex->prefHypoallergenicReq = 1;
+        alex->prefColorReq = true;
+        alex->prefHypoallergenic = false;
+        alex->prefHypoallergenicReq = true;
         alex->prefSex = "Male";
-        alex->prefSexReq = 1;
+        alex->prefSexReq = true;
         dm->addAdopter(alex, "A1l2E3x4");
 
         ally = new Adopter;
@@ -137,19 +146,19 @@ class Matchmaking_Test : public::testing::Test {
         ally->likedPetIds = likedPets;
         ally->dislikedPetIds = dislikedPets;
         ally->prefSpecies = "Cat";
-        ally->prefSpeciesReq = 1;
+        ally->prefSpeciesReq = true;
         ally->prefBreed = "Russian Blue";
-        ally->prefBreedReq = 0;
+        ally->prefBreedReq = false;
         ally->prefAge = 4;
-        ally->prefAgeReq = 1;
+        ally->prefAgeReq = true;
         ally->prefWeight = 12.5;
-        ally->prefWeightReq = 1;
+        ally->prefWeightReq = true;
         ally->prefColor = "Orange";
-        ally->prefColorReq = 1;
-        ally->prefHypoallergenic = 0;
-        ally->prefHypoallergenicReq = 1;
+        ally->prefColorReq = true;
+        ally->prefHypoallergenic = false;
+        ally->prefHypoallergenicReq = true;
         ally->prefSex = "Male";
-        ally->prefSexReq = 0;
+        ally->prefSexReq = false;
         dm->addAdopter(ally, "A1l2L3y4");
 
         addy = new Adopter;
@@ -775,68 +784,35 @@ TEST_F(DatabaseManager_Test, READ_IN_ADOPTEE) {
 //*********************************************************************************************************************
 //*********************************************************************************************************************
 //This test will be a basic test for Matchmaker
-TEST_F(Matchmaking_Test, ARRANGE_PREFS_TESTS){
-    vector<string> speciesT;
+TEST_F(Matchmaking_Test, SORT_AND_ARRANGE_PREFS_TESTS){
     vector<string> speciesR;
-    vector<string> breedT;
     vector<string> breedR;
-    vector<string> colorT;
     vector<string> colorR;
-    vector<int> ageT;
     vector<int> ageR;
-    vector<double> weightT;
     vector<double> weightR;
 
-    speciesT.push_back("Cat");
-    speciesT.push_back("Cat");
-    speciesT.push_back("Dog");
-    speciesT.push_back("Dog");
-    speciesT.push_back("Dog");
-    speciesT.push_back("Duck");//
     speciesR.push_back("Cat");
     speciesR.push_back("Dog");
     speciesR.push_back("Duck");
 
-    breedT.push_back("Shorkie");
-    breedT.push_back("Shorkie");
-    breedT.push_back("Shorkie");
-    breedT.push_back("Russian Blue");
-    breedT.push_back("Russian Blue");
-    breedT.push_back("Russian Blue");
-    breedT.push_back("Bengal");
-    breedT.push_back("Bengal");//
     breedR.push_back("Bengal");
-    breedR.push_back("Russian Blue");
+    breedR.push_back("Domestic");
+    breedR.push_back("Shih Tzu");
     breedR.push_back("Shorkie");
 
-    colorT.push_back("White");
-    colorT.push_back("Brown");
-    colorT.push_back("Gray");//
     colorR.push_back("Brown");
-    colorR.push_back("Gray");
+    colorR.push_back("Orange");
     colorR.push_back("White");
 
-    ageT.push_back(4);
-    ageT.push_back(7);
-    ageT.push_back(1);//
     ageR.push_back(1);
     ageR.push_back(4);
     ageR.push_back(7);
 
-    weightT.push_back(10.0);
-    weightT.push_back(12.5);
-    weightT.push_back(9.0);//
+    weightR.push_back(8.4);
     weightR.push_back(9.0);
-    weightR.push_back(10.0);
     weightR.push_back(12.5);
 
-    mm->total.species = speciesT;
-    mm->total.breeds = breedT;
-    mm->total.colors = colorT;
-    mm->total.ages = ageT;
-    mm->total.weights = weightT;
-
-    mm->arrangePrefs();
+    mm->sortPrefs();
 
     ASSERT_EQ(speciesR, mm->total.species);
     ASSERT_EQ(breedR, mm->total.breeds);
@@ -845,7 +821,13 @@ TEST_F(Matchmaking_Test, ARRANGE_PREFS_TESTS){
     ASSERT_EQ(weightR, mm->total.weights);
 }
 
-//
+//First Test for the matchmaking system based on the user's preferences
+TEST_F(Matchmaking_Test, MATCHMAKER_TEST_PREFS){
+    ASSERT_EQ(4, mm->DatabaseInterface("Danny_Admin", "D1a2N3").size());
+    ASSERT_EQ(1, mm->DatabaseInterface("Alex_Admin", "A1l2E3x4").size());
+    ASSERT_EQ(0, mm->DatabaseInterface("Ally_Admin", "A1l2L3y4").size());
+    ASSERT_EQ(0, mm->DatabaseInterface("Addy_Admin", "A1d2D3y4").size());
+}
 
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
