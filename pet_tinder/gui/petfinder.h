@@ -7,7 +7,6 @@
 #include <QWidget>
 
 #include "../matchmaking/matchmaker.h"
-#include "../databasemanager/databasemanager.h"
 
 namespace Ui {
 class PetFinder;
@@ -16,8 +15,7 @@ class PetFinder;
 class ProfilePage;
 class PetList;
 
-class PetFinder : public QMainWindow
-{
+class PetFinder : public QMainWindow {
     Q_OBJECT
 
 public:
@@ -25,6 +23,7 @@ public:
     ~PetFinder();
     void initialize();
     void setup();
+    void displayPet(Pet *pet);
 
     Matchmaker *matchmaker;
     ProfilePage *profileWindow;
@@ -32,6 +31,9 @@ public:
 
     bool isUserAdopter;
     bool deleteClicked = false;
+
+    vector<Pet*> petList; //Holds all pets pet finder can display
+    int petIndex; //Current pet index in petList
 
 private slots:
 

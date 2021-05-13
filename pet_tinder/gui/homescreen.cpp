@@ -14,7 +14,7 @@ HomeScreen::HomeScreen(QWidget *parent):QWidget(parent), ui(new Ui::HomeScreen) 
     pic2.convertFromImage(img.scaled(829, 786, Qt::KeepAspectRatio), 0);
     ui->logo->setPixmap(pic2);
 
-    databaseManager = new DatabaseManager();
+    //databaseManager = new DatabaseManager();
 }
 
 HomeScreen::~HomeScreen() {
@@ -23,25 +23,27 @@ HomeScreen::~HomeScreen() {
 
 void HomeScreen::on_loginButton_clicked() {
     //Tests if user in an adopter
-    Adopter* userInfoAdopter = databaseManager->readInAdopter(username, password);
+    Adopter* userInfoAdopter = petWindow->matchmaker->DM->readInAdopter(username, password);
     //Checks if this adopter exists
     if(userInfoAdopter != nullptr) {
         //Lets rest of gui know that user is an adopter
         petWindow->isUserAdopter = true;
         //Passes adopter to database to begin matchmaking
-        //petWindow->matchmaker->DatabaseInterface(username, password);
+        petWindow->petList = petWindow->matchmaker->DatabaseInterface(username, password);
         //Passes adopter to profileWindow to display their info
         petWindow->profileWindow->userInfoAdopter = userInfoAdopter;
+        //ADD SUPPORT FOR NO PETS MATCH PREFERENCES
 
-        //Set up pet window
-        petWindow->setup();
+        //Initialize pet window's display
+        petWindow->initialize();
 
         //Change window to pet window
         this->hide();
         petWindow->showMaximized();
     } else {
+
         //Tests if user in an adoptee
-        Adoptee* userInfoAdoptee = databaseManager->readInAdoptee(username, password);
+        Adoptee* userInfoAdoptee = petWindow->matchmaker->DM->readInAdoptee(username, password);
         //Tests if this adoptee exists
         if(userInfoAdoptee != nullptr) {
             cout << "Adoptee Login Successful!" << endl;
@@ -51,8 +53,8 @@ void HomeScreen::on_loginButton_clicked() {
             //Passes adoptee to profileWindow to display their info
             petWindow->profileWindow->userInfoAdoptee = userInfoAdoptee;
 
-            //Set up pet window
-            petWindow->setup();
+            //Initialize pet window's display
+            petWindow->initialize();
 
             //Change window to pet window
             this->hide();

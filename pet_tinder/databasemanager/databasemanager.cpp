@@ -8,7 +8,6 @@ DatabaseManager::DatabaseManager() {
         exit(0);
     }
     petIdMax = 0;
-    readInPets();
 }
 
 DatabaseManager::~DatabaseManager(){
@@ -18,6 +17,9 @@ DatabaseManager::~DatabaseManager(){
 
 //Reads in all pets from database
 void DatabaseManager::readInPets() {
+    //Empty pets vector before repopulating it
+    pets.clear();
+
     //Prepares a query that will read in all pets ordered by id.
     QSqlQuery query;
     query.prepare("SELECT petId, name, species, breed, age, weight,"
@@ -26,24 +28,24 @@ void DatabaseManager::readInPets() {
     if(query.exec()) {
         while(query.next()) {
             //Creates and fills pet struct
-            Pet pet;
-            pet.id = query.value("petId").toInt();
-            pet.name = query.value("name").toString().toStdString();
-            pet.species = query.value("species").toString().toStdString();
-            pet.breed = query.value("breed").toString().toStdString();
-            pet.age = query.value("age").toInt();
-            pet.weight = query.value("weight").toDouble();
-            pet.color = query.value("color").toString().toStdString();
-            pet.hypoallergenic = query.value("hypoallergenic").toInt();
-            pet.sex = query.value("sex").toString().toStdString();
-            pet.bio = query.value("bio").toString().toStdString();
+            Pet *pet = new Pet;
+            pet->id = query.value("petId").toInt();
+            pet->name = query.value("name").toString().toStdString();
+            pet->species = query.value("species").toString().toStdString();
+            pet->breed = query.value("breed").toString().toStdString();
+            pet->age = query.value("age").toInt();
+            pet->weight = query.value("weight").toDouble();
+            pet->color = query.value("color").toString().toStdString();
+            pet->hypoallergenic = query.value("hypoallergenic").toInt();
+            pet->sex = query.value("sex").toString().toStdString();
+            pet->bio = query.value("bio").toString().toStdString();
 
             //Tracks pet ids, will hold highest current pet id by end of while loop
-            if(pet.id > (int)petIdMax) {
-                petIdMax = pet.id;
+            if(pet->id > (int)petIdMax) {
+                petIdMax = pet->id;
             }
 
-            pets.push_back(&pet); //Adds pet struct to pets vector
+            pets.push_back(pet); //Adds pet struct to pets vector
         }
     }
 }
@@ -169,7 +171,7 @@ Pet* DatabaseManager::findPet(int findId) {
 
 //Returns number of pets in pets vector
 int DatabaseManager::getNumPets() {
-    return pets.size();
+    return (int)pets.size();
 }
 
 //Finds number of registered adopters in the database

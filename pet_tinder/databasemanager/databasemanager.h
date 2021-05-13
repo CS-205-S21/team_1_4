@@ -18,7 +18,7 @@ struct Pet {
     int age;
     double weight;
     string color;
-    bool hypoallergenic;
+    int hypoallergenic;
     string sex;
     string bio;
 };

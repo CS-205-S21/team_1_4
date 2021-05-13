@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     HomeScreen w;
     //w.initialize();
     //w.showMaximized();
-   w.show();
+    w.show();
 
     return a.exec();
 }
