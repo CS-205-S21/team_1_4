@@ -92,7 +92,6 @@ void Matchmaker::refreshPetList(){
 
 void Matchmaker::sortPrefs(){
     //Sort Pref Species
-
     total.species.push_back(DM->pets.at(0)->species);
     for(int i = 0; i < DM->getNumPets(); i++){
         int flag = 0;

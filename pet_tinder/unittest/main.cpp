@@ -97,7 +97,7 @@ class Matchmaking_Test : public::testing::Test {
         vector<int> likedPets;
         vector<int> dislikedPets;
         for(int i = 1; i<dm->getNumPets(); i++){
-            likedPets.push_back(i);
+            likedPets.push_back(dm->pets.at(i)->id);
         }
         dislikedPets.push_back(0);
 
