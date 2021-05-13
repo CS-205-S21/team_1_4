@@ -15,14 +15,19 @@ vector<Pet*> Matchmaker::DatabaseInterface(string username, string password){
     currentUser = DM->readInAdopter(username, password);
     refreshPetList();
 
+    cout << "pass" << endl;
     //cycles through all pets to find pets that match preferences and adds them to the queue
     //continue breaks loop and is triggers for when a pet doesnt match a hard preference
-    for(int i = 0; i < (int)sortablePets.size(); i++){
+    for(int i = 0; i < (int)sortablePets.size(); i++){ //SORTABLE PETS EMPTY
+        cout << "fail1" << endl;
         if(currentUser->prefSpeciesReq == true){
+            cout << "fail2" << endl;
             if(currentUser->prefSpecies != sortablePets.at(i)->species){
+                cout << "fail3" << endl;
                 continue;
             }
         }
+        cout << "pass1" << endl;
         if(currentUser->prefBreedReq == true){
             if(currentUser->prefBreed != sortablePets.at(i)->breed){
                 continue;
@@ -53,6 +58,7 @@ vector<Pet*> Matchmaker::DatabaseInterface(string username, string password){
                 continue;
             }
         }
+        cout << "Pet successfully added for " + currentUser->username << endl;
         Queue.push_back(sortablePets.at(i));
     }
     return Queue;

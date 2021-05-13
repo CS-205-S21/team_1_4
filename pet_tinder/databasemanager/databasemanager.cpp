@@ -87,19 +87,19 @@ Adopter* DatabaseManager::readInAdopter(string username, string password) {
         adopter->likedPetIds = stringToIntVector(query.value("likedPetIds").toString().toStdString());
         adopter->dislikedPetIds = stringToIntVector(query.value("dislikedPetIds").toString().toStdString());
         adopter->prefSpecies = query.value("prefSpecies").toString().toStdString();
-        adopter->prefSpeciesReq = query.value("prefSpeciesReq").toInt();
+        adopter->prefSpeciesReq = query.value("prefSpeciesReq").toBool();
         adopter->prefBreed = query.value("prefBreed").toString().toStdString();
-        adopter->prefBreedReq = query.value("prefBreedReq").toInt();
+        adopter->prefBreedReq = query.value("prefBreedReq").toBool();
         adopter->prefAge = query.value("prefBreed").toInt();
-        adopter->prefAgeReq = query.value("prefBreedReq").toInt();
+        adopter->prefAgeReq = query.value("prefBreedReq").toBool();
         adopter->prefWeight = query.value("prefWeight").toDouble();
-        adopter->prefWeightReq = query.value("prefWeightReq").toInt();
+        adopter->prefWeightReq = query.value("prefWeightReq").toBool();
         adopter->prefColor = query.value("prefColor").toString().toStdString();
-        adopter->prefColorReq = query.value("prefColorReq").toInt();
-        adopter->prefHypoallergenic = query.value("prefHypoallergenic").toInt();
-        adopter->prefHypoallergenicReq = query.value("prefHypoallergenicReq").toInt();
+        adopter->prefColorReq = query.value("prefColorReq").toBool();
+        adopter->prefHypoallergenic = query.value("prefHypoallergenic").toBool();
+        adopter->prefHypoallergenicReq = query.value("prefHypoallergenicReq").toBool();
         adopter->prefSex = query.value("prefSex").toString().toStdString();
-        adopter->prefSexReq = query.value("prefSexReq").toInt();
+        adopter->prefSexReq = query.value("prefSexReq").toBool();
         adopter->bio = query.value("bio").toString().toStdString();
 
         return adopter; //Returns adopter struct

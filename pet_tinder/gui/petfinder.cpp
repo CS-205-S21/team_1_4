@@ -27,9 +27,9 @@ void PetFinder::initialize() {
 
     setup();
 
-    if(matchmaker->DM->pets.size() > 0) {
+    if(petList.size() > 0) {
         cout << "PetFinder screen display first pet!" << endl;
-        displayPet(matchmaker->DM->pets.front());
+        displayPet(petList.front());
     } else {
         displayEmptyPet();
     }
@@ -160,10 +160,10 @@ void PetFinder::on_dislikeButton_clicked()
         deleteClicked = false;
     } else {
         //Iterates one up through the petList
-        if(!matchmaker->DM->pets.empty() && petIndex + 1 < (int)matchmaker->DM->pets.size()) {
+        if(!petList.empty() && petIndex + 1 < (int)petList.size()) {
             cout << "GUI PetFinder screen: Dislike button clicked, next pet displayed" << endl;
             petIndex++;
-            displayPet(matchmaker->DM->pets.at(petIndex));
+            displayPet(petList.at(petIndex));
         } else {
             cout << "GUI PetFinder screen: Dislike button clicked, no more pets to display" << endl;
             displayEmptyPet();
