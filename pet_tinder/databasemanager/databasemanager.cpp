@@ -8,7 +8,6 @@ DatabaseManager::DatabaseManager() {
         exit(0);
     }
     petIdMax = 0;
-    readInPets();
 }
 
 DatabaseManager::~DatabaseManager(){
@@ -18,6 +17,9 @@ DatabaseManager::~DatabaseManager(){
 
 //Reads in all pets from database
 void DatabaseManager::readInPets() {
+    //Empty pets vector before repopulating it
+    pets.clear();
+
     //Prepares a query that will read in all pets ordered by id.
     QSqlQuery query;
     query.prepare("SELECT petId, name, species, breed, age, weight,"
@@ -73,7 +75,7 @@ Adopter* DatabaseManager::readInAdopter(string username, string password) {
                   "prefSpecies, prefSpeciesReq, prefBreed, prefBreedReq, "
                   "prefAge, prefAgeReq, prefWeight, prefWeightReq, "
                   "prefColor, prefColorReq, prefHypoallergenic, prefHypoallergenicReq, "
-                  "prefSex, prefSexReq FROM adopter "
+                  "prefSex, prefSexReq, bio FROM adopter "
                   "WHERE usernameAdopter = (:username) AND password = (:password);");
     query.bindValue(":username", qUsername);
     query.bindValue(":password", qPassword);
@@ -98,6 +100,7 @@ Adopter* DatabaseManager::readInAdopter(string username, string password) {
         adopter->prefHypoallergenicReq = query.value("prefHypoallergenicReq").toInt();
         adopter->prefSex = query.value("prefSex").toString().toStdString();
         adopter->prefSexReq = query.value("prefSexReq").toInt();
+        adopter->bio = query.value("bio").toString().toStdString();
 
         return adopter; //Returns adopter struct
     } else if(!exists){
@@ -109,7 +112,6 @@ Adopter* DatabaseManager::readInAdopter(string username, string password) {
     }
 }
 
-//WARNING: THIS DOES NOT WORK
 Adoptee* DatabaseManager::readInAdoptee(string username, string password) {
     //Prepares username and password for use in query
     QString qUsername = QString::fromStdString(username);
@@ -128,7 +130,7 @@ Adoptee* DatabaseManager::readInAdoptee(string username, string password) {
 
     //Prepares a query that will read in all pets ordered by id.
     QSqlQuery query;
-    query.prepare("SELECT usernameAdoptee, shelter, petIds FROM adoptee "
+    query.prepare("SELECT usernameAdoptee, shelter, petIds, bio FROM adoptee "
                   "WHERE usernameAdoptee = (:usernameAdoptee) AND password = (:password);");
     query.bindValue(":usernameAdoptee", qUsername);
     query.bindValue(":password", qPassword);
@@ -139,6 +141,7 @@ Adoptee* DatabaseManager::readInAdoptee(string username, string password) {
         adoptee->username = query.value("usernameAdoptee").toString().toStdString();
         adoptee->shelter = query.value("shelter").toString().toStdString();
         adoptee->ownedPetIds = stringToIntVector(query.value("petIds").toString().toStdString());
+        adoptee->bio = query.value("bio").toString().toStdString();
         return adoptee; //Returns adoptee struct
     } else if(!exists){
         qDebug() << "Adoptee Cannot be found using Select." << endl;
@@ -169,7 +172,7 @@ Pet* DatabaseManager::findPet(int findId) {
 
 //Returns number of pets in pets vector
 int DatabaseManager::getNumPets() {
-    return pets.size();
+    return (int)pets.size();
 }
 
 //Finds number of registered adopters in the database

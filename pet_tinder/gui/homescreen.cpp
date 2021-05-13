@@ -14,7 +14,7 @@ HomeScreen::HomeScreen(QWidget *parent):QWidget(parent), ui(new Ui::HomeScreen) 
     pic2.convertFromImage(img.scaled(829, 786, Qt::KeepAspectRatio), 0);
     ui->logo->setPixmap(pic2);
 
-    databaseManager = new DatabaseManager();
+    //databaseManager = new DatabaseManager();
 }
 
 HomeScreen::~HomeScreen() {
@@ -23,36 +23,40 @@ HomeScreen::~HomeScreen() {
 
 void HomeScreen::on_loginButton_clicked() {
     //Tests if user in an adopter
-    Adopter* userInfoAdopter = databaseManager->readInAdopter(username, password);
+    Adopter* userInfoAdopter = petWindow->matchmaker->DM->readInAdopter(username, password);
     //Checks if this adopter exists
     if(userInfoAdopter != nullptr) {
         //Lets rest of gui know that user is an adopter
         petWindow->isUserAdopter = true;
         //Passes adopter to database to begin matchmaking
-        //petWindow->matchmaker->DatabaseInterface(username, password);
-        //Passes adopter to profileWindow to display their info
-        petWindow->profileWindow->userInfoAdopter = userInfoAdopter;
+        //petWindow->petList = petWindow->matchmaker->DatabaseInterface(username, password);
 
-        //Set up pet window
-        petWindow->setup();
+        //Passes adopter to profileWindow and displays their info
+        petWindow->profileWindow->userInfoAdopter = userInfoAdopter;
+        petWindow->profileWindow->displayUserInfo(true);
+
+        //Initialize pet window's display
+        petWindow->initialize();
 
         //Change window to pet window
         this->hide();
         petWindow->showMaximized();
     } else {
+
         //Tests if user in an adoptee
-        Adoptee* userInfoAdoptee = databaseManager->readInAdoptee(username, password);
+        Adoptee* userInfoAdoptee = petWindow->matchmaker->DM->readInAdoptee(username, password);
         //Tests if this adoptee exists
         if(userInfoAdoptee != nullptr) {
             cout << "Adoptee Login Successful!" << endl;
             //Lets rest of gui know that user is an adoptee
             petWindow->isUserAdopter = false;
 
-            //Passes adoptee to profileWindow to display their info
+            //Passes adoptee to profileWindow and displays their info
             petWindow->profileWindow->userInfoAdoptee = userInfoAdoptee;
+            petWindow->profileWindow->displayUserInfo(false);
 
-            //Set up pet window
-            petWindow->setup();
+            //Initialize pet window's display
+            petWindow->initialize();
 
             //Change window to pet window
             this->hide();

@@ -31,6 +31,8 @@ public:
     Adopter* userInfoAdopter;
     Adoptee* userInfoAdoptee;
 
+    void displayUserInfo(bool adopter);
+
 signals:
 
 public slots:
@@ -43,6 +45,8 @@ private slots:
     void on_pushButton_2_clicked();
 
     void on_PrefsButton_clicked();
+
+    void on_addPetButton_clicked();
 
 private:
     Ui::ProfilePage *ui;

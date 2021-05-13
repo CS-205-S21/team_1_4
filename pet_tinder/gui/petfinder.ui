@@ -335,9 +335,9 @@
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_3">
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout" stretch="3,3,0">
+     <layout class="QHBoxLayout" name="mainLayout" stretch="3,3,0">
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout_3" stretch="3,0,0">
+       <layout class="QVBoxLayout" name="pictureButtons" stretch="3,0,0">
         <item>
          <widget class="QLabel" name="animalImage">
           <property name="sizePolicy">
@@ -377,7 +377,7 @@
          </widget>
         </item>
         <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <layout class="QHBoxLayout" name="petButtons">
           <item>
            <widget class="QPushButton" name="dislikeButton">
             <property name="palette">
@@ -518,55 +518,104 @@
        </layout>
       </item>
       <item>
-       <widget class="QScrollArea" name="scrollArea">
-        <property name="widgetResizable">
-         <bool>true</bool>
-        </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents_2">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>303</width>
-           <height>427</height>
-          </rect>
-         </property>
-         <widget class="QLabel" name="animalCustomBio">
-          <property name="geometry">
-           <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>263</width>
-            <height>338</height>
-           </rect>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>10000</width>
-            <height>16777215</height>
-           </size>
+       <layout class="QVBoxLayout" name="infoLayout" stretch="1,0,0,7">
+        <item>
+         <widget class="QLabel" name="nameSexAge">
+          <property name="font">
+           <font>
+            <pointsize>14</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
           </property>
           <property name="text">
-           <string>Name: Sir McQuackinns
+           <string>Name, Sex, Age</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="speciesBreed">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+            <italic>true</italic>
+           </font>
+          </property>
+          <property name="text">
+           <string>Species - Breed</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="hypoallergenic">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+            <italic>true</italic>
+           </font>
+          </property>
+          <property name="text">
+           <string>Hypoallergenic</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QScrollArea" name="scrollArea">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents_2">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>301</width>
+             <height>323</height>
+            </rect>
+           </property>
+           <widget class="QLabel" name="animalCustomBio">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>263</width>
+              <height>338</height>
+             </rect>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>10000</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Name: Sir McQuackinns
 
 Species: Duck
 
 Breed: Cutie
 
 Bio: What time does a duck wake up in the morning? At the quack of dawn! bgtdg tg trh th th yh g fygj ytj tyj gcjtyh yhj dyjycj fygj tyj ytj yt jygj ty cyj yjtctrh tf hcft tfh cft hg</string>
-          </property>
-          <property name="scaledContents">
-           <bool>false</bool>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
+            </property>
+            <property name="scaledContents">
+             <bool>false</bool>
+            </property>
+            <property name="wordWrap">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </widget>
          </widget>
-        </widget>
-       </widget>
+        </item>
+       </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="verticalLayout" stretch="2,2,2">
+       <layout class="QVBoxLayout" name="menuButtons" stretch="2,2,2">
         <item>
          <widget class="QPushButton" name="profileButton">
           <property name="maximumSize">

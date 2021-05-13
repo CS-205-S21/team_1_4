@@ -3,7 +3,7 @@
 
 #include "petfinder.h"
 #include <QWidget>
-#include "../databasemanager/databasemanager.h"
+//#include "../databasemanager/databasemanager.h"
 
 namespace Ui {
 class HomeScreen;
@@ -20,7 +20,7 @@ public:
     explicit HomeScreen(QWidget *parent = 0);
     ~HomeScreen();
 
-    DatabaseManager* databaseManager;
+    //DatabaseManager* databaseManager;
 
 private slots:
     void on_loginButton_clicked();

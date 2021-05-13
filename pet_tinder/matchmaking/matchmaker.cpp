@@ -3,7 +3,6 @@
 //creates an instance of the database
 Matchmaker::Matchmaker(){
     DM = new DatabaseManager();
-    innit();
 }
 
 //reads in pets to the correct areas
@@ -11,55 +10,53 @@ void Matchmaker::innit(){
     DM->readInPets();
     sortPrefs();
 }
-
 //this is called to return a queue of pets for the petfinder screen
-vector<Pet> Matchmaker::DatabaseInterface(string username, string password){
+vector<Pet*> Matchmaker::DatabaseInterface(string username, string password){
     currentUser = DM->readInAdopter(username, password);
     refreshPetList();
 
     //cycles through all pets to find pets that match preferences and adds them to the queue
     //continue breaks loop and is triggers for when a pet doesnt match a hard preference
-    for(int i = 0; i < (int)sortablePets->size(); i++){
+    for(int i = 0; i < (int)sortablePets.size(); i++){
         if(currentUser->prefSpeciesReq == true){
-            if(currentUser->prefSpecies != sortablePets->at(i).species){
+            if(currentUser->prefSpecies != sortablePets.at(i)->species){
                 continue;
             }
         }
         if(currentUser->prefBreedReq == true){
-            if(currentUser->prefBreed != sortablePets->at(i).breed){
+            if(currentUser->prefBreed != sortablePets.at(i)->breed){
                 continue;
             }
         }
         if(currentUser->prefAgeReq == true){
-            if(currentUser->prefAge != sortablePets->at(i).age){
+            if(currentUser->prefAge != sortablePets.at(i)->age){
                 continue;
             }
         }
         if(currentUser->prefWeightReq == true){
-            if(currentUser->prefWeight != sortablePets->at(i).weight){
+            if(currentUser->prefWeight != sortablePets.at(i)->weight){
                 continue;
             }
         }
         if(currentUser->prefColorReq == true){
-            if(currentUser->prefColor != sortablePets->at(i).color){
+            if(currentUser->prefColor != sortablePets.at(i)->color){
                 continue;
             }
         }
         if(currentUser->prefHypoallergenicReq == true){
-            if(currentUser->prefHypoallergenic != sortablePets->at(i).hypoallergenic){
+            if(currentUser->prefHypoallergenic != sortablePets.at(i)->hypoallergenic){
                 continue;
             }
         }
         if(currentUser->prefSexReq == true){
-            if(currentUser->prefSex != sortablePets->at(i).sex){
+            if(currentUser->prefSex != sortablePets.at(i)->sex){
                 continue;
             }
         }
-        Queue->push_back(sortablePets->at(i));
+        Queue.push_back(sortablePets.at(i));
     }
-    return *Queue;
+    return Queue;
 }
-
 //rereads in pets and creates a list of all non liked/disliked pets for database interface
 void Matchmaker::refreshPetList(){
     innit();
@@ -85,11 +82,10 @@ void Matchmaker::refreshPetList(){
             }
         }
         if(flag == 0){
-            sortablePets->push_back(*DM->pets.at(j));
+            sortablePets.push_back(DM->pets.at(j));
         }
     }
 }
-
 void Matchmaker::sortPrefs(){
     //Sort Pref Species
     total.species.push_back(DM->pets.at(0)->species);
@@ -104,8 +100,7 @@ void Matchmaker::sortPrefs(){
             total.species.push_back(DM->pets.at(i)->species);
         }
     }
-
-    //Sort Pref Breed
+//Sort Pref Breed
     total.breeds.push_back(DM->pets.at(0)->breed);
     for(int i = 0; i < DM->getNumPets(); i++){
         int flag = 0;
@@ -163,7 +158,6 @@ void Matchmaker::sortPrefs(){
 
     arrangePrefs();
 }
-
 void Matchmaker::arrangePrefs(){
     sort(total.species.begin(),total.species.end());
     sort(total.breeds.begin(),total.breeds.end());

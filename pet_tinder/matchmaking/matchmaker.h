@@ -36,7 +36,7 @@ public:
      * @param passwords- given by GUI passed to databasemanager
      * @return Returns a vector of pets that is ready to be shown at the GUI
      */
-    vector<Pet> DatabaseInterface(string username, string passwords);
+    vector<Pet*> DatabaseInterface(string username, string passwords);
 
     /**
      * @brief refreshPetList- Sorts pets into discarded and sortable pets
@@ -59,9 +59,9 @@ public:
 
     DatabaseManager *DM;
     Adopter *currentUser;
-    vector<Pet> *sortablePets;
+    vector<Pet*> sortablePets;
     vector<int> discardedPetIds;
-    vector<Pet> *Queue;
+    vector<Pet*> Queue;
     AllPrefs total;
 };
 

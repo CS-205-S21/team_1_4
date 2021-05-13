@@ -18,7 +18,7 @@ struct Pet {
     int age;
     double weight;
     string color;
-    bool hypoallergenic;
+    int hypoallergenic;
     string sex;
     string bio;
 };
@@ -26,6 +26,7 @@ struct Adopter {
     string username;
     vector<int> likedPetIds;
     vector<int> dislikedPetIds;
+    string bio;
 
     string prefSpecies;
     bool prefSpeciesReq;
@@ -46,6 +47,7 @@ struct Adoptee {
     string username;
     string shelter;
     vector<int> ownedPetIds;
+    string bio;
 };
 
 class DatabaseManager

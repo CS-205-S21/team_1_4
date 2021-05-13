@@ -14,11 +14,11 @@ class PetFinder;
 class ProfilePage;
 class MessageScreen;
 
-class PetList : public QWidget
-{
+class PetList : public QWidget {
     Q_OBJECT
 
 public:
+
     explicit PetList(QWidget *parent = nullptr);
     ~PetList();
 
