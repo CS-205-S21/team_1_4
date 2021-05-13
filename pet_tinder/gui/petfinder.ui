@@ -518,11 +518,12 @@
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="infoLayout">
+       <layout class="QVBoxLayout" name="infoLayout" stretch="1,0,0,7">
         <item>
          <widget class="QLabel" name="nameSexAge">
           <property name="font">
            <font>
+            <pointsize>14</pointsize>
             <weight>75</weight>
             <bold>true</bold>
            </font>
@@ -534,6 +535,12 @@
         </item>
         <item>
          <widget class="QLabel" name="speciesBreed">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+            <italic>true</italic>
+           </font>
+          </property>
           <property name="text">
            <string>Species - Breed</string>
           </property>
@@ -541,6 +548,12 @@
         </item>
         <item>
          <widget class="QLabel" name="hypoallergenic">
+          <property name="font">
+           <font>
+            <pointsize>12</pointsize>
+            <italic>true</italic>
+           </font>
+          </property>
           <property name="text">
            <string>Hypoallergenic</string>
           </property>
@@ -557,7 +570,7 @@
              <x>0</x>
              <y>0</y>
              <width>301</width>
-             <height>362</height>
+             <height>323</height>
             </rect>
            </property>
            <widget class="QLabel" name="animalCustomBio">
@@ -574,6 +587,11 @@
               <width>10000</width>
               <height>16777215</height>
              </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>12</pointsize>
+             </font>
             </property>
             <property name="text">
              <string>Name: Sir McQuackinns

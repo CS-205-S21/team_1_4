@@ -24,6 +24,7 @@ public:
     void initialize();
     void setup();
     void displayPet(Pet *pet);
+    void displayEmptyPet();
 
     Matchmaker *matchmaker;
     ProfilePage *profileWindow;

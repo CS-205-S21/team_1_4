@@ -27,9 +27,11 @@ void PetFinder::initialize() {
 
     setup();
 
-    if(petList.size() > 0) {
+    if(matchmaker->DM->pets.size() > 0) {
         cout << "PetFinder screen display first pet!" << endl;
-        displayPet(petList.front());
+        displayPet(matchmaker->DM->pets.front());
+    } else {
+        displayEmptyPet();
     }
 }
 
@@ -74,6 +76,19 @@ void PetFinder::displayPet(Pet *pet) {
     ui->animalCustomBio->setText(QString::fromStdString(pet->bio));
 }
 
+//Displays passed-in pet on screen
+void PetFinder::displayEmptyPet() {
+    //Displays name, sex, and age
+    ui->nameSexAge->setText("No more pets match your preferences!");
+    //Displays species and breed
+    ui->speciesBreed->clear();
+    //Checks if pet is hypoallergenic, then displays that
+    ui->hypoallergenic->clear();
+    //Displays bio
+    ui->animalCustomBio->setText("Update your preferences in the Profile "
+                                 "or wait around for new pets to be added!");
+}
+
 void PetFinder::on_profileButton_clicked() {
     this->hide();
     profileWindow->showMaximized();
@@ -113,6 +128,18 @@ void PetFinder::on_likeButton_clicked() {
         ui->likeButton->setPalette(test);
 
         deleteClicked = false;
+    } else {
+        //Iterates one up through the petList
+        cout << petIndex << endl;
+        cout << matchmaker->DM->pets.size() << endl;
+        if(!matchmaker->DM->pets.empty() && petIndex + 1 < (int)matchmaker->DM->pets.size()) {
+            cout << "GUI PetFinder screen: Like button clicked, next pet displayed" << endl;
+            petIndex++;
+            displayPet(matchmaker->DM->pets.at(petIndex));
+        } else {
+            cout << "GUI PetFinder screen: Like button clicked, no more pets to display" << endl;
+            displayEmptyPet();
+        }
     }
 
 }
@@ -132,9 +159,14 @@ void PetFinder::on_dislikeButton_clicked()
 
         deleteClicked = false;
     } else {
-        //SEND INFO TO DATABASE
         //Iterates one up through the petList
-        petIndex++;
-        //displayPet(petList.at(petIndex));
+        if(!matchmaker->DM->pets.empty() && petIndex + 1 < (int)matchmaker->DM->pets.size()) {
+            cout << "GUI PetFinder screen: Dislike button clicked, next pet displayed" << endl;
+            petIndex++;
+            displayPet(matchmaker->DM->pets.at(petIndex));
+        } else {
+            cout << "GUI PetFinder screen: Dislike button clicked, no more pets to display" << endl;
+            displayEmptyPet();
+        }
     }
 }

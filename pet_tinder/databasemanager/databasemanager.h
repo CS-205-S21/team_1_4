@@ -26,26 +26,28 @@ struct Adopter {
     string username;
     vector<int> likedPetIds;
     vector<int> dislikedPetIds;
+    string bio;
 
     string prefSpecies;
-    int prefSpeciesReq;
+    bool prefSpeciesReq;
     string prefBreed;
-    int prefBreedReq;
+    bool prefBreedReq;
     int prefAge;
-    int prefAgeReq;
+    bool prefAgeReq;
     double prefWeight;
-    int prefWeightReq;
+    bool prefWeightReq;
     string prefColor;
-    int prefColorReq;
+    bool prefColorReq;
     int prefHypoallergenic;
-    int prefHypoallergenicReq;
+    bool prefHypoallergenicReq;
     string prefSex;
-    int prefSexReq;
+    bool prefSexReq;
 };
 struct Adoptee {
     string username;
     string shelter;
     vector<int> ownedPetIds;
+    string bio;
 };
 
 class DatabaseManager

@@ -3,9 +3,6 @@
 #include "../matchmaking/matchmaker.h"
 #include "../databasemanager/databasemanager.h"
 
-// TO DO: EDIT TO MATCH CURRENT DATABSE PARAMETERS
-// TO DO: EDIT SO THAT IT MIGHT BE ABLE TO WORK WITH OTHER THINGS IN THE DATABASE
-
 // The fixture for testing class Databasemanager
 class DatabaseManager_Test : public::testing::Test {
     protected:
@@ -35,14 +32,179 @@ class Matchmaking_Test : public::testing::Test {
     Matchmaking_Test() {
         mm = new Matchmaker();
         dm = mm->DM;
+        addTestAdopters();
+
+        dm->pets.clear();
+        mm->total.species.clear();
+        mm->total.breeds.clear();
+        mm->total.colors.clear();
+        mm->total.ages.clear();
+        mm->total.weights.clear();
+        addTestPets();
+    }
+
+    void addTestPets(){
+        tPet1 = new Pet;
+        tPet1->name = "Loki";
+        tPet1->species = "Dog";
+        tPet1->breed = "Shorkie";
+        tPet1->age = 1;
+        tPet1->weight = 12.5;
+        tPet1->color = "Brown";
+        tPet1->hypoallergenic = false;
+        tPet1->sex = "Female";
+        tPet1->bio = "The beloved Puppy of Danny, the head Tester for Claws n' Paws!";
+        dm->addPet(tPet1);
+
+        tPet2 = new Pet;
+        tPet2->name = "Sir McQuackins";
+        tPet2->species = "Duck";
+        tPet2->breed = "Domestic";
+        tPet2->age = 4;
+        tPet2->weight = 9.0;
+        tPet2->color = "White";
+        tPet2->hypoallergenic = false;
+        tPet2->sex = "Male";
+        tPet2->bio = "What time does a duck wake up in the morning? At the quack of Dawn!";
+        dm->addPet(tPet2);
+
+        tPet3 = new Pet;
+        tPet3->name = "Frumpkin";
+        tPet3->species = "Cat";
+        tPet3->breed = "Bengal";
+        tPet3->age = 7;
+        tPet3->weight = 8.4;
+        tPet3->color = "Orange";
+        tPet3->hypoallergenic = true;
+        tPet3->sex = "Male";
+        tPet3->bio = "Oh, you have cat to be kitten me right meow ^.^ OwO";
+        dm->addPet(tPet3);
+
+        tPet4 = new Pet;
+        tPet4->name = "Thor";
+        tPet4->species = "Dog";
+        tPet4->breed = "Shih Tzu";
+        tPet4->age = 7;
+        tPet4->weight = 12.5;
+        tPet4->color = "White";
+        tPet4->hypoallergenic = true;
+        tPet4->sex = "Male";
+        tPet4->bio = "I went to the zoo, but they only had one dog... It was a Shih Tzu";
+        dm->addPet(tPet4);
+    }
+
+    void addTestAdopters(){
+        vector<int> likedPets;
+        vector<int> dislikedPets;
+        for(int i = 1; i<dm->getNumPets(); i++){
+            likedPets.push_back(i);
+        }
+        dislikedPets.push_back(0);
+
+        dan = new Adopter;
+        dan->username = "Danny_Admin";
+        dan->likedPetIds = likedPets;
+        dan->dislikedPetIds = dislikedPets;
+        dan->prefSpecies = "Dog";
+        dan->prefSpeciesReq = false;
+        dan->prefBreed = "Shorkie";
+        dan->prefBreedReq = false;
+        dan->prefAge = 1;
+        dan->prefAgeReq = false;
+        dan->prefWeight = 12.5;
+        dan->prefWeightReq = false;
+        dan->prefColor = "Brown";
+        dan->prefColorReq = false;
+        dan->prefHypoallergenic = false;
+        dan->prefHypoallergenicReq = false;
+        dan->prefSex = "Female";
+        dan->prefSexReq = false;
+        dm->addAdopter(dan, "D1a2N3");
+
+        alex = new Adopter;
+        alex->username = "Alex_Admin";
+        alex->likedPetIds = likedPets;
+        alex->dislikedPetIds = dislikedPets;
+        alex->prefSpecies = "Duck";
+        alex->prefSpeciesReq = true;
+        alex->prefBreed = "Domestic";
+        alex->prefBreedReq = true;
+        alex->prefAge = 4;
+        alex->prefAgeReq = true;
+        alex->prefWeight = 9.0;
+        alex->prefWeightReq = true;
+        alex->prefColor = "White";
+        alex->prefColorReq = true;
+        alex->prefHypoallergenic = false;
+        alex->prefHypoallergenicReq = true;
+        alex->prefSex = "Male";
+        alex->prefSexReq = true;
+        dm->addAdopter(alex, "A1l2E3x4");
+
+        ally = new Adopter;
+        ally->username = "Ally_Admin";
+        ally->likedPetIds = likedPets;
+        ally->dislikedPetIds = dislikedPets;
+        ally->prefSpecies = "Cat";
+        ally->prefSpeciesReq = true;
+        ally->prefBreed = "Russian Blue";
+        ally->prefBreedReq = false;
+        ally->prefAge = 4;
+        ally->prefAgeReq = true;
+        ally->prefWeight = 12.5;
+        ally->prefWeightReq = true;
+        ally->prefColor = "Orange";
+        ally->prefColorReq = true;
+        ally->prefHypoallergenic = false;
+        ally->prefHypoallergenicReq = true;
+        ally->prefSex = "Male";
+        ally->prefSexReq = false;
+        dm->addAdopter(ally, "A1l2L3y4");
+
+        addy = new Adopter;
+        addy->username = "Addy_Admin";
+        addy->likedPetIds = likedPets;
+        addy->dislikedPetIds = dislikedPets;
+        addy->prefSpecies = "Pig";
+        addy->prefSpeciesReq = 1;
+        addy->prefBreed = "Duroc";
+        addy->prefBreedReq = 1;
+        addy->prefAge = 8;
+        addy->prefAgeReq = 1;
+        addy->prefWeight = 27.5;
+        addy->prefWeightReq = 1;
+        addy->prefColor = "Gray";
+        addy->prefColorReq = 1;
+        addy->prefHypoallergenic = 1;
+        addy->prefHypoallergenicReq = 1;
+        addy->prefSex = "Male";
+        addy->prefSexReq = 1;
+        dm->addAdopter(addy, "A1d2D3y4");
     }
 
     virtual void TearDown() {
+        dm->removePet(tPet1->id);
+        dm->removePet(tPet2->id);
+        dm->removePet(tPet3->id);
+        dm->removePet(tPet4->id);
+        dm->removeAdopter(dan->username);
+        dm->removeAdopter(alex->username);
+        dm->removeAdopter(ally->username);
+        dm->removeAdopter(addy->username);
+        delete dm;
         delete mm;
     }
 
     Matchmaker *mm;
     DatabaseManager *dm;
+    Pet *tPet1;
+    Pet *tPet2;
+    Pet *tPet3;
+    Pet *tPet4;
+    Adopter *dan;
+    Adopter *alex;
+    Adopter *ally;
+    Adopter *addy;
 };
 
 //*********************************************************************************************************************
@@ -161,7 +323,7 @@ TEST_F(DatabaseManager_Test, ADD_NONEXISTENT_PET) {
 }
 
 //This will test to see if you can add a pet with weird data such as a negative id number
-TEST_F(DatabaseManager_Test, WEIRD_DATA) {
+TEST_F(DatabaseManager_Test, WEIRD_PET_DATA) {
     Pet *animal = new Pet;
     ASSERT_EQ(numPets, dm->getNumPets())
                     << "Pets should have normal amount of pets";
@@ -295,19 +457,19 @@ TEST_F(DatabaseManager_Test, ADD_AND_REMOVE_ADOPTER) {
     dan->likedPetIds = likedPets;
     dan->dislikedPetIds = dislikedPets;
     dan->prefSpecies = "Dog";
-    dan->prefSpeciesReq = 1;
+    dan->prefSpeciesReq = true;
     dan->prefBreed = "Shorkie";
-    dan->prefBreedReq = 0;
+    dan->prefBreedReq = false;
     dan->prefAge = 3;
-    dan->prefAgeReq = 0;
+    dan->prefAgeReq = false;
     dan->prefWeight = 2.0;
-    dan->prefWeightReq = 0;
+    dan->prefWeightReq = false;
     dan->prefColor = "Brown";
-    dan->prefColorReq = 0;
-    dan->prefHypoallergenic = 1;
-    dan->prefHypoallergenicReq = 1;
+    dan->prefColorReq = false;
+    dan->prefHypoallergenic = true;
+    dan->prefHypoallergenicReq = true;
     dan->prefSex = "Female";
-    dan->prefSexReq = 0;
+    dan->prefSexReq = false;
 
     ASSERT_TRUE(dm->addAdopter(dan, "Password"))
                         << "dan the adopter was not added.";
@@ -332,19 +494,19 @@ TEST_F(DatabaseManager_Test, ADD_SAME_ADOPTER_INFO) {
     addison->likedPetIds = likedPets;
     addison->dislikedPetIds = dislikedPets;
     addison->prefSpecies = "Cat";
-    addison->prefSpeciesReq = 0;
+    addison->prefSpeciesReq = false;
     addison->prefBreed = "Mao";
-    addison->prefBreedReq = 0;
+    addison->prefBreedReq = false;
     addison->prefAge = 2;
-    addison->prefAgeReq = 0;
+    addison->prefAgeReq = false;
     addison->prefWeight = 20.9;
-    addison->prefWeightReq = 0;
+    addison->prefWeightReq = false;
     addison->prefColor = "gray";
-    addison->prefColorReq = 1;
-    addison->prefHypoallergenic = 0;
-    addison->prefHypoallergenicReq = 0;
+    addison->prefColorReq = true;
+    addison->prefHypoallergenic = false;
+    addison->prefHypoallergenicReq = false;
     addison->prefSex = "Male";
-    addison->prefSexReq = 1;
+    addison->prefSexReq = true;
 
     Adopter *copy = new Adopter;
     ASSERT_EQ(numAdopters, dm->getNumAdopters())
@@ -353,19 +515,19 @@ TEST_F(DatabaseManager_Test, ADD_SAME_ADOPTER_INFO) {
     copy->likedPetIds = addison->likedPetIds;
     copy->dislikedPetIds = addison->dislikedPetIds;
     copy->prefSpecies = "Cat";
-    copy->prefSpeciesReq = 0;
+    copy->prefSpeciesReq = false;
     copy->prefBreed = "Mao";
-    copy->prefBreedReq = 0;
+    copy->prefBreedReq = false;
     copy->prefAge = 2;
-    copy->prefAgeReq = 0;
+    copy->prefAgeReq = false;
     copy->prefWeight = 20.9;
-    copy->prefWeightReq = 0;
+    copy->prefWeightReq = false;
     copy->prefColor = "gray";
-    copy->prefColorReq = 1;
-    copy->prefHypoallergenic = 0;
-    copy->prefHypoallergenicReq = 0;
+    copy->prefColorReq = true;
+    copy->prefHypoallergenic = false;
+    copy->prefHypoallergenicReq = false;
     copy->prefSex = "Male";
-    copy->prefSexReq = 1;
+    copy->prefSexReq = true;
 
     ASSERT_TRUE(dm->addAdopter(addison, "Password"))
                         << "addison the adopter was not added.";
@@ -396,19 +558,19 @@ TEST_F(DatabaseManager_Test, ADD_EMPTY_ADOPTER) {
     alex->likedPetIds = likedPets;
     alex->dislikedPetIds = dislikedPets;
     alex->prefSpecies = "";
-    alex->prefSpeciesReq = 0;
+    alex->prefSpeciesReq = false;
     alex->prefBreed = "";
-    alex->prefBreedReq = 0;
+    alex->prefBreedReq = false;
     alex->prefAge = 0;
-    alex->prefAgeReq = 0;
+    alex->prefAgeReq = false;
     alex->prefWeight = 0.0;
-    alex->prefWeightReq = 0;
+    alex->prefWeightReq = false;
     alex->prefColor = "";
-    alex->prefColorReq = 0;
-    alex->prefHypoallergenic = 0;
-    alex->prefHypoallergenicReq = 0;
+    alex->prefColorReq = false;
+    alex->prefHypoallergenic = false;
+    alex->prefHypoallergenicReq = false;
     alex->prefSex = "";
-    alex->prefSexReq = 1;
+    alex->prefSexReq = true;
 
     ASSERT_TRUE(dm->addAdopter(alex, ""))
                         << "Alex the adopter was not added.";
@@ -442,19 +604,19 @@ TEST_F(DatabaseManager_Test, ADD_WEIRD_ADOPTER) {
     ally->likedPetIds = likedPets;
     ally->dislikedPetIds = dislikedPets;
     ally->prefSpecies = "gray";
-    ally->prefSpeciesReq = 1;
+    ally->prefSpeciesReq = true;
     ally->prefBreed = "yellow";
-    ally->prefBreedReq = 1;
+    ally->prefBreedReq = true;
     ally->prefAge = -100;
-    ally->prefAgeReq = 1;
+    ally->prefAgeReq = true;
     ally->prefWeight = -100.0;
-    ally->prefWeightReq = 1;
+    ally->prefWeightReq = true;
     ally->prefColor = "Abraham Lincoln";
-    ally->prefColorReq = 1;
-    ally->prefHypoallergenic = 0;
-    ally->prefHypoallergenicReq = 1;
+    ally->prefColorReq = true;
+    ally->prefHypoallergenic = false;
+    ally->prefHypoallergenicReq = true;
     ally->prefSex = "Gay";
-    ally->prefSexReq = 1;
+    ally->prefSexReq = true;
 
     ASSERT_TRUE(dm->addAdopter(ally, ""))
                         << "Ally the adopter was not added.";
@@ -479,19 +641,19 @@ TEST_F(DatabaseManager_Test, READ_IN_ADOPTER) {
     js->likedPetIds = likedPets;
     js->dislikedPetIds = dislikedPets;
     js->prefSpecies = "Cat";
-    js->prefSpeciesReq = 1;
+    js->prefSpeciesReq = true;
     js->prefBreed = "Butter";
-    js->prefBreedReq = 1;
+    js->prefBreedReq = true;
     js->prefAge = 2;
-    js->prefAgeReq = 0;
+    js->prefAgeReq = false;
     js->prefWeight = 10.0;
-    js->prefWeightReq = 0;
+    js->prefWeightReq = false;
     js->prefColor = "Silver";
-    js->prefColorReq = 1;
-    js->prefHypoallergenic = 1;
-    js->prefHypoallergenicReq = 0;
+    js->prefColorReq = true;
+    js->prefHypoallergenic = true;
+    js->prefHypoallergenicReq = false;
     js->prefSex = "Female";
-    js->prefSexReq = 1;
+    js->prefSexReq = true;
 
     ASSERT_TRUE(dm->addAdopter(js, "ButterIsGorgeous72"))
                         << "Justin Smith the adopter was not added.";
@@ -622,10 +784,52 @@ TEST_F(DatabaseManager_Test, READ_IN_ADOPTEE) {
 //*********************************************************************************************************************
 //*********************************************************************************************************************
 //This test will be a basic test for Matchmaker
-/*TEST_F(Matchmaking_Test, TEST_NAME){
+/*
+TEST_F(Matchmaking_Test, SORT_AND_ARRANGE_PREFS_TESTS){
+    vector<string> speciesR;
+    vector<string> breedR;
+    vector<string> colorR;
+    vector<int> ageR;
+    vector<double> weightR;
 
-}*/
+    speciesR.push_back("Cat");
+    speciesR.push_back("Dog");
+    speciesR.push_back("Duck");
 
+    breedR.push_back("Bengal");
+    breedR.push_back("Domestic");
+    breedR.push_back("Shih Tzu");
+    breedR.push_back("Shorkie");
+
+    colorR.push_back("Brown");
+    colorR.push_back("Orange");
+    colorR.push_back("White");
+
+    ageR.push_back(1);
+    ageR.push_back(4);
+    ageR.push_back(7);
+
+    weightR.push_back(8.4);
+    weightR.push_back(9.0);
+    weightR.push_back(12.5);
+
+    mm->sortPrefs();
+
+    ASSERT_EQ(speciesR, mm->total.species);
+    ASSERT_EQ(breedR, mm->total.breeds);
+    ASSERT_EQ(colorR, mm->total.colors);
+    ASSERT_EQ(ageR, mm->total.ages);
+    ASSERT_EQ(weightR, mm->total.weights);
+}
+
+//First Test for the matchmaking system based on the user's preferences
+TEST_F(Matchmaking_Test, MATCHMAKER_TEST_PREFS){
+    ASSERT_EQ(4, mm->DatabaseInterface("Danny_Admin", "D1a2N3").size());
+    ASSERT_EQ(1, mm->DatabaseInterface("Alex_Admin", "A1l2E3x4").size());
+    ASSERT_EQ(0, mm->DatabaseInterface("Ally_Admin", "A1l2L3y4").size());
+    ASSERT_EQ(0, mm->DatabaseInterface("Addy_Admin", "A1d2D3y4").size());
+}
+*/
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

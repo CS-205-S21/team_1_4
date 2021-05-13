@@ -36,7 +36,7 @@ void DatabaseManager::readInPets() {
             pet->age = query.value("age").toInt();
             pet->weight = query.value("weight").toDouble();
             pet->color = query.value("color").toString().toStdString();
-            pet->hypoallergenic = query.value("hypoallergenic").toInt();
+            pet->hypoallergenic = query.value("hypoallergenic").toBool();
             pet->sex = query.value("sex").toString().toStdString();
             pet->bio = query.value("bio").toString().toStdString();
 
@@ -75,7 +75,7 @@ Adopter* DatabaseManager::readInAdopter(string username, string password) {
                   "prefSpecies, prefSpeciesReq, prefBreed, prefBreedReq, "
                   "prefAge, prefAgeReq, prefWeight, prefWeightReq, "
                   "prefColor, prefColorReq, prefHypoallergenic, prefHypoallergenicReq, "
-                  "prefSex, prefSexReq FROM adopter "
+                  "prefSex, prefSexReq, bio FROM adopter "
                   "WHERE usernameAdopter = (:username) AND password = (:password);");
     query.bindValue(":username", qUsername);
     query.bindValue(":password", qPassword);
@@ -100,6 +100,7 @@ Adopter* DatabaseManager::readInAdopter(string username, string password) {
         adopter->prefHypoallergenicReq = query.value("prefHypoallergenicReq").toInt();
         adopter->prefSex = query.value("prefSex").toString().toStdString();
         adopter->prefSexReq = query.value("prefSexReq").toInt();
+        adopter->bio = query.value("bio").toString().toStdString();
 
         return adopter; //Returns adopter struct
     } else if(!exists){
@@ -111,7 +112,6 @@ Adopter* DatabaseManager::readInAdopter(string username, string password) {
     }
 }
 
-//WARNING: THIS DOES NOT WORK
 Adoptee* DatabaseManager::readInAdoptee(string username, string password) {
     //Prepares username and password for use in query
     QString qUsername = QString::fromStdString(username);
@@ -130,7 +130,7 @@ Adoptee* DatabaseManager::readInAdoptee(string username, string password) {
 
     //Prepares a query that will read in all pets ordered by id.
     QSqlQuery query;
-    query.prepare("SELECT usernameAdoptee, shelter, petIds FROM adoptee "
+    query.prepare("SELECT usernameAdoptee, shelter, petIds, bio FROM adoptee "
                   "WHERE usernameAdoptee = (:usernameAdoptee) AND password = (:password);");
     query.bindValue(":usernameAdoptee", qUsername);
     query.bindValue(":password", qPassword);
@@ -141,6 +141,7 @@ Adoptee* DatabaseManager::readInAdoptee(string username, string password) {
         adoptee->username = query.value("usernameAdoptee").toString().toStdString();
         adoptee->shelter = query.value("shelter").toString().toStdString();
         adoptee->ownedPetIds = stringToIntVector(query.value("petIds").toString().toStdString());
+        adoptee->bio = query.value("bio").toString().toStdString();
         return adoptee; //Returns adoptee struct
     } else if(!exists){
         qDebug() << "Adoptee Cannot be found using Select." << endl;
@@ -212,23 +213,26 @@ int DatabaseManager::getNumAdoptees() {
 
 //Adds a pet to the database of pets and to the vector pf pets
 bool DatabaseManager::addPet(Pet *pet) {
-    cout<<pet->name<<" Has been added"<<endl;
-    petIdMax++;
-    pet->id = petIdMax; //Sets given pet's id to max id + 1
-    //cout << pet->id << std::endl;
     QSqlQuery sel;
-    sel.prepare("SELECT petId FROM pet WHERE petId = (:pid)");
-    sel.bindValue(":pid", pet->id);
+    sel.prepare("SELECT name, species, breed FROM pet WHERE name = (:name) AND species = (:species) AND breed = (:breed)");
+    QString n = QString::fromStdString(pet->name);
+    sel.bindValue(":name", n);
+    QString s = QString::fromStdString(pet->name);
+    sel.bindValue(":species", s);
+    QString b = QString::fromStdString(pet->name);
+    sel.bindValue(":breed", b);
     if(sel.exec()){
         if(sel.next()){
             return false;
         }
     }
-
     //Tests for bad data
     if(pet->age <= 0 || pet->weight <= 0) {
         return false;
     }
+    petIdMax++;
+    pet->id = petIdMax; //Sets given pet's id to max id + 1
+    //cout << pet->id << std::endl;
 
     //Prepares a query that inserts all pet info from pet struct
     QSqlQuery q;
@@ -263,11 +267,21 @@ bool DatabaseManager::addPet(Pet *pet) {
 
 //Removes a pet from the database of pets
 bool DatabaseManager::removePet(int petId) {
+    bool exists = false;
+    QSqlQuery sel;
+    sel.prepare("SELECT petId FROM pet WHERE petId = (:id);");
+    sel.bindValue(":id", petId);
+    if(sel.exec()){
+        if(sel.next()){
+            exists = true;
+        }
+    }
+
     QSqlQuery q;
     q.prepare("DELETE FROM pet WHERE petId = (:petId);");
     q.bindValue(":petId", petId);
 
-    if(q.exec()) {
+    if(q.exec() && exists) {
         //Searches through pets vector to find pet with given id
         for(int i = 0; i < (int)pets.size(); i++) {
             //When pet with matching id is found, return it

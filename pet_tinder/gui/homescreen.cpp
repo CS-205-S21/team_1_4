@@ -29,10 +29,11 @@ void HomeScreen::on_loginButton_clicked() {
         //Lets rest of gui know that user is an adopter
         petWindow->isUserAdopter = true;
         //Passes adopter to database to begin matchmaking
-        petWindow->petList = petWindow->matchmaker->DatabaseInterface(username, password);
-        //Passes adopter to profileWindow to display their info
+        //petWindow->petList = petWindow->matchmaker->DatabaseInterface(username, password);
+
+        //Passes adopter to profileWindow and displays their info
         petWindow->profileWindow->userInfoAdopter = userInfoAdopter;
-        //ADD SUPPORT FOR NO PETS MATCH PREFERENCES
+        petWindow->profileWindow->displayUserInfo(true);
 
         //Initialize pet window's display
         petWindow->initialize();
@@ -50,8 +51,9 @@ void HomeScreen::on_loginButton_clicked() {
             //Lets rest of gui know that user is an adoptee
             petWindow->isUserAdopter = false;
 
-            //Passes adoptee to profileWindow to display their info
+            //Passes adoptee to profileWindow and displays their info
             petWindow->profileWindow->userInfoAdoptee = userInfoAdoptee;
+            petWindow->profileWindow->displayUserInfo(false);
 
             //Initialize pet window's display
             petWindow->initialize();
