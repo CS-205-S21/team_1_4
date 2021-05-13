@@ -475,6 +475,18 @@ QString DatabaseManager::intVectorToQString(vector<int> vec) {
     return str;
 }
 
+vector<string> DatabaseManager::messageParse(string message) {
+    string delimeterSender = ":";
+    string delimeterEndMessage = "|";
+
+    while(message.length() > 0) {
+        string senderReciever = message.substr(0, message.find(delimeterSender));
+        cout << senderReciever << endl;
+        message.erase(0, message.find(delimeterSender));
+        if(senderReciever == "S");
+    }
+}
+
 int DatabaseManager::getPetIdMax() {
     return petIdMax;
 }
