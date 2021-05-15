@@ -22,8 +22,8 @@ void DatabaseManager::readInPets() {
 
     //Prepares a query that will read in all pets ordered by id.
     QSqlQuery query;
-    query.prepare("SELECT petId, name, species, breed, age, weight,"
-                    "color, hypoallergenic, sex, bio FROM pet ORDER BY petId;");
+    query.prepare("SELECT petId, name, species, breed, age, weight, "
+                  "color, hypoallergenic, sex, bio FROM pet ORDER BY petId;");
 
     if(query.exec()) {
         while(query.next()) {
@@ -150,6 +150,74 @@ Adoptee* DatabaseManager::readInAdoptee(string username, string password) {
          qDebug() << "Read Adoptee through query error: " << query.lastError();
          return nullptr;
     }
+}
+
+//Checks given username against all others to find if it is unique
+bool DatabaseManager::isUsernameTaken(string username) {
+    QSqlQuery query;
+    query.prepare("SELECT usernameAdopter FROM adopter;");
+    if(query.exec()) {
+        while(query.next()) {
+            //If given username is ever equal to a found name, return true
+            if(username.compare(query.value("usernameAdopter").toString().toStdString()) == 0) {
+                return true;
+            }
+        }
+    }
+    query.prepare("SELECT usernameAdoptee FROM adoptee;");
+    if(query.exec()) {
+        while(query.next()) {
+            //If given username is ever equal to a found name, return true
+            if(username.compare(query.value("usernameAdoptee").toString().toStdString()) == 0) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+//Finds adopter who has liked pet with given id
+Adopter* DatabaseManager::findAdopterPet(int id) {
+    QSqlQuery query;
+    query.prepare("SELECT likedPetIds, usernameAdopter, password FROM adopter "
+                  "ORDER BY likedPetIds;");
+    if(query.exec()) {
+        while(query.next()) {
+            //Pull vector of liked pets for current adopter
+            vector<int> likedPetIds = stringToIntVector(query.value("likedPetIds").toString().toStdString());
+            //Parse likedPetIds
+            for(int i = 0; i < likedPetIds.size(); i++) {
+                //If likedPetIds contains the id being searched for, pull and return said adopter
+                if(likedPetIds.at(i) == id) {
+                    return readInAdopter(query.value("usernameAdopter").toString().toStdString(),
+                                         query.value("password").toString().toStdString());
+                }
+            }
+        }
+    }
+    return nullptr;
+}
+
+//Finds adoptee who owns pet with given id
+Adoptee* DatabaseManager::findAdopteePet(int id) {
+    QSqlQuery query;
+    query.prepare("SELECT petIds, usernameAdoptee, password FROM adoptee "
+                  "ORDER BY petIds;");
+    if(query.exec()) {
+        while(query.next()) {
+            //Pull vector of liked pets for current adoptee
+            vector<int> petIds = stringToIntVector(query.value("petIds").toString().toStdString());
+            //Parse likedPetIds
+            for(int i = 0; i < petIds.size(); i++) {
+                //If petIds contains the id being searched for, pull and return said adoptee
+                if(petIds.at(i) == id) {
+                    return readInAdoptee(query.value("usernameAdoptee").toString().toStdString(),
+                                         query.value("password").toString().toStdString());
+                }
+            }
+        }
+    }
+    return nullptr;
 }
 
 //Finds pet with given id

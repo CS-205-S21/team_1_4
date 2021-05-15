@@ -13,6 +13,12 @@ int main() {
     dm->findPet(4)->name;
     cout << dm->findPet(5)->name << endl << endl;
 
+    //cout << dm->isUsernameTaken("Glue") << endl << endl;
+
+    cout << "User: " + dm->findAdopterPet(1)->username << endl;
+    cout << "User: " + dm->findAdopteePet(1)->username << endl;
+
+    /*
     cout << "Message test: " << endl;
     vector<string> messageTest;
     messageTest = dm->messageParse("S:Hello my na:me is kate|R:Kate is a st:::upid name|S:Well that's rude"
@@ -21,5 +27,6 @@ int main() {
     cout << "RETURNED VECTOR TEXT: " << endl;
     for(string i : messageTest) {
         cout << i << endl;
-    }
+    }*/
+
 }

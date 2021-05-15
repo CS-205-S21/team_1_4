@@ -272,7 +272,7 @@
      <item>
       <layout class="QVBoxLayout" name="chatLayout" stretch="1,0,4,0,0">
        <item>
-        <widget class="QComboBox" name="comboBox"/>
+        <widget class="QComboBox" name="otherConvos"/>
        </item>
        <item>
         <widget class="QLabel" name="title">
@@ -328,7 +328,10 @@
           </palette>
          </property>
          <property name="text">
-          <string>Example message</string>
+          <string>user: Hi my name is Addison and I am a beautiful man </string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
          </property>
         </widget>
        </item>

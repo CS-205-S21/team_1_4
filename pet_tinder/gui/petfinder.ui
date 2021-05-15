@@ -594,13 +594,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Name: Sir McQuackinns
-
-Species: Duck
-
-Breed: Cutie
-
-Bio: What time does a duck wake up in the morning? At the quack of dawn! bgtdg tg trh th th yh g fygj ytj tyj gcjtyh yhj dyjycj fygj tyj ytj yt jygj ty cyj yjtctrh tf hcft tfh cft hg</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a bio, which users will never see ever so we can write anything we want here.&lt;/p&gt;&lt;p&gt;haha poopy&lt;/p&gt;&lt;p&gt;Richie &amp;amp; Anna &amp;lt;3&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="scaledContents">
              <bool>false</bool>

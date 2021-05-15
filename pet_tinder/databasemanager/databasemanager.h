@@ -97,6 +97,22 @@ public:
     bool isUsernameTaken(string username);
 
     /**
+     * @brief findAdopterPet - Finds adopter who has liked pet with given id
+     * @param id - id for pet to look for among adopters
+     * @return Adopter - struct of adopter's info
+     *  or nullptr if no adopter was found (though that shouldn't happen)
+     */
+    Adopter* findAdopterPet(int id);
+
+    /**
+     * @brief findAdopteePet - Finds adoptee who has owned pet with given id
+     * @param id - id for pet to look for among adoptees
+     * @return Adoptee - struct of adoptee's info or nullptr
+     *  if no adopter was found (though that shouldn't happen)
+     */
+    Adoptee* findAdopteePet(int id);
+
+    /**
      * @brief DatabaseManager::findPet - Finds pet with given id from vector
      * @param findId - Id of pet to search for
      * @return Pointer to Pet struct of pet's info. If no pet is found,
@@ -197,6 +213,10 @@ public:
      */
     vector<string> messageParse(string message);
 
+    /**
+     * @brief getPetIdMax - Getter method for petIdMax
+     * @return int - petIdMax
+     */
     int getPetIdMax();
 
 private:

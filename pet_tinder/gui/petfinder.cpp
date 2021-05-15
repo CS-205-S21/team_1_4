@@ -134,9 +134,11 @@ void PetFinder::on_likeButton_clicked() {
         if(petList.size() > 0 && petIndex + 1 < (int)petList.size()) {
             cout << "GUI PetFinder screen: Like button clicked, next pet displayed" << endl;
             //Adds pet id to user info's liked pet list
-            profileWindow->userInfoAdopter->likedPetIds.push_back(petList.at(petIndex)->id);
+            Pet* pet = petList.at(petIndex);
+            profileWindow->userInfoAdopter->likedPetIds.push_back(pet->id);
             petIndex++;
-            displayPet(petList.at(petIndex));
+            displayPet(pet);
+            petListWindow->updateConvos(pet, matchmaker->DM->findAdopteePet(pet->id));
         } else {
             cout << "GUI PetFinder screen: Like button clicked, no more pets to display" << endl;
             displayEmptyPet();
@@ -165,6 +167,7 @@ void PetFinder::on_dislikeButton_clicked()
             cout << "GUI PetFinder screen: Like button clicked, next pet displayed" << endl;
             //Adds pet id to user info's liked pet list
             profileWindow->userInfoAdopter->dislikedPetIds.push_back(petList.at(petIndex)->id);
+            //RUN DM METHOD AND SEND INFO TO PETLIST
             petIndex++;
             displayPet(petList.at(petIndex));
         } else {
