@@ -74,3 +74,8 @@ void HomeScreen::on_usernameInput_textEdited(const QString &arg1) {
 void HomeScreen::on_passwordInput_textEdited(const QString &arg1) {
     password = arg1.toStdString();
 }
+
+void HomeScreen::on_newAccount_clicked()
+{
+
+}

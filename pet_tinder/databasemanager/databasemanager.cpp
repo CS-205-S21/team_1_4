@@ -483,14 +483,38 @@ QString DatabaseManager::intVectorToQString(vector<int> vec) {
 }
 
 vector<string> DatabaseManager::messageParse(string message) {
-    string delimeterSender = ":";
-    string delimeterEndMessage = "|";
+    cout << "Database Manager: parsing message" << endl;
 
+    vector<string> messageVec;
+    string delimeterSender = ":";     //Marks end of sender character ('S' or 'R')
+    string delimeterEndMessage = "|"; //Marks end of sent message
+
+    //Code eats chunks of the message as it parses,
+    // so this runs until the message is fully consumed by the great coding lords
     while(message.length() > 0) {
+        //Cuts sender/reciever character out
         string senderReciever = message.substr(0, message.find(delimeterSender));
-        cout << senderReciever << endl;
+        cout << "SR char: " + senderReciever << endl;
         message.erase(0, message.find(delimeterSender));
-        if(senderReciever == "S");
+        //Finds message sent/recieved out
+        string foundMessage = message.substr(1, message.find(delimeterEndMessage) - 1);
+        cout << "Found message: " + foundMessage << endl;
+
+
+        //Checks what sender/reciever character was found
+        if(senderReciever == "R") {
+            messageVec.push_back(foundMessage.append("R"));
+        } else {
+            messageVec.push_back(foundMessage.append("S"));
+        }
+
+        cout << "Message: " + message << endl;
+        if(message.find('|') == string::npos) {
+            return messageVec;
+        }
+        //Removes found message
+        message.erase(0, message.find(delimeterEndMessage) + 1);
+
     }
 }
 

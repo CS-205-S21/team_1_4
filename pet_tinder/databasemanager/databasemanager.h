@@ -175,6 +175,18 @@ public:
      */
     QString intVectorToQString(vector<int> vec);
 
+    /**
+     * @brief messageParse - Parses user message strings into a vector
+     *  of seperated messages
+     * @param message - A string holding all messages between the user
+     *  and one other, formatted ONLY like:
+     *  "S:Sender's message|R:Reciever's message|", etc.
+     *  Typically only used on message strings read in straight from the database
+     * @return vector<string> - A vector of individual messages, type
+     *  denoted by the back character of the string. User string::pop_back
+     *  to check whether the message was sent by the user ('S') or
+     *  the other party ('R')
+     */
     vector<string> messageParse(string message);
 
     int getPetIdMax();

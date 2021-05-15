@@ -29,6 +29,8 @@ private slots:
 
     void on_passwordInput_textEdited(const QString &arg1);
 
+    void on_newAccount_clicked();
+
 private:
     Ui::HomeScreen* ui;
     PetFinder* petWindow;
