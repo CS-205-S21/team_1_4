@@ -133,6 +133,8 @@ void PetFinder::on_likeButton_clicked() {
         //Iterates one up through the petList
         if(petList.size() > 0 && petIndex + 1 < (int)petList.size()) {
             cout << "GUI PetFinder screen: Like button clicked, next pet displayed" << endl;
+            //Adds pet id to user info's liked pet list
+            profileWindow->userInfoAdopter->likedPetIds.push_back(petList.at(petIndex)->id);
             petIndex++;
             displayPet(petList.at(petIndex));
         } else {
@@ -161,6 +163,8 @@ void PetFinder::on_dislikeButton_clicked()
         //Iterates one up through the petList
         if(petList.size() > 0 && petIndex + 1 < (int)petList.size()) {
             cout << "GUI PetFinder screen: Like button clicked, next pet displayed" << endl;
+            //Adds pet id to user info's liked pet list
+            profileWindow->userInfoAdopter->dislikedPetIds.push_back(petList.at(petIndex)->id);
             petIndex++;
             displayPet(petList.at(petIndex));
         } else {

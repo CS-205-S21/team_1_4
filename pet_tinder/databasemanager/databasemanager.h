@@ -89,6 +89,14 @@ public:
     Adoptee* readInAdoptee(string username, string password);
 
     /**
+     * @brief checkUsernames - Checks given username against usernames
+     *  of all adopters and adoptees
+     * @param username - Username to check for
+     * @return bool - true if username is taken, false otherwise
+     */
+    bool isUsernameTaken(string username);
+
+    /**
      * @brief DatabaseManager::findPet - Finds pet with given id from vector
      * @param findId - Id of pet to search for
      * @return Pointer to Pet struct of pet's info. If no pet is found,
