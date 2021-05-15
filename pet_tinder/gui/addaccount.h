@@ -20,6 +20,7 @@ public:
     QString username;
     QString password;
     QString confirmPassword;
+    int role;
 
 private slots:
     void on_cancelbutton_clicked();
