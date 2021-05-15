@@ -25,7 +25,7 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -35,46 +35,7 @@
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="5" column="1">
-     <widget class="QPushButton" name="cancelbutton">
-      <property name="text">
-       <string>Cancel</string>
-      </property>
-     </widget>
-    </item>
-    <item row="5" column="2">
-     <widget class="QPushButton" name="saveNewAccount">
-      <property name="text">
-       <string>Save</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1" colspan="2">
-     <widget class="QLineEdit" name="newUsernameInput"/>
-    </item>
-    <item row="2" column="1" colspan="2">
-     <widget class="QLineEdit" name="newPasswordInput"/>
-    </item>
-    <item row="1" column="3">
-     <widget class="QComboBox" name="roleChooser">
-      <item>
-       <property name="text">
-        <string>Select</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Adopter</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>Adoptee</string>
-       </property>
-      </item>
-     </widget>
-    </item>
-    <item row="2" column="0">
+    <item row="3" column="0">
      <widget class="QLabel" name="password">
       <property name="font">
        <font>
@@ -99,7 +60,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
+    <item row="2" column="0">
      <widget class="QLabel" name="Username">
       <property name="font">
        <font>
@@ -112,10 +73,10 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="1" colspan="2">
+    <item row="4" column="1" colspan="2">
      <widget class="QLineEdit" name="newConfirmPasswordInput"/>
     </item>
-    <item row="3" column="0">
+    <item row="4" column="0">
      <widget class="QLabel" name="password_2">
       <property name="font">
        <font>
@@ -125,6 +86,55 @@
       </property>
       <property name="text">
        <string>Confirm Password</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="1">
+     <widget class="QPushButton" name="cancelbutton">
+      <property name="text">
+       <string>Cancel</string>
+      </property>
+     </widget>
+    </item>
+    <item row="6" column="2">
+     <widget class="QPushButton" name="saveNewAccount">
+      <property name="text">
+       <string>Save</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1" colspan="2">
+     <widget class="QLineEdit" name="newUsernameInput"/>
+    </item>
+    <item row="3" column="1" colspan="2">
+     <widget class="QLineEdit" name="newPasswordInput"/>
+    </item>
+    <item row="2" column="3">
+     <widget class="QComboBox" name="roleChooser">
+      <item>
+       <property name="text">
+        <string>Select</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Adopter</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Adoptee</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="1" column="1" colspan="2">
+     <widget class="QLabel" name="errorBox">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
       </property>
      </widget>
     </item>

@@ -3,11 +3,12 @@
 
 #include <QWidget>
 #include <string>
+#include "petfinder.h"
 
 namespace Ui {
 class AddAccount;
 }
-
+class PetFinder;
 class AddAccount : public QWidget
 {
     Q_OBJECT
@@ -15,7 +16,7 @@ class AddAccount : public QWidget
 public:
     explicit AddAccount(QWidget *parent = 0);
     ~AddAccount();
-
+    PetFinder *PfPnter;
     QString username;
     QString password;
     QString confirmPassword;
@@ -23,7 +24,7 @@ public:
 private slots:
     void on_cancelbutton_clicked();
     void on_saveNewAccount_clicked();
-    void validate();
+    bool validate();
     void on_newUsernameInput_textChanged(const QString &arg1);
 
     void on_newPasswordInput_textChanged(const QString &arg1);

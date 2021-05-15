@@ -21,11 +21,27 @@ void AddAccount::on_cancelbutton_clicked()
 
 void AddAccount::on_saveNewAccount_clicked()
 {
-    validate();
+    if(validate()){
+
+
+    }
+
 }
 
-void AddAccount::validate(){
+bool AddAccount::validate(){
+    if(PfPnter->matchmaker->DM->isUsernameTaken("kate")){
 
+        ui->errorBox->setText("Sorry Username is already taken");
+        return false;
+    }
+    if(password != confirmPassword){
+        ui->errorBox->setText("Passwords do not match");
+        return false;
+    }
+    else{
+        ui->errorBox->setText("");
+
+    }
 
 
 

@@ -76,5 +76,6 @@ void HomeScreen::on_passwordInput_textEdited(const QString &arg1) {
 
 void HomeScreen::on_newAccount_clicked()
 {
+    AApointer->PfPnter = petWindow;
     AApointer->show();
 }
