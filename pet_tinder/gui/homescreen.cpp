@@ -30,7 +30,6 @@ void HomeScreen::on_loginButton_clicked() {
         petWindow->isUserAdopter = true;
         //Passes adopter to database to begin matchmaking
         petWindow->petList = petWindow->matchmaker->DatabaseInterface(username, password);
-        cout << petWindow->petList.at(0) << endl;
 
         //Passes adopter to profileWindow and displays their info
         petWindow->profileWindow->userInfoAdopter = userInfoAdopter;

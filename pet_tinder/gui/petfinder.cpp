@@ -1,3 +1,4 @@
+
 #include "petfinder.h"
 #include "ui_petfinder.h"
 
@@ -130,12 +131,10 @@ void PetFinder::on_likeButton_clicked() {
         deleteClicked = false;
     } else {
         //Iterates one up through the petList
-        cout << petIndex << endl;
-        cout << matchmaker->DM->pets.size() << endl;
-        if(!matchmaker->DM->pets.empty() && petIndex + 1 < (int)matchmaker->DM->pets.size()) {
+        if(petList.size() > 0 && petIndex + 1 < (int)petList.size()) {
             cout << "GUI PetFinder screen: Like button clicked, next pet displayed" << endl;
             petIndex++;
-            displayPet(matchmaker->DM->pets.at(petIndex));
+            displayPet(petList.at(petIndex));
         } else {
             cout << "GUI PetFinder screen: Like button clicked, no more pets to display" << endl;
             displayEmptyPet();
@@ -160,12 +159,12 @@ void PetFinder::on_dislikeButton_clicked()
         deleteClicked = false;
     } else {
         //Iterates one up through the petList
-        if(!petList.empty() && petIndex + 1 < (int)petList.size()) {
-            cout << "GUI PetFinder screen: Dislike button clicked, next pet displayed" << endl;
+        if(petList.size() > 0 && petIndex + 1 < (int)petList.size()) {
+            cout << "GUI PetFinder screen: Like button clicked, next pet displayed" << endl;
             petIndex++;
             displayPet(petList.at(petIndex));
         } else {
-            cout << "GUI PetFinder screen: Dislike button clicked, no more pets to display" << endl;
+            cout << "GUI PetFinder screen: Like button clicked, no more pets to display" << endl;
             displayEmptyPet();
         }
     }

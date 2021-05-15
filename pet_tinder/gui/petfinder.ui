@@ -509,7 +509,7 @@
              </palette>
             </property>
             <property name="text">
-             <string>Like</string>
+             <string>&lt;3</string>
             </property>
            </widget>
           </item>

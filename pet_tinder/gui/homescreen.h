@@ -3,6 +3,7 @@
 
 #include "petfinder.h"
 #include <QWidget>
+#include <string>
 //#include "../databasemanager/databasemanager.h"
 
 namespace Ui {
