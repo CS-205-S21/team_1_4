@@ -1,6 +1,6 @@
 #ifndef HOMESCREEN_H
 #define HOMESCREEN_H
-
+#include "addaccount.h"
 #include "petfinder.h"
 #include <QWidget>
 #include <string>
@@ -9,7 +9,7 @@
 namespace Ui {
 class HomeScreen;
 }
-
+class AddAccount;
 class HomeScreen : public QWidget
 {
     Q_OBJECT
@@ -17,7 +17,7 @@ class HomeScreen : public QWidget
 public:
     string username;
     string password;
-
+    AddAccount *AApointer;
     explicit HomeScreen(QWidget *parent = 0);
     ~HomeScreen();
 
