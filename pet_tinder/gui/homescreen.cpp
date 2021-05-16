@@ -8,7 +8,7 @@ HomeScreen::HomeScreen(QWidget *parent):QWidget(parent), ui(new Ui::HomeScreen) 
 
     username = "";
     password = "";
-
+    AApointer = new AddAccount();
     QImage img(":/claws.png");
     QPixmap pic2;
     pic2.convertFromImage(img.scaled(829, 786, Qt::KeepAspectRatio), 0);
@@ -29,7 +29,7 @@ void HomeScreen::on_loginButton_clicked() {
         //Lets rest of gui know that user is an adopter
         petWindow->isUserAdopter = true;
         //Passes adopter to database to begin matchmaking
-        //petWindow->petList = petWindow->matchmaker->DatabaseInterface(username, password);
+        petWindow->petList = petWindow->matchmaker->DatabaseInterface(username, password);
 
         //Passes adopter to profileWindow and displays their info
         petWindow->profileWindow->userInfoAdopter = userInfoAdopter;
@@ -72,4 +72,10 @@ void HomeScreen::on_usernameInput_textEdited(const QString &arg1) {
 }
 void HomeScreen::on_passwordInput_textEdited(const QString &arg1) {
     password = arg1.toStdString();
+}
+
+void HomeScreen::on_newAccount_clicked()
+{
+    AApointer->PfPnter = petWindow;
+    AApointer->show();
 }

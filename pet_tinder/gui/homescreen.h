@@ -1,14 +1,15 @@
 #ifndef HOMESCREEN_H
 #define HOMESCREEN_H
-
+#include "addaccount.h"
 #include "petfinder.h"
 #include <QWidget>
+#include <string>
 //#include "../databasemanager/databasemanager.h"
 
 namespace Ui {
 class HomeScreen;
 }
-
+class AddAccount;
 class HomeScreen : public QWidget
 {
     Q_OBJECT
@@ -16,7 +17,7 @@ class HomeScreen : public QWidget
 public:
     string username;
     string password;
-
+    AddAccount *AApointer;
     explicit HomeScreen(QWidget *parent = 0);
     ~HomeScreen();
 
@@ -28,6 +29,8 @@ private slots:
     void on_usernameInput_textEdited(const QString &arg1);
 
     void on_passwordInput_textEdited(const QString &arg1);
+
+    void on_newAccount_clicked();
 
 private:
     Ui::HomeScreen* ui;

@@ -1,12 +1,12 @@
 create table adoptee (
-      usernameAdoptee CHAR NOT NULL UNIQUE,
+      username        CHAR NOT NULL UNIQUE,
       password        CHAR NOT NULL,
-      shelter         CHAR,
+      shelter         CHAR NOT NULL,
       petIds          CHAR NOT NULL,   
-      bio             CHAR                   );
+      bio             CHAR NOT NULL             );
       
 create table adopter (
-      usernameAdopter       CHAR NOT NULL UNIQUE,
+      username              CHAR NOT NULL UNIQUE,
       password              CHAR NOT NULL,
       likedPetIds           CHAR NOT NULL,
       dislikedPetIds        CHAR NOT NULL,
@@ -24,10 +24,9 @@ create table adopter (
       prefHypoallergenicReq BOOLEAN NOT NULL,
       prefSex               CHAR NOT NULL,
       prefSexReq            INT NOT NULL,
-      bio                   CHAR                );
+      bio                   CHAR NOT NULL           );
 
-create table messages (
-      messagesId      INT NOT NULL UNIQUE,
+create table conversation (
       usernameAdopter CHAR NOT NULL,
       usernameAdoptee CHAR NOT NULL,
       messages        CHAR NOT NULL        );
@@ -45,15 +44,9 @@ create table pet (
       sex            CHAR NOT NULL, 
       bio            CHAR NOT NULL          );
       
-create table likedPet (
-      likedPetId        INT NOT NULL UNIQUE,
-      adopter           CHAR NOT NULL,
-      adoptionConfirmed INT NOT NULL    );
-      
 .separator ","
 .mode csv
 .import "00_build_db/adoptee.csv"  adoptee
 .import "00_build_db/adopter.csv"  adopter
-.import "00_build_db/messages.csv" messages
+.import "00_build_db/conversation.csv" conversation
 .import "00_build_db/pet.csv"      pet
-.import "00_build_db/likedPet.csv" likedPet
