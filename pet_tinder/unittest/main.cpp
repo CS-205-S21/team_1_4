@@ -32,15 +32,9 @@ class Matchmaking_Test : public::testing::Test {
     Matchmaking_Test() {
         mm = new Matchmaker();
         dm = mm->DM;
-        addTestAdopters();
 
-        dm->pets.clear();
-        mm->total.species.clear();
-        mm->total.breeds.clear();
-        mm->total.colors.clear();
-        mm->total.ages.clear();
-        mm->total.weights.clear();
         addTestPets();
+        addTestAdopters();
     }
 
     void addTestPets(){
@@ -96,9 +90,7 @@ class Matchmaking_Test : public::testing::Test {
     void addTestAdopters(){
         vector<int> likedPets;
         vector<int> dislikedPets;
-        for(int i = 1; i<dm->getNumPets(); i++){
-            likedPets.push_back(dm->pets.at(i)->id);
-        }
+        likedPets.push_back(0);
         dislikedPets.push_back(0);
 
         dan = new Adopter;
@@ -119,6 +111,7 @@ class Matchmaking_Test : public::testing::Test {
         dan->prefHypoallergenicReq = false;
         dan->prefSex = "Female";
         dan->prefSexReq = false;
+        dan->bio = "Lookin for some Hot Dogs";
         dm->addAdopter(dan, "D1a2N3");
 
         alex = new Adopter;
@@ -130,7 +123,7 @@ class Matchmaking_Test : public::testing::Test {
         alex->prefBreed = "Domestic";
         alex->prefBreedReq = true;
         alex->prefAge = 4;
-        alex->prefAgeReq = true;
+        alex->prefAgeReq = false;
         alex->prefWeight = 9.0;
         alex->prefWeightReq = true;
         alex->prefColor = "White";
@@ -139,6 +132,7 @@ class Matchmaking_Test : public::testing::Test {
         alex->prefHypoallergenicReq = true;
         alex->prefSex = "Male";
         alex->prefSexReq = true;
+        alex->bio = "I am gay.";
         dm->addAdopter(alex, "A1l2E3x4");
 
         ally = new Adopter;
@@ -159,6 +153,7 @@ class Matchmaking_Test : public::testing::Test {
         ally->prefHypoallergenicReq = true;
         ally->prefSex = "Male";
         ally->prefSexReq = false;
+        ally->bio = "Haha I am female.";
         dm->addAdopter(ally, "A1l2L3y4");
 
         addy = new Adopter;
@@ -179,6 +174,7 @@ class Matchmaking_Test : public::testing::Test {
         addy->prefHypoallergenicReq = 1;
         addy->prefSex = "Male";
         addy->prefSexReq = 1;
+        addy->bio = "I don't care.";
         dm->addAdopter(addy, "A1d2D3y4");
     }
 
@@ -790,6 +786,46 @@ TEST_F(DatabaseManager_Test, READ_IN_ADOPTEE) {
 }
 
 //*********************************************************************************************************************
+//*****************************************OTHER TESTS FOR DATABASE****************************************************
+//*********************************************************************************************************************
+TEST_F(DatabaseManager_Test, ADD_AND_REMOVE_MESSAGES){
+    Adopter *dan = new Adopter;
+    vector<int> likedPets;
+    likedPets.push_back(1);
+    vector<int> dislikedPets;
+    dislikedPets.push_back(0);
+    ASSERT_EQ(numAdopters, dm->getNumAdopters())
+                    << "This should never be false";
+    dan->username = "Danny";
+    dan->likedPetIds = likedPets;
+    dan->dislikedPetIds = dislikedPets;
+    dan->prefSpecies = "Dog";
+    dan->prefSpeciesReq = true;
+    dan->prefBreed = "Shorkie";
+    dan->prefBreedReq = false;
+    dan->prefAge = 3;
+    dan->prefAgeReq = false;
+    dan->prefWeight = 2.0;
+    dan->prefWeightReq = false;
+    dan->prefColor = "Brown";
+    dan->prefColorReq = false;
+    dan->prefHypoallergenic = true;
+    dan->prefHypoallergenicReq = true;
+    dan->prefSex = "Female";
+    dan->prefSexReq = false;
+    dan->bio = "";
+
+    ASSERT_TRUE(dm->addAdopter(dan, "Password"))
+                        << "dan the adopter was not added.";
+    ASSERT_TRUE(dm->removeAdopter(dan->username))
+                        << "dan the adopter should have been removed.";
+}
+
+TEST_F(DatabaseManager_Test, READ_IN_CONVERSATIONS){
+
+}
+
+//*********************************************************************************************************************
 //*********************************************************************************************************************
 //*****************************************TESTS FOR MATCHMAKER********************************************************
 //*********************************************************************************************************************
@@ -834,10 +870,11 @@ TEST_F(Matchmaking_Test, SORT_AND_ARRANGE_PREFS_TESTS){
 
 //First Test for the matchmaking system based on the user's preferences
 TEST_F(Matchmaking_Test, MATCHMAKER_TEST_PREFS){
-    ASSERT_EQ(4, mm->DatabaseInterface("Danny_Admin", "D1a2N3").size());
-    ASSERT_EQ(1, mm->DatabaseInterface("Alex_Admin", "A1l2E3x4").size());
-    ASSERT_EQ(0, mm->DatabaseInterface("Ally_Admin", "A1l2L3y4").size());
-    ASSERT_EQ(0, mm->DatabaseInterface("Addy_Admin", "A1d2D3y4").size());
+    //adopter danny already liked/disliked 1 pet, so he should still have all but one pet to see.
+    ASSERT_EQ(dm->getNumPets()-1, mm->DatabaseInterface(dan).size());
+    ASSERT_EQ(1, mm->DatabaseInterface(alex).size());
+    ASSERT_EQ(0, mm->DatabaseInterface(ally).size());
+    ASSERT_EQ(0, mm->DatabaseInterface(addy).size());
 }
 
 int main(int argc, char **argv) {

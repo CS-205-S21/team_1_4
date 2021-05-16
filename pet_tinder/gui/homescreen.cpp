@@ -29,7 +29,7 @@ void HomeScreen::on_loginButton_clicked() {
         //Lets rest of gui know that user is an adopter
         petWindow->isUserAdopter = true;
         //Passes adopter to database to begin matchmaking
-        petWindow->petList = petWindow->matchmaker->DatabaseInterface(username, password);
+        petWindow->petList = petWindow->matchmaker->DatabaseInterface(userInfoAdopter);
 
         //Passes adopter to profileWindow and displays their info
         petWindow->profileWindow->userInfoAdopter = userInfoAdopter;

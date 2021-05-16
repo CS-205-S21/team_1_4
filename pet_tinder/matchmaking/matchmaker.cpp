@@ -11,13 +11,12 @@ void Matchmaker::innit(){
     sortPrefs();
 }
 //this is called to return a queue of pets for the petfinder screen
-vector<Pet*> Matchmaker::DatabaseInterface(string username, string password){
-    cout << "Matchmaker: DatabaseInterface called" << endl;
-
-    currentUser = DM->readInAdopter(username, password);
+vector<Pet*> Matchmaker::DatabaseInterface(Adopter *cu){
+    currentUser = cu;
     refreshPetList();
+    Queue.clear();
 
-    cout << "sortablePets size = " + to_string((int)sortablePets.size()) << endl;
+    //cout << "sortablePets size = " + to_string((int)sortablePets.size()) << endl;
     if(sortablePets.size() <= 0) {
         cout << "pass" << endl;
         vector<Pet*> empty;
@@ -37,7 +36,7 @@ vector<Pet*> Matchmaker::DatabaseInterface(string username, string password){
             }
         }
         if(currentUser->prefAgeReq == true){
-            if(currentUser->prefAge != sortablePets.at(i)->age){
+            if((int)currentUser->prefAge != (int)sortablePets.at(i)->age){
                 continue;
             }
         }
@@ -61,13 +60,14 @@ vector<Pet*> Matchmaker::DatabaseInterface(string username, string password){
                 continue;
             }
         }
-        cout << "Pet successfully added for " + currentUser->username << endl;
+        //cout << "Pet successfully added for " + currentUser->username << endl;
         Queue.push_back(sortablePets.at(i));
     }
     return Queue;
 }
 //rereads in pets and creates a list of all non liked/disliked pets for database interface
 void Matchmaker::refreshPetList(){
+    sortablePets.clear();
     innit();
 
     //Combines disliked and liked pet ids into one vector and sorts
@@ -75,20 +75,20 @@ void Matchmaker::refreshPetList(){
     //discardedPetIds.resize((currentUser->dislikedPetIds.size()+currentUser->likedPetIds.size()));
 
     for(int i = 0; i < (int)currentUser->dislikedPetIds.size(); i++){
-        cout << "disliked pet: " + to_string(currentUser->dislikedPetIds.at(i)) << endl;
+        //cout << "disliked pet: " + to_string(currentUser->dislikedPetIds.at(i)) << endl;
         discardedPetIds.push_back(currentUser->dislikedPetIds.at(i));
     }
 
-    cout << currentUser->likedPetIds.size() << endl;
+    //cout << "likedPets size: " << currentUser->likedPetIds.size() << endl;
     for(int i = 0; i < (int)currentUser->likedPetIds.size(); i++){
-        cout << "liked pet: " + to_string(currentUser->likedPetIds.at(i)) << endl;
+        //cout << "liked pet: " + to_string(currentUser->likedPetIds.at(i)) << endl;
         discardedPetIds.push_back(currentUser->likedPetIds.at(i));
     }
 
-    cout << "Number of pets in DM vector = " + to_string(DM->getNumPets()) << endl;
+    //cout << "Number of pets in DM vector = " + to_string(DM->getNumPets()) << endl;
     //sorts through all pets and adds to a vector if they are not liked/disliked
     for(int j = 0; j < DM->getNumPets(); j++){
-        cout << "pet id: " + to_string(DM->pets.at(j)->id) << endl;
+        //cout << "pet id: " + to_string(DM->pets.at(j)->id) << endl;
         int flag = 0;
         for(int k = 0; k < (int)discardedPetIds.size(); k++){
             if(DM->pets.at(j)->id == discardedPetIds.at(k)) {
@@ -96,7 +96,7 @@ void Matchmaker::refreshPetList(){
             }
         }
         if(flag == 0){
-            cout << "Pet added to sortablePets vector" << endl;
+            //cout << "Pet added to sortablePets vector" << endl;
             sortablePets.push_back(DM->pets.at(j));
         }
     }
@@ -170,7 +170,6 @@ void Matchmaker::sortPrefs(){
             total.colors.push_back(DM->pets.at(i)->color);
         }
     }
-
     arrangePrefs();
 }
 void Matchmaker::arrangePrefs(){
