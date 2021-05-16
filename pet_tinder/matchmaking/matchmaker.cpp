@@ -26,53 +26,39 @@ vector<Pet*> Matchmaker::DatabaseInterface(string username, string password){
     //cycles through all pets to find pets that match preferences and adds them to the queue
     //continue breaks loop and is triggers for when a pet doesnt match a hard preference
     for(int i = 0; i < (int)sortablePets.size(); i++){ //SORTABLE PETS EMPTY
-        if(currentUser->prefSpeciesReq != nullptr && currentUser->prefSpecies != nullptr){
-            if(currentUser->prefSpeciesReq == true){
-                if(currentUser->prefSpecies != sortablePets.at(i)->species){
-                    continue;
-                }
+        if(currentUser->prefSpeciesReq == true){
+            if(currentUser->prefSpecies != sortablePets.at(i)->species){
+                continue;
             }
         }
-        if(currentUser->prefBreedReq != nullptr && currentUser->prefBreed != nullptr){
-            if(currentUser->prefBreedReq == true){
-                if(currentUser->prefBreed != sortablePets.at(i)->breed){
-                    continue;
-                }
+        if(currentUser->prefBreedReq == true){
+            if(currentUser->prefBreed != sortablePets.at(i)->breed){
+                continue;
             }
         }
-        if(currentUser->prefAgeReq != nullptr && currentUser->prefAge != nullptr){
-            if(currentUser->prefAgeReq == true){
-                if(currentUser->prefAge != sortablePets.at(i)->age){
-                    continue;
-                }
+        if(currentUser->prefAgeReq == true){
+            if(currentUser->prefAge != sortablePets.at(i)->age){
+                continue;
             }
         }
-        if(currentUser->prefWeightReq != nullptr && currentUser->prefWeight != nullptr){
-            if(currentUser->prefWeightReq == true){
-                if(currentUser->prefWeight != sortablePets.at(i)->weight){
-                    continue;
-                }
+        if(currentUser->prefWeightReq == true){
+            if(currentUser->prefWeight != sortablePets.at(i)->weight){
+                continue;
             }
         }
-        if(currentUser->prefColorReq != nullptr && currentUser->prefColor != nullptr){
-            if(currentUser->prefColorReq == true){
-                if(currentUser->prefColor != sortablePets.at(i)->color){
-                    continue;
-                }
+        if(currentUser->prefColorReq == true){
+            if(currentUser->prefColor != sortablePets.at(i)->color){
+                continue;
             }
         }
-        if(currentUser->prefHypoallergenicReq != nullptr && currentUser->prefHypoallergenic != nullptr){
-            if(currentUser->prefHypoallergenicReq == true){
-                if(currentUser->prefHypoallergenic != sortablePets.at(i)->hypoallergenic){
-                    continue;
-                }
+        if(currentUser->prefHypoallergenicReq == true){
+            if(currentUser->prefHypoallergenic != sortablePets.at(i)->hypoallergenic){
+                continue;
             }
         }
-        if(currentUser->prefSexReq != nullptr && currentUser->prefSex != nullptr){
-            if(currentUser->prefSexReq == true){
-                if(currentUser->prefSex != sortablePets.at(i)->sex){
-                    continue;
-                }
+        if(currentUser->prefSexReq == true){
+            if(currentUser->prefSex != sortablePets.at(i)->sex){
+                continue;
             }
         }
         cout << "Pet successfully added for " + currentUser->username << endl;
