@@ -135,10 +135,16 @@ void PetFinder::on_likeButton_clicked() {
             cout << "GUI PetFinder screen: Like button clicked, next pet displayed" << endl;
             //Adds pet id to user info's liked pet list
             Pet* pet = petList.at(petIndex);
-            profileWindow->userInfoAdopter->likedPetIds.push_back(pet->id);
             petIndex++;
             displayPet(pet);
-            petListWindow->updateConvos(pet, matchmaker->DM->findAdopteePet(pet->id));
+
+            Adoptee* adoptee = matchmaker->DM->findAdopteePet(pet->id);
+            if(adoptee != nullptr) {
+                profileWindow->userInfoAdopter->likedPetIds.push_back(pet->id);
+                petListWindow->newConvo(pet, adoptee);
+            } else {
+                cout << "ERROR: Pet doesn't have an owner, that shouldn't be a thing" << endl;
+            }
         } else {
             cout << "GUI PetFinder screen: Like button clicked, no more pets to display" << endl;
             displayEmptyPet();

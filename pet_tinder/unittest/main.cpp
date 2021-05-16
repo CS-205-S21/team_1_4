@@ -470,6 +470,7 @@ TEST_F(DatabaseManager_Test, ADD_AND_REMOVE_ADOPTER) {
     dan->prefHypoallergenicReq = true;
     dan->prefSex = "Female";
     dan->prefSexReq = false;
+    dan->bio = "";
 
     ASSERT_TRUE(dm->addAdopter(dan, "Password"))
                         << "dan the adopter was not added.";
@@ -507,6 +508,7 @@ TEST_F(DatabaseManager_Test, ADD_SAME_ADOPTER_INFO) {
     addison->prefHypoallergenicReq = false;
     addison->prefSex = "Male";
     addison->prefSexReq = true;
+    addison->bio = "";
 
     Adopter *copy = new Adopter;
     ASSERT_EQ(numAdopters, dm->getNumAdopters())
@@ -528,6 +530,7 @@ TEST_F(DatabaseManager_Test, ADD_SAME_ADOPTER_INFO) {
     copy->prefHypoallergenicReq = false;
     copy->prefSex = "Male";
     copy->prefSexReq = true;
+    copy->bio = "";
 
     ASSERT_TRUE(dm->addAdopter(addison, "Password"))
                         << "addison the adopter was not added.";
@@ -571,6 +574,7 @@ TEST_F(DatabaseManager_Test, ADD_EMPTY_ADOPTER) {
     alex->prefHypoallergenicReq = false;
     alex->prefSex = "";
     alex->prefSexReq = true;
+    alex->bio = "";
 
     ASSERT_TRUE(dm->addAdopter(alex, ""))
                         << "Alex the adopter was not added.";
@@ -617,6 +621,7 @@ TEST_F(DatabaseManager_Test, ADD_WEIRD_ADOPTER) {
     ally->prefHypoallergenicReq = true;
     ally->prefSex = "Gay";
     ally->prefSexReq = true;
+    ally->bio = "";
 
     ASSERT_TRUE(dm->addAdopter(ally, ""))
                         << "Ally the adopter was not added.";
@@ -654,6 +659,7 @@ TEST_F(DatabaseManager_Test, READ_IN_ADOPTER) {
     js->prefHypoallergenicReq = false;
     js->prefSex = "Female";
     js->prefSexReq = true;
+    js->bio = "";
 
     ASSERT_TRUE(dm->addAdopter(js, "ButterIsGorgeous72"))
                         << "Justin Smith the adopter was not added.";
@@ -676,6 +682,7 @@ TEST_F(DatabaseManager_Test, ADD_AND_REMOVE_ADOPTEE) {
     pt->username = "Pet Tinder";
     pt->shelter = "Claws n' Paws";
     pt->ownedPetIds = ownedPetIds;
+    pt->bio = "";
 
     ASSERT_TRUE(dm->addAdoptee(pt, "Password"))
                         << "Pet Tinder the adoptee was not added.";
@@ -699,6 +706,7 @@ TEST_F(DatabaseManager_Test, ADD_SAME_ADOPTEE_INFO) {
     copy->username = "Monke";
     copy->shelter = "Monke";
     copy->ownedPetIds = ownedPetIds;
+    copy->bio = "";
 
     ASSERT_TRUE(dm->addAdoptee(apee, "Monke"))
                         << "Apee the adoptee was not added.";
@@ -720,6 +728,7 @@ TEST_F(DatabaseManager_Test, ADD_EMPTY_ADOPTEE) {
     peta->username = "";
     peta->shelter = "";
     peta->ownedPetIds = ownedPetIds;
+    peta->bio = "";
 
     ASSERT_TRUE(dm->addAdoptee(peta, "Password"))
                         << "Peta the adoptee was not added.";
@@ -748,6 +757,7 @@ TEST_F(DatabaseManager_Test, ADD_WEIRD_ADOPTEE) {
     fr->username = "SuperDuperClimax1000";
     fr->shelter = "ShelterDeezNutz Goteem";
     fr->ownedPetIds = ownedPetIds;
+    fr->bio = "";
 
     ASSERT_TRUE(dm->addAdoptee(fr, ""))
                         << "The adoptee was not added.";
@@ -767,6 +777,7 @@ TEST_F(DatabaseManager_Test, READ_IN_ADOPTEE) {
     butter->username = "KoolKat12";
     butter->shelter = "Matchmaker App";
     butter->ownedPetIds = ownedPetIds;
+    butter->bio = "";
 
     ASSERT_TRUE(dm->addAdoptee(butter, "ButterIsGorgeous72"))
                         << "Butter the adoptee was not added.";

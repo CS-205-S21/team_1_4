@@ -23,8 +23,8 @@ public:
     explicit PetList(QWidget *parent = nullptr);
     ~PetList();
     void sendMessage();
-    void updateConvos(Pet* pet, Adopter* adopter);
-    void updateConvos(Pet* pet, Adoptee* adoptee);
+    void newConvo(Pet* pet, Adopter* adopter);
+    void newConvo(Pet* pet, Adoptee* adoptee);
 
     PetFinder *pfptr;
     ProfilePage *ppptr;
@@ -37,10 +37,12 @@ public:
     // or adoptee who likes/owns the pet
     std::vector<Pet*> petsChatting;
 
-    QString textbox;
+    vector<QString> textboxes;
     QString typedMessage;
     bool validMessage;
-    bool noMessages;
+
+    //String to display when no messages have been sent
+    QString noMessagesDisplay;
 
 
 signals:
@@ -56,9 +58,9 @@ private slots:
 
     void on_sendButton_clicked();
 
-    void on_otherConvos_currentIndexChanged(const QString &arg1);
-
     void on_lineEdit_returnPressed();
+
+    void on_otherConvos_currentIndexChanged(int index);
 
 private:
     Ui::PetList *ui;

@@ -7,11 +7,13 @@ PetList::PetList(QWidget *parent) : QWidget(parent), ui(new Ui::PetList) {
     ppptr = NULL;
 
     validMessage = false;
-    noMessages = false;
+    QString noMessagesDisplay = "This is where your messages will appear!";
     ui->invalidWarning->setVisible(false);
 
-    textbox = "This is where your messages will appear!";
-    ui->chatbox->setText(textbox);
+    for(int i = 0; i < textboxes.size(); i++) {
+        textboxes.at(i) = noMessagesDisplay;
+        ui->chatbox->setText(noMessagesDisplay);
+    }
 }
 
 PetList::~PetList() {
@@ -19,32 +21,36 @@ PetList::~PetList() {
 }
 
 void PetList::sendMessage() {
-    if(noMessages == false) {
-        textbox.clear();
+
+    if(textboxes.at(0).compare(noMessagesDisplay) == 0) {
+        textboxes.at(0).clear();
     }
     if(validMessage) {
         if(pfptr->isUserAdopter) {
-            noMessages = true;
-            textbox.append(QString::fromStdString(ppptr->userInfoAdopter->username)
+            textboxes.at(0).append(QString::fromStdString(ppptr->userInfoAdopter->username)
                            + ": " + typedMessage + "\n");
         } else {
-            textbox.append(QString::fromStdString(ppptr->userInfoAdoptee->username)
+            textboxes.at(0).append(QString::fromStdString(ppptr->userInfoAdoptee->username)
                            + ": " + typedMessage + "\n");
         }
-        ui->chatbox->setText(textbox);
+        ui->chatbox->setText(textboxes.at(0));
         ui->lineEdit->clear();
     }
 }
 
-void PetList::updateConvos(Pet* pet, Adopter *adopter) {
+void PetList::newConvo(Pet* pet, Adopter *adopter) {
+
 }
 
-void PetList::updateConvos(Pet* pet, Adoptee *adoptee) {
+void PetList::newConvo(Pet* pet, Adoptee *adoptee) {
     adopteesChatting.push_back(adoptee);
     petsChatting.push_back(pet);
-    ui->otherConvos->addItem(QString::fromStdString(pet->name + " from " + adoptee->username));
-
-
+    //If adoptee doesn't have an associated shelter, display their username instead
+    if(adoptee->shelter.compare("") == 0) {
+        ui->otherConvos->addItem(QString::fromStdString(pet->name + " from " + adoptee->username));
+    } else {
+        ui->otherConvos->addItem(QString::fromStdString(pet->name + " from " + adoptee->shelter));
+    }
 }
 
 void PetList::on_homeButton_clicked() {
@@ -79,10 +85,11 @@ void PetList::on_sendButton_clicked() {
     sendMessage();
 }
 
-void PetList::on_otherConvos_currentIndexChanged(const QString &arg1) {
-
-}
-
 void PetList::on_lineEdit_returnPressed() {
     sendMessage();
+}
+
+void PetList::on_otherConvos_currentIndexChanged(int index)
+{
+
 }
