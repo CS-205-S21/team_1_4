@@ -33,7 +33,8 @@ SOURCES += \
     messagescreen.cpp \
     adopteeaddpet.cpp \
     preftab.cpp \
-    addaccount.cpp
+    addaccount.cpp \
+    chatinfo.cpp
 
 HEADERS += \
     homescreen.h \
@@ -43,7 +44,8 @@ HEADERS += \
     messagescreen.h \
     adopteeaddpet.h \
     preftab.h \
-    addaccount.h
+    addaccount.h \
+    chatinfo.h
 
 FORMS += \
     homescreen.ui \
@@ -53,7 +55,8 @@ FORMS += \
     messagescreen.ui \
     adopteeaddpet.ui \
     preftab.ui \
-    addaccount.ui
+    addaccount.ui \
+    chatinfo.ui
 
 HEADERS += ../matchmaking/matchmaker.h
 SOURCES += ../matchmaking/matchmaker.cpp
