@@ -13,7 +13,7 @@ class PrefTab : public QWidget
     Q_OBJECT
 
 public:
-
+void populateBoxes();
     explicit PrefTab(QWidget *parent = 0);
     ~PrefTab();
     Adopter input;
