@@ -795,7 +795,6 @@ TEST_F(DatabaseManager_Test, READ_IN_ADOPTEE) {
 //*********************************************************************************************************************
 //*********************************************************************************************************************
 //This test will be a basic test for Matchmaker
-/*
 TEST_F(Matchmaking_Test, SORT_AND_ARRANGE_PREFS_TESTS){
     vector<string> speciesR;
     vector<string> breedR;
@@ -840,7 +839,7 @@ TEST_F(Matchmaking_Test, MATCHMAKER_TEST_PREFS){
     ASSERT_EQ(0, mm->DatabaseInterface("Ally_Admin", "A1l2L3y4").size());
     ASSERT_EQ(0, mm->DatabaseInterface("Addy_Admin", "A1d2D3y4").size());
 }
-*/
+
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
