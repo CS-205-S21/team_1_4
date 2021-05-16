@@ -506,7 +506,7 @@ bool DatabaseManager::addConversation(Conversation convo) {
                            "WHERE usernameAdopter = (:usernameAdopter) "
                            "AND usernameAdoptee = (:usernameAdoptee);");
         existQuery.bindValue(":usernameAdopter", QString::fromStdString(convo.usernameAdopter));
-        existQuery.bindValue(":usernameAdoptee", QString::fromStdString(convo.usernameAdopte));
+        existQuery.bindValue(":usernameAdoptee", QString::fromStdString(convo.usernameAdoptee));
 
     //If conversation doesn't exist...
     if(existQuery.exec() && !existQuery.next()){
@@ -533,11 +533,9 @@ bool DatabaseManager::removeConversation(string usernameAdopter, string username
                        "AND usernameAdoptee = (:usernameAdoptee);");
     existQuery.bindValue(":usernameAdopter", QString::fromStdString(usernameAdopter));
     existQuery.bindValue(":usernameAdoptee", QString::fromStdString(usernameAdoptee));
-    if(sel.exec() && sel.next()) {
-        QString qUsername = QString::fromStdString(username);
-
+    if(existQuery.exec() && existQuery.next()) {
         QSqlQuery q;
-        q.prepare("DELETE FROM conversation
+        q.prepare("DELETE FROM conversation "
                   "WHERE usernameAdopter = (:usernameAdopter) "
                   "AND usernameAdoptee = (:usernameAdoptee);");
         existQuery.bindValue(":usernameAdopter", QString::fromStdString(usernameAdopter));

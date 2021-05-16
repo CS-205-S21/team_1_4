@@ -173,7 +173,7 @@ void PetFinder::on_dislikeButton_clicked()
             cout << "GUI PetFinder screen: Like button clicked, next pet displayed" << endl;
             //Adds pet id to user info's liked pet list
             profileWindow->userInfoAdopter->dislikedPetIds.push_back(petList.at(petIndex)->id);
-            //RUN DM METHOD AND SEND INFO TO PETLIST
+            //petListWindow->adopteesChatting.push_back(*matchmaker->DM->readInConversation(profileWindow->userInfoAdopter->username), *matchmaker->DM->findAdopteePet(petList.at(petIndex)->id));
             petIndex++;
             displayPet(petList.at(petIndex));
         } else {

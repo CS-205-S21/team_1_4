@@ -21,7 +21,6 @@ PetList::~PetList() {
 }
 
 void PetList::sendMessage() {
-
     if(textboxes.at(0).compare(noMessagesDisplay) == 0) {
         textboxes.at(0).clear();
     }
