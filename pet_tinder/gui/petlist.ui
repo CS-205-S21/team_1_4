@@ -270,21 +270,39 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,0">
      <item>
-      <layout class="QVBoxLayout" name="chatLayout" stretch="1,0,4,0,0">
+      <layout class="QVBoxLayout" name="chatLayout" stretch="1,0,0,4,0,0">
        <item>
         <widget class="QComboBox" name="otherConvos"/>
        </item>
        <item>
-        <widget class="QLabel" name="title">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QPushButton" name="petInfoButton">
+           <property name="text">
+            <string>Pet Information</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="shelterInfoButton">
+           <property name="text">
+            <string>Shelter Information</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QLabel" name="chatTitle">
          <property name="font">
           <font>
-           <pointsize>14</pointsize>
+           <pointsize>15</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
          </property>
          <property name="text">
-          <string>Shelter Name</string>
+          <string>You haven't liked any pets yet!</string>
          </property>
         </widget>
        </item>
@@ -327,8 +345,13 @@
            </disabled>
           </palette>
          </property>
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+          </font>
+         </property>
          <property name="text">
-          <string>user: Hi my name is Addison and I am a beautiful man </string>
+          <string>This is where you will be able to chat with the shelters whose pets you've liked.</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>

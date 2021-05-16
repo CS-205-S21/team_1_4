@@ -6,6 +6,7 @@
 #include "petfinder.h"
 #include "petlist.h"
 #include "messagescreen.h"
+#include "chatinfo.h"
 
 #include "../matchmaking/matchmaker.h"
 
@@ -13,6 +14,7 @@ namespace Ui {
 class PetList;
 }
 
+class ChatInfo;
 class PetFinder;
 class ProfilePage;
 
@@ -26,8 +28,9 @@ public:
     void newConvo(Pet* pet, Adopter* adopter);
     void newConvo(Pet* pet, Adoptee* adoptee);
 
-    PetFinder *pfptr;
-    ProfilePage *ppptr;
+    PetFinder* pfptr;
+    ProfilePage* ppptr;
+    ChatInfo* ciptr;
 
     //Adopters user is chatting (used only if they are an adoptee)
     std::vector<Adopter*> adoptersChatting;
@@ -63,6 +66,8 @@ private slots:
     void on_lineEdit_returnPressed();
 
     void on_otherConvos_currentIndexChanged(int index);
+
+    void on_petInfoButton_clicked();
 
 private:
     Ui::PetList *ui;
