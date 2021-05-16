@@ -37,6 +37,8 @@ public:
     // or adoptee who likes/owns the pet
     std::vector<Pet*> petsChatting;
 
+    //Textboxes containing conversations between user and other, should
+    // always line up with adoptersChatting or adopteesChatting
     vector<QString> textboxes;
     QString typedMessage;
     bool validMessage;

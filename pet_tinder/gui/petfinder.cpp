@@ -134,14 +134,17 @@ void PetFinder::on_likeButton_clicked() {
         if(petList.size() > 0 && petIndex + 1 < (int)petList.size()) {
             cout << "GUI PetFinder screen: Like button clicked, next pet displayed" << endl;
             //Adds pet id to user info's liked pet list
-            Pet* pet = petList.at(petIndex);
+            Pet* likedPet = petList.at(petIndex);
             petIndex++;
-            displayPet(pet);
+            displayPet(likedPet);
 
-            Adoptee* adoptee = matchmaker->DM->findAdopteePet(pet->id);
+            //Find adoptee who owns liked pet
+            Adoptee* adoptee = matchmaker->DM->findAdopteePet(likedPet->id);
             if(adoptee != nullptr) {
-                profileWindow->userInfoAdopter->likedPetIds.push_back(pet->id);
-                petListWindow->newConvo(pet, adoptee);
+                //Adds this pet to user's list of liked pets
+                profileWindow->userInfoAdopter->likedPetIds.push_back(likedPet->id);
+                //Begins conversation with adoptee who owns pet
+                petListWindow->newConvo(likedPet, adoptee);
             } else {
                 cout << "ERROR: Pet doesn't have an owner, that shouldn't be a thing" << endl;
             }
@@ -172,10 +175,10 @@ void PetFinder::on_dislikeButton_clicked()
         if(petList.size() > 0 && petIndex + 1 < (int)petList.size()) {
             cout << "GUI PetFinder screen: Like button clicked, next pet displayed" << endl;
             //Adds pet id to user info's liked pet list
-            profileWindow->userInfoAdopter->dislikedPetIds.push_back(petList.at(petIndex)->id);
-            //petListWindow->adopteesChatting.push_back(*matchmaker->DM->readInConversation(profileWindow->userInfoAdopter->username), *matchmaker->DM->findAdopteePet(petList.at(petIndex)->id));
+            Pet* dislikedPet = petList.at(petIndex);
+            profileWindow->userInfoAdopter->dislikedPetIds.push_back(dislikedPet->id);
             petIndex++;
-            displayPet(petList.at(petIndex));
+            displayPet(dislikedPet);
         } else {
             cout << "GUI PetFinder screen: Like button clicked, no more pets to display" << endl;
             displayEmptyPet();

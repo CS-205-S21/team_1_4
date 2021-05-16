@@ -44,6 +44,7 @@ void PetList::newConvo(Pet* pet, Adopter *adopter) {
 void PetList::newConvo(Pet* pet, Adoptee *adoptee) {
     adopteesChatting.push_back(adoptee);
     petsChatting.push_back(pet);
+    textboxes.push_back(noMessagesDisplay);
     //If adoptee doesn't have an associated shelter, display their username instead
     if(adoptee->shelter.compare("") == 0) {
         ui->otherConvos->addItem(QString::fromStdString(pet->name + " from " + adoptee->username));
