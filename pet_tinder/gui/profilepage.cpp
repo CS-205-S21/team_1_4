@@ -1,15 +1,17 @@
 #include "profilepage.h"
 #include "ui_profilepage.h"
 
-ProfilePage::ProfilePage(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::ProfilePage) {
-        ui->setupUi(this);
-        pfptr = NULL;
-        plptr = NULL;
-         aap = new AdopteeAddPet();
-         ptpnter = new PrefTab();
-    }
+ProfilePage::ProfilePage(QWidget *parent) : QWidget(parent), ui(new Ui::ProfilePage) {
+    ui->setupUi(this);
+    pfptr = NULL;
+    plptr = NULL;
+    aap = new AdopteeAddPet();
+    ptpnter = new PrefTab();
+
+    ui->bioEdit->setVisible(false);
+    editingBio = false;
+    bioText = "";
+}
 
 ProfilePage::~ProfilePage()
 {
@@ -56,4 +58,28 @@ void ProfilePage::on_addPetButton_clicked()
 {
     aap->pnter = pfptr;
     aap->show();
+}
+
+void ProfilePage::on_editBioButton_clicked()
+{
+    if(!editingBio) {
+        ui->bioEdit->setVisible(true);
+        ui->editBioButton->setText("Save");
+        editingBio = true;
+    } else {
+        ui->userBio->setText(bioText);
+        if(pfptr->isUserAdopter) {
+            userInfoAdopter->bio = bioText.toStdString();
+        } else {
+            userInfoAdoptee->bio = bioText.toStdString();
+        }
+        ui->bioEdit->setVisible(false);
+        ui->editBioButton->setText("Edit bio");
+        editingBio = false;
+    }
+}
+
+void ProfilePage::on_bioEdit_textEdited(const QString &arg1)
+{
+    bioText = arg1;
 }

@@ -612,11 +612,13 @@ vector<int> DatabaseManager::stringToIntVector(string str) {
 
 //Takes an int vector and creates a QString out of its ints, seperated by ' ' characters
 QString DatabaseManager::intVectorToQString(vector<int> vec) {
-    QString str;
+    QString str = "";
 
-    str += str.fromStdString(to_string(vec.front()));
-    for(int i = 1; i < (int)vec.size(); i++) {
-        str += " " + str.fromStdString(to_string(vec.at(i)));
+    if(!vec.empty()) {
+        str += str.fromStdString(to_string(vec.front()));
+        for(int i = 1; i < (int)vec.size(); i++) {
+            str += " " + str.fromStdString(to_string(vec.at(i)));
+        }
     }
     return str;
 }

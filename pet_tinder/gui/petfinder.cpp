@@ -12,9 +12,8 @@ PetFinder::PetFinder(QWidget *parent) : QMainWindow(parent), ui(new Ui::PetFinde
     petListWindow->pfptr = this;
     petListWindow->ppptr = profileWindow;
 
-
     isUserAdopter = true;
-    petIndex = 0;
+    petIndex = -1;
 }
 
 //Initializes most variables and display
@@ -55,6 +54,16 @@ void PetFinder::setup() {
         ui->dislikeButton->setPalette(test);
         ui->likeButton->setPalette(test);
     }
+    if(petList.size() <= 0) {
+        ui->deleteButton->setVisible(false);
+        ui->likeButton->setVisible(false);
+        ui->dislikeButton->setVisible(false);
+        ui->animalImage->setVisible(false);
+    } else {
+        ui->likeButton->setVisible(true);
+        ui->dislikeButton->setVisible(true);
+        ui->animalImage->setVisible(true);
+    }
 }
 
 PetFinder::~PetFinder() {
@@ -63,6 +72,7 @@ PetFinder::~PetFinder() {
 
 //Displays passed-in pet on screen
 void PetFinder::displayPet(Pet *pet) {
+
     //Displays name, sex, and age
     ui->nameSexAge->setText(QString::fromStdString(pet->name + ", " + pet->sex + ", " + to_string(pet->age)));
     //Displays species and breed
@@ -75,11 +85,8 @@ void PetFinder::displayPet(Pet *pet) {
     }
     //Displays bio
     ui->animalCustomBio->setText(QString::fromStdString(pet->bio));
+    //Displays image
     QPixmap pic;
-    /*QByteArray byteArray;
-    QBuffer buffer(&byteArray);
-    buffer.open(QIODevice::WriteOnly);
-    pic.save(&buffer, "PNG");*/
     pic.loadFromData(pet->image);
     pic.scaled(200, 300, Qt::KeepAspectRatio);
     ui->animalImage->setPixmap(pic);
@@ -87,15 +94,41 @@ void PetFinder::displayPet(Pet *pet) {
 
 //Displays passed-in pet on screen
 void PetFinder::displayEmptyPet() {
-    //Displays name, sex, and age
-    ui->nameSexAge->setText("No more pets match your preferences!");
-    //Displays species and breed
-    ui->speciesBreed->clear();
-    //Checks if pet is hypoallergenic, then displays that
-    ui->hypoallergenic->clear();
-    //Displays bio
-    ui->animalCustomBio->setText("Update your preferences in the Profile "
-                                 "or wait around for new pets to be added!");
+    //Empty pet for adopter
+    if(isUserAdopter) {
+        //Displays name, sex, and age
+        ui->nameSexAge->setText("No more pets match your preferences!");
+        //Displays species and breed
+        ui->speciesBreed->clear();
+        //Checks if pet is hypoallergenic, then displays that
+        ui->hypoallergenic->clear();
+        //Displays bio
+        ui->animalCustomBio->setText("Update your preferences in the Profile "
+                                     "or wait around for new pets to be added!");
+        //Empty pet for adoptee
+    } else {
+        //Displays name, sex, and age
+        ui->nameSexAge->setText("You haven't created any pet profiles yet!");
+        //Displays species and breed
+        ui->speciesBreed->clear();
+        //Checks if pet is hypoallergenic, then displays that
+        ui->hypoallergenic->clear();
+        //Displays bio
+        ui->animalCustomBio->setText("You can add new pet profiles "
+                                     "in the profile screen!");
+    }
+}
+
+void PetFinder::closeEvent (QCloseEvent *event) {
+    QMessageBox::StandardButton exitButton =
+            QMessageBox::question(this, "pet_tinder", tr("Are you sure?\n"),
+                                   QMessageBox::Cancel | QMessageBox::No
+                                   | QMessageBox::Yes, QMessageBox::Yes);
+    if (exitButton == QMessageBox::Yes) {
+        event->accept();
+    } else {
+        event->ignore();
+    }
 }
 
 void PetFinder::on_profileButton_clicked() {
@@ -125,6 +158,7 @@ void PetFinder::on_deleteButton_clicked() {
 }
 
 void PetFinder::on_likeButton_clicked() {
+    //likeButton = delete confirm
     if(deleteClicked == true){
         ui->deleteWarning->setText("");
         //  ui->deleteButton->setEnabled(true);
@@ -136,16 +170,27 @@ void PetFinder::on_likeButton_clicked() {
         ui->dislikeButton->setPalette(test);
         ui->likeButton->setPalette(test);
 
+        if(petList.size() > 0) {
+            matchmaker->DM->removePet(petList.at(petIndex)->id);
+        }
+
         deleteClicked = false;
-    } else {
+    } else { //likeButton = like/right arrow
+        Pet* likedPet = petList.at(petIndex);
         //Iterates one up through the petList
         if(petList.size() > 0 && petIndex + 1 < (int)petList.size()) {
             cout << "GUI PetFinder screen: Like button clicked, next pet displayed" << endl;
             //Adds pet id to user info's liked pet list
-            Pet* likedPet = petList.at(petIndex);
             petIndex++;
-            displayPet(likedPet);
+            cout << petIndex << endl;
+            displayPet(petList.at(petIndex));
+        } else if(isUserAdopter) {
+            cout << "GUI PetFinder screen: Like button clicked, no more pets to display" << endl;
+            displayEmptyPet();
+        }
 
+        //If user is adopter, like pet
+        if(isUserAdopter) {
             //Find adoptee who owns liked pet
             Adoptee* adoptee = matchmaker->DM->findAdopteePet(likedPet->id);
             if(adoptee != nullptr) {
@@ -156,9 +201,6 @@ void PetFinder::on_likeButton_clicked() {
             } else {
                 cout << "ERROR: Pet doesn't have an owner, that shouldn't be a thing" << endl;
             }
-        } else {
-            cout << "GUI PetFinder screen: Like button clicked, no more pets to display" << endl;
-            displayEmptyPet();
         }
     }
 
@@ -166,7 +208,8 @@ void PetFinder::on_likeButton_clicked() {
 
 void PetFinder::on_dislikeButton_clicked()
 {
-    if(deleteClicked == true){
+    //dislikeButton = delete cancel
+    if(deleteClicked == true) {
         ui->deleteWarning->setText("");
         //ui->deleteButton->setEnabled(true);
         ui->deleteButton->setVisible(true);
@@ -178,18 +221,24 @@ void PetFinder::on_dislikeButton_clicked()
         ui->likeButton->setPalette(test);
 
         deleteClicked = false;
-    } else {
+    } else if(isUserAdopter) { //dislikeButton = dislike (adopter)
         //Iterates one up through the petList
         if(petList.size() > 0 && petIndex + 1 < (int)petList.size()) {
             cout << "GUI PetFinder screen: Like button clicked, next pet displayed" << endl;
-            //Adds pet id to user info's liked pet list
-            Pet* dislikedPet = petList.at(petIndex);
-            profileWindow->userInfoAdopter->dislikedPetIds.push_back(dislikedPet->id);
+            profileWindow->userInfoAdopter->dislikedPetIds.push_back(petList.at(petIndex)->id);
             petIndex++;
-            displayPet(dislikedPet);
+            displayPet(petList.at(petIndex));
         } else {
             cout << "GUI PetFinder screen: Like button clicked, no more pets to display" << endl;
             displayEmptyPet();
+        }
+    } else { //dislikeButton = left arrow (adoptee)
+        //Iterates one up through the petList
+        if(petList.size() > 0 && petIndex - 1 >= 0) {
+            cout << "GUI PetFinder screen: left arrow clicked, previous pet displayed" << endl;
+            petIndex--;
+            cout << petIndex << endl;
+            displayPet(petList.at(petIndex));
         }
     }
 }

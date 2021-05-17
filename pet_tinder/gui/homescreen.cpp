@@ -13,6 +13,7 @@ HomeScreen::HomeScreen(QWidget *parent):QWidget(parent), ui(new Ui::HomeScreen) 
     QPixmap pic2;
     pic2.convertFromImage(img.scaled(829, 786, Qt::KeepAspectRatio), 0);
     ui->logo->setPixmap(pic2);
+    ui->loginFailedLabel->setVisible(false);
 
     //databaseManager = new DatabaseManager();
 }
@@ -21,7 +22,7 @@ HomeScreen::~HomeScreen() {
     delete ui;
 }
 
-void HomeScreen::on_loginButton_clicked() {
+void HomeScreen::login() {
     //Tests if user in an adopter
     Adopter* userInfoAdopter = petWindow->matchmaker->DM->readInAdopter(username, password);
     //Checks if this adopter exists
@@ -42,8 +43,8 @@ void HomeScreen::on_loginButton_clicked() {
         //Change window to pet window
         this->hide();
         petWindow->showMaximized();
-    } else {
 
+    } else {
         //Tests if user in an adoptee
         Adoptee* userInfoAdoptee = petWindow->matchmaker->DM->readInAdoptee(username, password);
         //Tests if this adoptee exists
@@ -51,6 +52,20 @@ void HomeScreen::on_loginButton_clicked() {
             cout << "Adoptee Login Successful!" << endl;
             //Lets rest of gui know that user is an adoptee
             petWindow->isUserAdopter = false;
+
+            //Reads in pets (normally happens automatically,
+            // but matchmaking is not required for adoptees)
+            petWindow->matchmaker->DM->readInPets();
+
+            //Passes adoptee's pets to the pet list window's petList
+            for(int i : userInfoAdoptee->ownedPetIds) {
+                if(petWindow->matchmaker->DM->getNumPets() > 0) {
+                    petWindow->petList.push_back(petWindow->matchmaker->DM->findPet(i));
+                } else {
+                    cout << "Adoptee's pet id: " + to_string(i) + " does not exist"
+                            " or was not read in properly" << endl;
+                }
+            }
 
             //Passes adoptee to profileWindow and displays their info
             petWindow->profileWindow->userInfoAdoptee = userInfoAdoptee;
@@ -63,9 +78,15 @@ void HomeScreen::on_loginButton_clicked() {
             this->hide();
             petWindow->showMaximized();
         } else {
+            ui->loginFailedLabel->setVisible(true);
             cout << "Login failed!" << endl; //DISPLAY ON SCREEN LATER
         }
     }
+
+}
+
+void HomeScreen::on_loginButton_clicked() {
+    login();
 }
 
 void HomeScreen::on_usernameInput_textEdited(const QString &arg1) {
@@ -75,8 +96,15 @@ void HomeScreen::on_passwordInput_textEdited(const QString &arg1) {
     password = arg1.toStdString();
 }
 
-void HomeScreen::on_newAccount_clicked()
-{
+void HomeScreen::on_newAccount_clicked() {
     AApointer->PfPnter = petWindow;
     AApointer->show();
+}
+
+void HomeScreen::on_usernameInput_returnPressed() {
+    login();
+}
+
+void HomeScreen::on_passwordInput_returnPressed() {
+    login();
 }

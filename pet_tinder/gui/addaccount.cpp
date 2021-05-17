@@ -1,10 +1,7 @@
 #include "addaccount.h"
 #include "ui_addaccount.h"
 
-AddAccount::AddAccount(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::AddAccount)
-{
+AddAccount::AddAccount(QWidget *parent) : QWidget(parent), ui(new Ui::AddAccount) {
     ui->setupUi(this);
 }
 
@@ -26,27 +23,33 @@ void AddAccount::on_saveNewAccount_clicked()
         if(ui->roleChooser->currentIndex() == 1){
             Adopter *temp = new Adopter;
             temp->username = username.toStdString();
-            temp->prefAgeReq = false;
-            temp->prefBreedReq = false;
-            temp->prefSexReq = false;
-            temp->prefHypoallergenicReq = false;
+            temp->prefSpecies = "";
             temp->prefSpeciesReq = false;
-            temp->prefColorReq = false;
+            temp->prefBreed = "";
+            temp->prefBreedReq = false;
+            temp->prefAge = 0;
+            temp->prefAgeReq = false;
+            temp->prefWeight = 0;
             temp->prefWeightReq = false;
+            temp->prefColor = "";
+            temp->prefColorReq = false;
+            temp->prefHypoallergenic = true;
+            temp->prefHypoallergenicReq = false;
+            temp->prefSex = "";
+            temp->prefSexReq = false;
 
-            PfPnter->matchmaker->DM->addAdopter(temp,password.toStdString());
-
+            PfPnter->matchmaker->DM->addAdopter(temp, password.toStdString());
         }
         //adoptee
         if(ui->roleChooser->currentIndex() == 2){
             Adoptee *temp = new Adoptee;
             temp->username = username.toStdString();
+            temp->bio = "";
+            temp->shelter = "";
             PfPnter->matchmaker->DM->addAdoptee(temp,password.toStdString());
-
         }
-
+        this->close();
     }
-
 }
 
 bool AddAccount::validate(){
@@ -75,7 +78,7 @@ bool AddAccount::validate(){
 
 void AddAccount::on_newUsernameInput_textChanged(const QString &arg1)
 {
-        username = arg1;
+     username = arg1;
 }
 
 void AddAccount::on_newPasswordInput_textChanged(const QString &arg1)

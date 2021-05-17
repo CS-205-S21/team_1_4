@@ -82,9 +82,9 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="2,1,0">
+    <layout class="QHBoxLayout" name="mainLayout" stretch="2,1,0">
      <item>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="infoLayout">
        <item>
         <widget class="QLabel" name="userName">
          <property name="font">
@@ -96,6 +96,9 @@
          </property>
          <property name="text">
           <string>Name</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -111,10 +114,24 @@
          </property>
         </widget>
        </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QPushButton" name="editBioButton">
+           <property name="text">
+            <string>Edit bio</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="bioEdit"/>
+         </item>
+        </layout>
+       </item>
       </layout>
      </item>
      <item>
-      <layout class="QGridLayout" name="gridLayout_4">
+      <layout class="QGridLayout" name="buttonsLayout">
        <item row="1" column="0">
         <widget class="QPushButton" name="PrefsButton">
          <property name="text">

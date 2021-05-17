@@ -409,7 +409,7 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
+    <layout class="QVBoxLayout" name="mainLayout" stretch="2,0,8">
      <item>
       <widget class="QLabel" name="logo">
        <property name="palette">
@@ -930,6 +930,16 @@
        </property>
        <property name="wordWrap">
         <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="loginFailedLabel">
+       <property name="text">
+        <string>Incorrect username or password. Please try again!</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>

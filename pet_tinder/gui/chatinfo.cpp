@@ -36,6 +36,11 @@ void ChatInfo::display(bool isPet) {
         }
         //Displays bio
         ui->bio->setText(QString::fromStdString(pet->bio));
+        //Displays image
+        QPixmap pic;
+        pic.loadFromData(pet->image);
+        pic.scaled(200, 300, Qt::KeepAspectRatio);
+        ui->pic->setPixmap(pic);
     //If not pet is being displayed...
     } else {
         ui->speciesBreed->setVisible(false);
