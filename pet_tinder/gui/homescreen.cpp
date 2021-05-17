@@ -34,6 +34,7 @@ void HomeScreen::on_loginButton_clicked() {
         //Passes adopter to profileWindow and displays their info
         petWindow->profileWindow->userInfoAdopter = userInfoAdopter;
         petWindow->profileWindow->displayUserInfo(true);
+        petWindow->petListWindow->initialize();
 
         //Initialize pet window's display
         petWindow->initialize();

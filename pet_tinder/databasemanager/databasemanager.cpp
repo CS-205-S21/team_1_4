@@ -91,6 +91,26 @@ Adopter* DatabaseManager::readInAdopter(string username, string password) {
     }
 }
 
+//Reads in adopter's public info from database with given username
+Adopter* DatabaseManager::readInAdopterPublic(string username) {
+    //Prepares a query that will read in all pets ordered by id.
+    QSqlQuery query;
+    query.prepare("SELECT username, bio FROM adopter "
+                  "WHERE username = (:username);");
+    query.bindValue(":username", QString::fromStdString(username));
+    if(query.exec() && query.next()) {
+        //Creates and fills adopter struct
+        Adopter *adopter = new Adopter;
+        adopter->username = query.value("username").toString().toStdString();
+        adopter->bio = query.value("bio").toString().toStdString();
+
+        return adopter; //Returns adopter struct
+    } else {
+        cout << "Error: Issue with the Query\n";
+        return nullptr;
+    }
+}
+
 Adoptee* DatabaseManager::readInAdoptee(string username, string password) {
     //Prepares a query that will read in all pets ordered by id.
     QSqlQuery query;
@@ -112,10 +132,34 @@ Adoptee* DatabaseManager::readInAdoptee(string username, string password) {
     }
 }
 
-Conversation* DatabaseManager::readInConversation(string usernameAdopter, string usernameAdoptee) {
+//Reads in adopter's public info from database with given username
+Adoptee* DatabaseManager::readInAdopteePublic(string username) {
     //Prepares a query that will read in all pets ordered by id.
     QSqlQuery query;
-    query.prepare("SELECT messages FROM conversation "
+    query.prepare("SELECT username, shelter, bio FROM adoptee "
+                  "WHERE username = (:username);");
+    query.bindValue(":username", QString::fromStdString(username));
+    if(query.exec() && query.next()) {
+        //Creates and fills adopter struct
+        Adoptee *adoptee = new Adoptee;
+        adoptee->username = query.value("username").toString().toStdString();
+        adoptee->shelter = query.value("shelter").toString().toStdString();
+        adoptee->bio = query.value("bio").toString().toStdString();
+
+        return adoptee; //Returns adopter struct
+    } else {
+        cout << "Error: Issue with the Query\n";
+        return nullptr;
+    }
+}
+
+Conversation* DatabaseManager::readInConversation(string usernameAdopter, string usernameAdoptee) {
+    cout << "readInConversation called" << endl;
+    cout << "adopter: " + usernameAdopter << endl;
+    cout << "adoptee: " + usernameAdoptee << endl;
+    //Prepares a query that will read in all pets ordered by id.
+    QSqlQuery query;
+    query.prepare("SELECT usernameAdopter, usernameAdoptee, messages FROM conversation "
                   "WHERE usernameAdopter = (:usernameAdopter) "
                   "AND usernameAdoptee = (:usernameAdoptee);");
     query.bindValue(":usernameAdopter", QString::fromStdString(usernameAdopter));
@@ -123,7 +167,7 @@ Conversation* DatabaseManager::readInConversation(string usernameAdopter, string
     if(query.exec() && query.next()) {
         //Creates and fills info struct
         Conversation *convo = new Conversation;
-        convo->messages = query.value("messages").toString().toStdString();
+        convo->messages = messageParse(query.value("messages").toString().toStdString());
         convo->usernameAdopter = usernameAdopter;
         convo->usernameAdoptee = usernameAdoptee;
         return convo; //Returns adoptee struct
@@ -167,7 +211,7 @@ Adopter* DatabaseManager::findAdopterPet(int id) {
             //Pull vector of liked pets for current adopter
             vector<int> likedPetIds = stringToIntVector(query.value("likedPetIds").toString().toStdString());
             //Parse likedPetIds
-            for(int i = 0; i < likedPetIds.size(); i++) {
+            for(int i = 0; i < (int)likedPetIds.size(); i++) {
                 //If likedPetIds contains the id being searched for, pull and return said adopter
                 if(likedPetIds.at(i) == id) {
                     return readInAdopter(query.value("username").toString().toStdString(),
@@ -516,7 +560,7 @@ bool DatabaseManager::addConversation(Conversation convo) {
                       "VALUES (:usernameAdopter, :usernameAdoptee, :messages);");
             q.bindValue(":usernameAdopter", QString::fromStdString(convo.usernameAdopter));
             q.bindValue(":usernameAdoptee", QString::fromStdString(convo.usernameAdoptee));
-            q.bindValue(":messages", QString::fromStdString(convo.messages));
+            //q.bindValue(":messages", QString::fromStdString(convo.messages));
         if(q.exec()) {
             return true;
         } else {
@@ -576,34 +620,26 @@ QString DatabaseManager::intVectorToQString(vector<int> vec) {
     return str;
 }
 
-//DEFUNCT?
-vector<string> DatabaseManager::messageParse(string message) {
+vector<QString> DatabaseManager::messageParse(string message) {
     cout << "Database Manager: parsing message" << endl;
 
-    vector<string> messageVec;
-    string delimeterSender = ":";     //Marks end of sender name
+    vector<QString> messageVec;
     string delimeterEndMessage = "|"; //Marks end of sent message
 
     //Code eats chunks of the message as it parses,
     // so this runs until the message is fully consumed by the great coding lords
     while(message.length() > 0) {
-        //Cuts sender name out
-        string sender = message.substr(0, message.find(delimeterSender));
-        cout << "Sender name: " + sender << endl;
-        message.erase(0, message.find(delimeterSender));
         //Finds message sent
-        string foundMessage = message.substr(1, message.find(delimeterEndMessage) - 1);
+        string foundMessage = message.substr(0, message.find(delimeterEndMessage) - 1);
         cout << "Found message: " + foundMessage << endl;
 
-        messageVec.push_back(sender + ": " + foundMessage);
+        messageVec.push_back(QString::fromStdString(foundMessage));
 
-        cout << "Message: " + message << endl;
         if(message.find('|') == string::npos) {
             return messageVec;
         }
         //Removes found message
         message.erase(0, message.find(delimeterEndMessage) + 1);
-
     }
 }
 

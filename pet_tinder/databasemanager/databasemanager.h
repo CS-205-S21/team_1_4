@@ -23,10 +23,10 @@ struct Pet {
     string bio;
 };
 struct Adopter {
-    string username;
+    string username;            //PUBLIC
     vector<int> likedPetIds;
     vector<int> dislikedPetIds;
-    string bio;
+    string bio;                 //PUBLIC
 
     string prefSpecies;
     bool prefSpeciesReq;
@@ -44,15 +44,15 @@ struct Adopter {
     bool prefSexReq;
 };
 struct Adoptee {
-    string username;
-    string shelter;
+    string username;         //PUBLIC
+    string shelter;          //PUBLIC
     vector<int> ownedPetIds;
-    string bio;
+    string bio;              //PUBLIC
 };
 struct Conversation {
     string usernameAdopter;
     string usernameAdoptee;
-    string messages;
+    vector<QString> messages;
 };
 
 class DatabaseManager
@@ -81,6 +81,15 @@ public:
      *  If adopter is not found, a nullptr is returned.
      */
     Adopter* readInAdopter(string username, string password);
+    
+    /**
+     * @brief DatabaseManager::readInAdopterPublic - Reads in public adopter
+     *  info from database with matching username
+     * @param username - Username of adopter to search for
+     * @return Pointer to Pref struct of adopter's public info only.
+     *  If adopter is not found, a nullptr is returned.
+     */
+    Adopter* readInAdopterPublic(string username);
 
     /**
      * @brief DatabaseManager::readInAdoptee - Reads in adoptee from adopter database
@@ -91,6 +100,15 @@ public:
      *  If adoptee is not found, a nullptr is returned.
      */
     Adoptee* readInAdoptee(string username, string password);
+    
+    /**
+     * @brief DatabaseManager::readInAdopteePublic - Reads in public adoptee
+     *  info from database with matching username
+     * @param username - Username of adoptee to search for
+     * @return Pointer to Pref struct of adoptee's public info only.
+     *  If adoptee is not found, a nullptr is returned.
+     */
+    Adoptee* readInAdopteePublic(string username);
 
     /**
      * @brief DatabaseManager::readInMessages - Reads in conversation from
@@ -236,10 +254,10 @@ public:
      *  and one other, formatted ONLY like:
      *  "senderName:Sender's message|otherSenderName:Other sender's message|", etc.
      *  Typically only used on message strings read in straight from the database
-     * @return vector<string> - A vector of individual messages, with
+     * @return vector<QString> - A vector of individual messages, with
      *  sender's name attached to the front of each message of the
      */
-    vector<string> messageParse(string message);
+    vector<QString> messageParse(string message);
 
     /**
      * @brief getPetIdMax - Getter method for petIdMax

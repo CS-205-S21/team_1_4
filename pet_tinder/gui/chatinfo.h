@@ -20,6 +20,11 @@ public:
 
     PetList* petListWindow;
 
+    void display(bool isPet);
+
+private slots:
+    void on_backButton_clicked();
+
 private:
     Ui::ChatInfo *ui;
 };

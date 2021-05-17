@@ -1,4 +1,3 @@
-
 #include "petfinder.h"
 #include "ui_petfinder.h"
 
@@ -31,6 +30,7 @@ void PetFinder::initialize() {
     if(petList.size() > 0) {
         cout << "PetFinder screen display first pet!" << endl;
         displayPet(petList.front());
+        petIndex++;
     } else {
         displayEmptyPet();
     }

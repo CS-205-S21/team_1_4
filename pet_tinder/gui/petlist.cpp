@@ -6,39 +6,67 @@ PetList::PetList(QWidget *parent) : QWidget(parent), ui(new Ui::PetList) {
     pfptr = NULL;
     ppptr = NULL;
     ciptr = new ChatInfo();
+    ciptr->petListWindow = this;
 
     validMessage = false;
     noMessagesDisplay = "This is where your messages will appear!";
     ui->invalidWarning->setVisible(false);
-
-    for(int i = 0; i < textboxes.size(); i++) {
-        textboxes.at(i) = noMessagesDisplay;
-        ui->chatbox->setText(noMessagesDisplay);
-    }
+    convoIndex = ui->otherConvos->currentIndex();
 }
 
 PetList::~PetList() {
     delete ui;
 }
 
+//Initializes conversations, call from login not constructor
+void PetList::initialize() {
+    //Reads in messages frmo database
+    if(pfptr->isUserAdopter) {
+        Adopter* user = ppptr->userInfoAdopter;
+        for(int i = 0; i < (int)user->likedPetIds.size(); i++) {
+            Conversation* convo = pfptr->matchmaker->DM->readInConversation
+                                   (user->username, pfptr->matchmaker->DM->findAdopteePet
+                                    (user->likedPetIds.at(i))->username);
+            adopteesChatting.push_back(pfptr->matchmaker->DM->readInAdopteePublic
+                                       (convo->usernameAdoptee));
+            petsChatting.push_back(pfptr->matchmaker->DM->findPet
+                                   (user->likedPetIds.at(i)));
+            textboxes.push_back(convo->messages);
+            //If adoptee doesn't have an associated shelter, display their username instead
+            if(adopteesChatting.back()->shelter.compare("") == 0) {
+                ui->otherConvos->addItem(QString::fromStdString
+                                         (petsChatting.back()->name +
+                                          " from " + adopteesChatting.back()->username));
+            } else {
+                ui->otherConvos->addItem(QString::fromStdString
+                                         (petsChatting.back()->name +
+                                          " from " + adopteesChatting.back()->shelter));
+            }
+        }
+    }
+}
+
 void PetList::sendMessage() {
     //Doesn't send a message if you have no conversations
     if(textboxes.size() > 0) {
         //Finds current conversation index
-        int convoIndex = ui->otherConvos->currentIndex();
         //If this is the first message, clear no messages display
-        if(textboxes.at(convoIndex).compare(noMessagesDisplay) == 0) {
+        if(textboxes.at(convoIndex).size() == 0) {
             textboxes.at(convoIndex).clear();
         }
         if(validMessage) {
             if(pfptr->isUserAdopter) {
-                textboxes.at(convoIndex).append
-                    (QString::fromStdString(ppptr->userInfoAdopter->username) + ": " + typedMessage + "\n");
+                textboxes.at(convoIndex).push_back
+                    (QString::fromStdString(ppptr->userInfoAdopter->username) + ": " + typedMessage);
             } else {
-                textboxes.at(convoIndex).append
-                    (QString::fromStdString(ppptr->userInfoAdoptee->username) + ": " + typedMessage + "\n");
+                textboxes.at(convoIndex).push_back
+                    (QString::fromStdString(ppptr->userInfoAdoptee->username) + ": " + typedMessage);
             }
-            ui->chatbox->setText(textboxes.at(convoIndex));
+            QString text;
+            for(QString i : textboxes.at(convoIndex)) {
+                text.append(i + "\n");
+            }
+            ui->chatbox->setText(text);
             ui->lineEdit->clear();
         }
     }
@@ -51,7 +79,9 @@ void PetList::newConvo(Pet* pet, Adopter *adopter) {
 void PetList::newConvo(Pet* pet, Adoptee *adoptee) {
     adopteesChatting.push_back(adoptee);
     petsChatting.push_back(pet);
-    textboxes.push_back(noMessagesDisplay);
+    vector<QString> vec;
+    vec.push_back(noMessagesDisplay);
+    textboxes.push_back(vec);
     //If adoptee doesn't have an associated shelter, display their username instead
     if(adoptee->shelter.compare("") == 0) {
         ui->otherConvos->addItem(QString::fromStdString(pet->name + " from " + adoptee->username));
@@ -97,17 +127,35 @@ void PetList::on_lineEdit_returnPressed() {
 }
 
 void PetList::on_otherConvos_currentIndexChanged(int index) {
-    ui->chatbox->setText(textboxes.at(index));
+    convoIndex = index;
+    QString text;
+    for(QString i : textboxes.at(convoIndex)) {
+        text.append(i + "\n");
+    }
+    ui->chatbox->setText(text);
     if(pfptr->isUserAdopter && adoptersChatting.size() > 0) {
         ui->chatTitle->setText
-                (QString::fromStdString("Chatting with " + adoptersChatting.at(index)->username));
+                (QString::fromStdString("Chatting with " + adoptersChatting.at(convoIndex)->username));
     } else if (adopteesChatting.size() > 0) {
         ui->chatTitle->setText
-                (QString::fromStdString("Chatting with " + adopteesChatting.at(index)->username +
-                                        " from " + adopteesChatting.at(index)->shelter));
+                (QString::fromStdString("Chatting with " + adopteesChatting.at(convoIndex)->username +
+                                        " from " + adopteesChatting.at(convoIndex)->shelter));
     }
 }
 
 void PetList::on_petInfoButton_clicked() {
-    ciptr->show();
+    //Button only works if user has liked pets
+    if(textboxes.size() > 0) {
+        ciptr->display(true);
+        ciptr->show();
+    }
 }
+
+void PetList::on_shelterInfoButton_clicked() {
+    //Button only works if user has liked pets
+    if(textboxes.size() > 0) {
+        ciptr->display(false);
+        ciptr->show();
+    }
+}
+

@@ -18,5 +18,8 @@ int main() {
     cout << "User: " + dm->findAdopterPet(1)->username << endl;
     cout << "User: " + dm->findAdopteePet(1)->username << endl << endl;
 
-    cout << dm->readInConversation("Kate", "Glue")->messages << endl;
+    vector<QString> vec = dm->messageParse("Kate: AHAHHHHHH|Glue: GIUDHGUIDGUI|Kate: SCREAMING|");
+    for(QString i : vec) {
+        cout << i.toStdString() << endl;
+    }
 }

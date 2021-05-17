@@ -24,6 +24,7 @@ class PetList : public QWidget {
 public:
     explicit PetList(QWidget *parent = nullptr);
     ~PetList();
+    void initialize();
     void sendMessage();
     void newConvo(Pet* pet, Adopter* adopter);
     void newConvo(Pet* pet, Adoptee* adoptee);
@@ -42,9 +43,10 @@ public:
 
     //Textboxes containing conversations between user and other, should
     // always line up with adoptersChatting or adopteesChatting
-    vector<QString> textboxes;
+    vector<vector<QString>> textboxes;
     QString typedMessage;
     bool validMessage;
+    int convoIndex;
 
     //String to display when no messages have been sent
     QString noMessagesDisplay;
@@ -68,6 +70,8 @@ private slots:
     void on_otherConvos_currentIndexChanged(int index);
 
     void on_petInfoButton_clicked();
+
+    void on_shelterInfoButton_clicked();
 
 private:
     Ui::PetList *ui;
