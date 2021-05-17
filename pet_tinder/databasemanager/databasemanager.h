@@ -21,6 +21,7 @@ struct Pet {
     int hypoallergenic;
     string sex;
     string bio;
+    QByteArray image;
 };
 struct Adopter {
     string username;            //PUBLIC
@@ -175,7 +176,7 @@ public:
      * @param p - the pet that will be added to the database
      * @return True or false depending on if the pet was successfully added.
      */
-    bool addPet(Pet *p);
+    bool addPet(Pet* p);
 
     /**
      * @brief removePet - Removes a pet from the database of pets
@@ -189,7 +190,7 @@ public:
      * @param p - the adopter (pref) that will be added to the database.
      * @return True or false depending on if the adopter was successfully added.
      */
-    bool addAdopter(Adopter *p, string password);
+    bool addAdopter(Adopter* p, string password);
 
     /**
      * @brief removeAdopter - Removes an adopter from the database of adopters
@@ -203,7 +204,7 @@ public:
      * @param p - the adoptee that will be added to the database.
      * @return True or false depending on if the adoptee was successfully added.
      */
-    bool addAdoptee(Adoptee *p, string password);
+    bool addAdoptee(Adoptee* p, string password);
 
     /**
      * @brief removeAdoptee - Removes an adoptee from the database of adoptees
@@ -218,7 +219,7 @@ public:
      * @param convo - Conversation struct
      * @return bool - Whether or not conversation was succesfully added
      */
-    bool addConversation(Conversation convo);
+    bool addConversation(Conversation* convo);
 
     /**
      * @brief removeConversation - Removes found conversation from database
@@ -258,6 +259,13 @@ public:
      *  sender's name attached to the front of each message of the
      */
     vector<QString> messageParse(string message);
+
+    /**
+     * @brief messageUnparse
+     * @param message
+     * @return
+     */
+    QString messageUnparse(vector<QString> message);
 
     /**
      * @brief getPetIdMax - Getter method for petIdMax

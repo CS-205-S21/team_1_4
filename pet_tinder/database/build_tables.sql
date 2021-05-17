@@ -42,7 +42,8 @@ create table pet (
       color          CHAR NOT NULL,
       hypoallergenic BOOLEAN NOT NULL, 
       sex            CHAR NOT NULL, 
-      bio            CHAR NOT NULL          );
+      bio            CHAR NOT NULL,
+      image        BLOB NOT NULL          );
       
 .separator ","
 .mode csv

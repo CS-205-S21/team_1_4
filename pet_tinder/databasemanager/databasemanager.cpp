@@ -233,7 +233,7 @@ Adoptee* DatabaseManager::findAdopteePet(int id) {
             //Pull vector of liked pets for current adoptee
             vector<int> petIds = stringToIntVector(query.value("petIds").toString().toStdString());
             //Parse likedPetIds
-            for(int i = 0; i < petIds.size(); i++) {
+            for(int i = 0; i < (int)petIds.size(); i++) {
                 //If petIds contains the id being searched for, pull and return said adoptee
                 if(petIds.at(i) == id) {
                     return readInAdoptee(query.value("username").toString().toStdString(),
@@ -330,9 +330,9 @@ bool DatabaseManager::addPet(Pet *pet) {
     //Prepares a query that inserts all pet info from pet struct
     QSqlQuery q;
         q.prepare("INSERT INTO pet (petId, name, species, breed, "
-                  "age, weight, color, hypoallergenic, sex, bio) "
+                  "age, weight, color, hypoallergenic, sex, bio, image) "
                   "VALUES (:petId, :name, :species, :breed, :age, "
-                  ":weight, :color, :hypoallergenic, :sex, :bio);");
+                  ":weight, :color, :hypoallergenic, :sex, :bio, :image);");
         q.bindValue(":petId", pet->id);
         QString name = QString::fromStdString(pet->name);
         q.bindValue(":name", name);
@@ -349,6 +349,7 @@ bool DatabaseManager::addPet(Pet *pet) {
         q.bindValue(":sex", sex);
         QString bio = QString::fromStdString(pet->bio);
         q.bindValue(":bio", bio);
+        q.bindValue(":image", pet->image);
     if(q.exec()){
         pets.push_back(pet); //Adds pet struct to pets vector
         return true;
@@ -543,14 +544,14 @@ bool DatabaseManager::removeAdoptee(string username) {
     return false;
 }
 
-bool DatabaseManager::addConversation(Conversation convo) {
+bool DatabaseManager::addConversation(Conversation* convo) {
     //Checks if conversation already exists
     QSqlQuery existQuery;
         existQuery.prepare("SELECT usernameAdopter FROM conversation "
                            "WHERE usernameAdopter = (:usernameAdopter) "
                            "AND usernameAdoptee = (:usernameAdoptee);");
-        existQuery.bindValue(":usernameAdopter", QString::fromStdString(convo.usernameAdopter));
-        existQuery.bindValue(":usernameAdoptee", QString::fromStdString(convo.usernameAdoptee));
+        existQuery.bindValue(":usernameAdopter", QString::fromStdString(convo->usernameAdopter));
+        existQuery.bindValue(":usernameAdoptee", QString::fromStdString(convo->usernameAdoptee));
 
     //If conversation doesn't exist...
     if(existQuery.exec() && !existQuery.next()){
@@ -558,15 +559,17 @@ bool DatabaseManager::addConversation(Conversation convo) {
         QSqlQuery q;
             q.prepare("INSERT INTO conversation (usernameAdopter, usernameAdoptee, messages) "
                       "VALUES (:usernameAdopter, :usernameAdoptee, :messages);");
-            q.bindValue(":usernameAdopter", QString::fromStdString(convo.usernameAdopter));
-            q.bindValue(":usernameAdoptee", QString::fromStdString(convo.usernameAdoptee));
-            //q.bindValue(":messages", QString::fromStdString(convo.messages));
+            q.bindValue(":usernameAdopter", QString::fromStdString(convo->usernameAdopter));
+            q.bindValue(":usernameAdoptee", QString::fromStdString(convo->usernameAdoptee));
+            q.bindValue(":messages", messageUnparse(convo->messages));
         if(q.exec()) {
             return true;
         } else {
             qDebug() << "Add conversation error" << q.lastError();
             return false;
         }
+    } else {
+        return false;
     }
 }
 
@@ -641,6 +644,15 @@ vector<QString> DatabaseManager::messageParse(string message) {
         //Removes found message
         message.erase(0, message.find(delimeterEndMessage) + 1);
     }
+    return messageVec;
+}
+
+QString DatabaseManager::messageUnparse(vector<QString> message) {
+    QString dannyCodeBad;
+    for(QString i : message) {
+        dannyCodeBad.append(i + "|");
+    }
+    return dannyCodeBad;
 }
 
 int DatabaseManager::getPetIdMax() {

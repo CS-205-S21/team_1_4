@@ -32,11 +32,10 @@ public:
     /**
      * @brief DatabaseInterface- interfaces with the database to sort viable
      * pets for the user
-     * @param username- given by GUI passed to databasemanager
-     * @param passwords- given by GUI passed to databasemanager
+     * @param cu - Current User given by GUI
      * @return Returns a vector of pets that is ready to be shown at the GUI
      */
-    vector<Pet*> DatabaseInterface(string username, string passwords);
+    vector<Pet*> DatabaseInterface(Adopter *cu);
 
     /**
      * @brief refreshPetList- Sorts pets into discarded and sortable pets
