@@ -12,6 +12,8 @@ int main() {
     cout << dm->findPet(2)->name << endl;
     dm->findPet(4)->name;
     cout << dm->findPet(5)->name << endl << endl;
+    cout << dm->findPet(6)->name << endl << endl;
+    cout << dm->findPet(12)->name << endl << endl;
 
     //cout << dm->isUsernameTaken("Glue") << endl << endl;
 
@@ -22,4 +24,17 @@ int main() {
     for(QString i : vec) {
         cout << i.toStdString() << endl;
     }
+
+    Pet* pet = new Pet;
+    pet->age = 2;
+    pet->bio = "";
+    pet->breed = "true";
+    pet->color = "glue";
+    pet->hypoallergenic = true;
+    pet->image = "";
+    pet->name = "myname";
+    pet->sex = "male";
+    pet->species = "epc";
+    pet->weight = 2.0;
+    dm->addPet(pet);
 }
