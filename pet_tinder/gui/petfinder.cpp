@@ -75,6 +75,14 @@ void PetFinder::displayPet(Pet *pet) {
     }
     //Displays bio
     ui->animalCustomBio->setText(QString::fromStdString(pet->bio));
+    QPixmap pic;
+    /*QByteArray byteArray;
+    QBuffer buffer(&byteArray);
+    buffer.open(QIODevice::WriteOnly);
+    pic.save(&buffer, "PNG");*/
+    pic.loadFromData(pet->image);
+    pic.scaled(200, 300, Qt::KeepAspectRatio);
+    ui->animalImage->setPixmap(pic);
 }
 
 //Displays passed-in pet on screen

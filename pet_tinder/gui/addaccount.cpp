@@ -34,11 +34,6 @@ void AddAccount::on_saveNewAccount_clicked()
             temp->prefColorReq = false;
             temp->prefWeightReq = false;
 
-
-
-
-
-
             PfPnter->matchmaker->DM->addAdopter(temp,password.toStdString());
 
         }

@@ -21,15 +21,22 @@ void AdopteeAddPet::on_btn_image_clicked()
         QImage image;
         bool valid = image.load(filename);
         if(valid){
+            QPixmap pic;
             image = image.scaled(200, 300, Qt::KeepAspectRatio);
-            ui->lbl_image->setPixmap(QPixmap::fromImage(image));
+            ui->lbl_image->setPixmap(pic.fromImage(image));
+            
+            QByteArray byteArray;
+            QBuffer buffer(&byteArray);
+            buffer.open(QIODevice::WriteOnly);
+            pic.save(&buffer, "PNG");
+            input->image = byteArray;
+            cout << byteArray.toStdString() << endl;
         }
         else{
 
         }
     }
 }
-
 
 //broken DO NOT DELETE I AM TOO LAZY TO DEAL WITH THE ISSUES THAT WILL OCCUR
 //void AdopteeAddPet::on_pushButton_2_clicked()
@@ -44,8 +51,12 @@ void AdopteeAddPet::on_discardButton_clicked()
 
 void AdopteeAddPet::on_saveButton_clicked()
 {
+    //Add pet to database
     pnter->matchmaker->DM->addPet(input);
-
+    //Add pet to adoptee's owned pet list
+    pnter->profileWindow->userInfoAdoptee->ownedPetIds.push_back
+            (pnter->matchmaker->DM->getPetIdMax() + 1);
+    this->close();
 }
 
 void AdopteeAddPet::on_nameInput_textChanged(const QString &arg1)

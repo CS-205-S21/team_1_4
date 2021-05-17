@@ -22,13 +22,13 @@ void DatabaseManager::readInPets() {
 
     //Prepares a query that will read in all pets ordered by id.
     QSqlQuery query;
-    query.prepare("SELECT petId, name, species, breed, age, weight, "
-                  "color, hypoallergenic, sex, bio FROM pet ORDER BY petId;");
+    query.prepare("SELECT petId, name, species, breed, age, weight, color, "
+                  "hypoallergenic, sex, bio, image FROM pet ORDER BY petId;");
 
     if(query.exec()) {
         while(query.next()) {
             //Creates and fills pet struct
-            Pet *pet = new Pet;
+            Pet* pet = new Pet;
             pet->id = query.value("petId").toInt();
             pet->name = query.value("name").toString().toStdString();
             pet->species = query.value("species").toString().toStdString();
@@ -39,6 +39,7 @@ void DatabaseManager::readInPets() {
             pet->hypoallergenic = query.value("hypoallergenic").toBool();
             pet->sex = query.value("sex").toString().toStdString();
             pet->bio = query.value("bio").toString().toStdString();
+            pet->image = query.value("image").toByteArray();
 
             //Tracks pet ids, will hold highest current pet id by end of while loop
             if(pet->id > (int)petIdMax) {
@@ -597,9 +598,6 @@ bool DatabaseManager::removeConversation(string usernameAdopter, string username
 
 //Takes a string of ints split by ' ' characters and builds it into a vector
 vector<int> DatabaseManager::stringToIntVector(string str) {
-    //char c[s.size() + 1];
-    //strcpy(c, s.c_str());
-
     vector<int> vector;
 
     //Create stream of str string
