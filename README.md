@@ -24,7 +24,7 @@ travel to shelters for adoptions, leading to more pet euthanizations than before
 
 # Building and Running our System:
 To build this system, just download our source code, as well as any database included with 
-sqlite3 and our pictures of each pet. Then, make sure that th eproject builds, then run it 
+sqlite3 and our pictures of each pet. Then, make sure that the project builds, then run it 
 while starting from qtcreator's GUI main method. Then, it will bring up the login screen,
 and from there, the user can explore our app. 
 
