@@ -1,3 +1,5 @@
+![claws](https://user-images.githubusercontent.com/78805674/118567055-1d779480-b743-11eb-8f10-47420f1db017.png)
+
 # Project: Claws n' Paws Matchmaking System!
 
 This project will be a matchmaking system for potential adopters. They will be able to login, 
