@@ -801,6 +801,8 @@ TEST_F(DatabaseManager_Test, READ_IN_ADOPTEE) {
 //*********************************************************************************************************************
 //*****************************************OTHER TESTS FOR DATABASE****************************************************
 //*********************************************************************************************************************
+//This will test the important and testable parts of the messages database. It is less extensive since most
+//of the fields of the Conversation are other adopters and adoptees.
 TEST_F(DatabaseManager_Test, ADD_REMOVE_AND_READ_IN_MESSAGES){
     Adopter *dan = new Adopter;
     vector<int> likedPets;
@@ -860,6 +862,7 @@ TEST_F(DatabaseManager_Test, ADD_REMOVE_AND_READ_IN_MESSAGES){
                         << "dan the adopter should have been removed.";
 }
 
+//This will test the othe rmethod dealing with usernames across all users, not just adopters and adoptees
 TEST_F(DatabaseManager_Test, TEST_SAME_USERNAMES){
     Adopter *dumbass = new Adopter;
     vector<int> likedPets;
@@ -943,6 +946,7 @@ TEST_F(Matchmaking_Test, SORT_AND_ARRANGE_PREFS_TESTS){
     weightR.push_back(12.5);
 
     mm->sortPrefs();
+    cout << mm->total.species.size() << endl;
 
     ASSERT_EQ(speciesR, mm->total.species);
     ASSERT_EQ(breedR, mm->total.breeds);
