@@ -20,6 +20,7 @@ public:
     AddAccount *AApointer;
     explicit HomeScreen(QWidget *parent = 0);
     ~HomeScreen();
+    void login();
 
     //DatabaseManager* databaseManager;
 
@@ -31,6 +32,10 @@ private slots:
     void on_passwordInput_textEdited(const QString &arg1);
 
     void on_newAccount_clicked();
+
+    void on_usernameInput_returnPressed();
+
+    void on_passwordInput_returnPressed();
 
 private:
     Ui::HomeScreen* ui;

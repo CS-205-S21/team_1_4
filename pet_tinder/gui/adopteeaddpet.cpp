@@ -1,39 +1,55 @@
 #include "adopteeaddpet.h"
 #include "ui_adopteeaddpet.h"
 
-AdopteeAddPet::AdopteeAddPet(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::AdopteeAddPet)
-{
+AdopteeAddPet::AdopteeAddPet(QWidget *parent) : QWidget(parent), ui(new Ui::AdopteeAddPet) {
     ui->setupUi(this);
 
+    ui->invalidImageLabel->setVisible(false);
+
+    input->name = "";
+    input->species = "";
+    input->breed = "";
+    input->age = 0;
+    input->weight = 0;
+    input->color = "";
+    input->hypoallergenic = false;
+    input->sex = "Male";
+    input->bio = "";
+    QImage img(":/claws.png");
+    QPixmap pic;
+    pic.convertFromImage(img.scaled(829, 786, Qt::KeepAspectRatio), 0);
+    QByteArray byteArray;
+    QBuffer buffer(&byteArray);
+    buffer.open(QIODevice::WriteOnly);
+    pic.save(&buffer, "png");
+    input->image = byteArray;
 }
 
-AdopteeAddPet::~AdopteeAddPet()
-{
+AdopteeAddPet::~AdopteeAddPet() {
     delete ui;
 }
 
-void AdopteeAddPet::on_btn_image_clicked()
-{
+void AdopteeAddPet::on_btn_image_clicked() {
     QString filename = QFileDialog::getOpenFileName(this, tr("Choose"), "", tr("Images (*.png *.jpg *.jpeg *.gif)"));
-    if(QString::compare(filename, QString()) != 0){
+    if(QString::compare(filename, QString()) != 0) {
         QImage image;
         bool valid = image.load(filename);
         if(valid){
+            ui->invalidImageLabel->setVisible(false);
             QPixmap pic;
             image = image.scaled(200, 300, Qt::KeepAspectRatio);
-            ui->lbl_image->setPixmap(pic.fromImage(image));
+            pic.convertFromImage(image);
+            ui->lbl_image->setPixmap(pic);
             
             QByteArray byteArray;
             QBuffer buffer(&byteArray);
             buffer.open(QIODevice::WriteOnly);
-            pic.save(&buffer, "PNG");
+            pic.save(&buffer, "png");
             input->image = byteArray;
             cout << byteArray.toStdString() << endl;
         }
-        else{
-
+        else {
+            ui->invalidImageLabel->setVisible(true);
         }
     }
 }
@@ -56,6 +72,10 @@ void AdopteeAddPet::on_saveButton_clicked()
     //Add pet to adoptee's owned pet list
     pnter->profileWindow->userInfoAdoptee->ownedPetIds.push_back
             (pnter->matchmaker->DM->getPetIdMax() + 1);
+    pnter->petList.push_back(input);
+    if(pnter->petList.size() <= 0) {
+        pnter->setup();
+    }
     this->close();
 }
 
@@ -104,10 +124,10 @@ void AdopteeAddPet::on_comboBox_currentIndexChanged(int index)
 void AdopteeAddPet::on_comboBox_2_currentIndexChanged(int index)
 {
     if(index == 0){
-        input->sex = "male";
+        input->sex = "Male";
     }
     else{
-        input->sex = "female";
+        input->sex = "Female";
     }
 }
 

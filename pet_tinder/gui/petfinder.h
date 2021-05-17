@@ -5,6 +5,8 @@
 #include "petlist.h"
 #include <QMainWindow>
 #include <QWidget>
+#include <QCloseEvent>
+#include <QMessageBox>
 
 #include "../matchmaking/matchmaker.h"
 
@@ -25,6 +27,8 @@ public:
     void setup();
     void displayPet(Pet *pet);
     void displayEmptyPet();
+
+    void closeEvent(QCloseEvent *event);
 
     Matchmaker *matchmaker;
     ProfilePage *profileWindow;

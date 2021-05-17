@@ -31,6 +31,9 @@ public:
     Adopter* userInfoAdopter;
     Adoptee* userInfoAdoptee;
 
+    bool editingBio;
+    QString bioText;
+
     void displayUserInfo(bool adopter);
 
 signals:
@@ -47,6 +50,10 @@ private slots:
     void on_PrefsButton_clicked();
 
     void on_addPetButton_clicked();
+
+    void on_editBioButton_clicked();
+
+    void on_bioEdit_textEdited(const QString &arg1);
 
 private:
     Ui::ProfilePage *ui;
