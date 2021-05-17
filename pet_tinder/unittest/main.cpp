@@ -48,6 +48,7 @@ class Matchmaking_Test : public::testing::Test {
         tPet1->hypoallergenic = false;
         tPet1->sex = "Female";
         tPet1->bio = "The beloved Puppy of Danny, the head Tester for Claws n' Paws!";
+        tPet1->image = "";
         dm->addPet(tPet1);
 
         tPet2 = new Pet;
@@ -60,6 +61,7 @@ class Matchmaking_Test : public::testing::Test {
         tPet2->hypoallergenic = false;
         tPet2->sex = "Male";
         tPet2->bio = "What time does a duck wake up in the morning? At the quack of Dawn!";
+        tPet2->image = "";
         dm->addPet(tPet2);
 
         tPet3 = new Pet;
@@ -72,6 +74,7 @@ class Matchmaking_Test : public::testing::Test {
         tPet3->hypoallergenic = true;
         tPet3->sex = "Male";
         tPet3->bio = "Oh, you have cat to be kitten me right meow ^.^ OwO";
+        tPet3->image = "";
         dm->addPet(tPet3);
 
         tPet4 = new Pet;
@@ -84,6 +87,7 @@ class Matchmaking_Test : public::testing::Test {
         tPet4->hypoallergenic = true;
         tPet4->sex = "Male";
         tPet4->bio = "I went to the zoo, but they only had one dog... It was a Shih Tzu";
+        tPet4->image = "";
         dm->addPet(tPet4);
     }
 
@@ -224,6 +228,7 @@ TEST_F(DatabaseManager_Test, ADD_AND_REMOVE_PET) {
                "Trinket has seen a great many adventure and receieved special treatment as the"
                "bear that aided Vox Machina through several adventures that would save all of Tal"
                "Dore. THis is probably the most well-known bear in the world, for good reason. ";
+    bear->image = "";
     ASSERT_TRUE(dm->addPet(bear))
                         << "Bear should have been added.";
     ASSERT_EQ(numPets+1, dm->getNumPets())
@@ -255,6 +260,7 @@ TEST_F(DatabaseManager_Test, ADD_MULTIPLE_IDS) {
                  "vow and motivation to seek out his brother's murderer, and his mentor, Enrico"
                  "Brando, the leader of the Diashad order of Paladins. Jyken has sworn to make"
                  "Enrico wish he was never alive.";
+    animal->image = "";
     ASSERT_TRUE(dm->addPet(animal))
                     << "Animal should have been added.";
 
@@ -273,6 +279,7 @@ TEST_F(DatabaseManager_Test, ADD_MULTIPLE_IDS) {
                   "master Ba had mysteriously passed away, leaving Mist to his own devices. He then"
                   "went on to discover his own path, acting as judge of the mortal world and seeking"
                   "to learn who he is.";
+    animalA->image = "";
     ASSERT_TRUE(dm->addPet(animalA))
                 << "AnimalA should have an id overwritten and added anyway";
     ASSERT_TRUE(dm->removePet(animal->id))
@@ -299,6 +306,7 @@ TEST_F(DatabaseManager_Test, ADD_EMPTY_PET) {
     frog->hypoallergenic = false;
     frog->sex = "";
     frog->bio = "";
+    frog->image = "";
 
     ASSERT_TRUE(dm->addPet(frog))
                     << "Pets should accept parameters if there are some non-applicable information.";
@@ -333,6 +341,7 @@ TEST_F(DatabaseManager_Test, WEIRD_PET_DATA) {
     animal->hypoallergenic = true;
     animal->sex = "Non-Binary";
     animal->bio = "N/A";
+    animal->image = "";
     ASSERT_FALSE(dm->addPet(animal))
                     << "Pets should not accept parameters with weird information";
     //just in case it was not removed yet
@@ -363,6 +372,7 @@ TEST_F(DatabaseManager_Test, FIND_PETS) {
                "In the stories, Pikachu was Ash's first pokemon, and though their relationship"
                "was rocky at first, they grew to be the closest of friends and swore to become the"
                "very best like no one ever was together.";
+    pika->image = "";
     ASSERT_TRUE(dm->addPet(pika))
                     << "Pets should now contain only 1 addition";
 
@@ -378,6 +388,7 @@ TEST_F(DatabaseManager_Test, FIND_PETS) {
                "also joined Ash Ketchum in his quest to become the ultimate pokemon trainer, but"
                "tepig is objectively one of the best starters of all pokemon. The final evolution"
                "is Emboar.";
+    tepi->image = "";
     ASSERT_TRUE(dm->addPet(tepi))
                     << "Pets should now contain only 2 additions";
 
@@ -393,6 +404,7 @@ TEST_F(DatabaseManager_Test, FIND_PETS) {
                "Ash for a brief period. Snivy can evolve into the graceful Serperior, the superior"
                "grass serpent that can slither around and capture its foes with its grassy entanglement."
                "Snivy is a beautiful pokemon with great evolutions for a fresh design in generation 5.";
+    sniv->image = "";
     ASSERT_TRUE(dm->addPet(sniv))
                     << "Pets should now contain only 3 additions";
 
@@ -409,6 +421,7 @@ TEST_F(DatabaseManager_Test, FIND_PETS) {
                "but it might be some sort of turtle. Oshawott has some sort of boomerang weapon that "
                "can come off its body, but evolves into Samurott, a large and intimidating pokemon with"
                "the wespons from its first evolution adorning its legs. Truly Generation 5 was a masterpiece.";
+    osha->image = "";
     ASSERT_TRUE(dm->addPet(osha))
                     << "Pets should now contain only 4 additions";
 
@@ -788,7 +801,7 @@ TEST_F(DatabaseManager_Test, READ_IN_ADOPTEE) {
 //*********************************************************************************************************************
 //*****************************************OTHER TESTS FOR DATABASE****************************************************
 //*********************************************************************************************************************
-TEST_F(DatabaseManager_Test, ADD_AND_REMOVE_MESSAGES){
+TEST_F(DatabaseManager_Test, ADD_REMOVE_AND_READ_IN_MESSAGES){
     Adopter *dan = new Adopter;
     vector<int> likedPets;
     likedPets.push_back(1);
@@ -796,7 +809,7 @@ TEST_F(DatabaseManager_Test, ADD_AND_REMOVE_MESSAGES){
     dislikedPets.push_back(0);
     ASSERT_EQ(numAdopters, dm->getNumAdopters())
                     << "This should never be false";
-    dan->username = "Danny";
+    dan->username = "Arthur Ayers";
     dan->likedPetIds = likedPets;
     dan->dislikedPetIds = dislikedPets;
     dan->prefSpecies = "Dog";
@@ -813,16 +826,86 @@ TEST_F(DatabaseManager_Test, ADD_AND_REMOVE_MESSAGES){
     dan->prefHypoallergenicReq = true;
     dan->prefSex = "Female";
     dan->prefSexReq = false;
-    dan->bio = "";
-
+    dan->bio = "Watch my spelunky 2 speedruns ^.^";
     ASSERT_TRUE(dm->addAdopter(dan, "Password"))
                         << "dan the adopter was not added.";
+
+    Adoptee *pt = new Adoptee;
+    vector<int> ownedPetIds;
+    ownedPetIds.push_back(1);
+    pt->username = "LC";
+    pt->shelter = "Lafayette College";
+    pt->ownedPetIds = ownedPetIds;
+    pt->bio = "";
+    ASSERT_TRUE(dm->addAdoptee(pt, "LafayetteIsBetterThanLehigh"))
+                        << "LC the adoptee was not added.";
+
+    Conversation *ct = new Conversation;
+    ct->usernameAdopter = dan->username;
+    ct->usernameAdoptee = pt->username;
+    QString message = QString::fromStdString("Sup Bitch");
+    ct->messages.push_back(message);
+    ASSERT_TRUE(dm->addConversation(ct))
+                        << "Conversation ct was not added :(";
+
+    ASSERT_EQ(ct->usernameAdopter, dm->readInConversation(ct->usernameAdopter, ct->usernameAdoptee)->usernameAdopter)
+                        << "Read in Conversation should have the same usernames.";
+    ASSERT_EQ(ct->usernameAdoptee, dm->readInConversation(ct->usernameAdopter, ct->usernameAdoptee)->usernameAdoptee)
+                        << "Read in Conversation should have the same usernames.";
+    ASSERT_TRUE(dm->removeConversation(ct->usernameAdopter, ct->usernameAdoptee))
+                        << "Conversation should be removed.";
+    ASSERT_TRUE(dm->removeAdoptee(pt->username))
+                        << "Pet Tinder the adoptee should have been removed.";
     ASSERT_TRUE(dm->removeAdopter(dan->username))
                         << "dan the adopter should have been removed.";
 }
 
-TEST_F(DatabaseManager_Test, READ_IN_CONVERSATIONS){
+TEST_F(DatabaseManager_Test, TEST_SAME_USERNAMES){
+    Adopter *dumbass = new Adopter;
+    vector<int> likedPets;
+    likedPets.push_back(1);
+    vector<int> dislikedPets;
+    dislikedPets.push_back(0);
+    dumbass->username = "Standard Username";
+    dumbass->likedPetIds = likedPets;
+    dumbass->dislikedPetIds = dislikedPets;
+    dumbass->prefSpecies = "Dog";
+    dumbass->prefSpeciesReq = true;
+    dumbass->prefBreed = "Shorkie";
+    dumbass->prefBreedReq = false;
+    dumbass->prefAge = 3;
+    dumbass->prefAgeReq = false;
+    dumbass->prefWeight = 2.0;
+    dumbass->prefWeightReq = false;
+    dumbass->prefColor = "Brown";
+    dumbass->prefColorReq = false;
+    dumbass->prefHypoallergenic = true;
+    dumbass->prefHypoallergenicReq = true;
+    dumbass->prefSex = "Female";
+    dumbass->prefSexReq = false;
+    dumbass->bio = "My name is Alex";
+    ASSERT_TRUE(dm->addAdopter(dumbass, "Password"))
+                        << "Dumbass the adopter was not added.";
+    ASSERT_TRUE(dm->isUsernameTaken(dumbass->username))
+                        << "The username should be taken.";
 
+    Adoptee *coolass = new Adoptee;
+    vector<int> ownedPetIds;
+    ownedPetIds.push_back(1);
+    coolass->username = "Less Standard Username";
+    coolass->shelter = "Claws n' Paws";
+    coolass->ownedPetIds = ownedPetIds;
+    coolass->bio = "My name is not Alex";
+    ASSERT_FALSE(dm->isUsernameTaken(coolass->username))
+                        << "The username should not be taken yet.";
+    ASSERT_TRUE(dm->addAdoptee(coolass, "Password"))
+                        << "Coolass the adoptee was not added.";
+    ASSERT_TRUE(dm->isUsernameTaken(coolass->username))
+                        << "The username should be taken now.";
+    ASSERT_TRUE(dm->removeAdoptee(coolass->username))
+                        << "Coolass the adoptee should have been removed.";
+    ASSERT_TRUE(dm->removeAdopter(dumbass->username))
+                        << "Dumbass the adopter should have been removed.";
 }
 
 //*********************************************************************************************************************

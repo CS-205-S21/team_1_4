@@ -585,8 +585,8 @@ bool DatabaseManager::removeConversation(string usernameAdopter, string username
         q.prepare("DELETE FROM conversation "
                   "WHERE usernameAdopter = (:usernameAdopter) "
                   "AND usernameAdoptee = (:usernameAdoptee);");
-        existQuery.bindValue(":usernameAdopter", QString::fromStdString(usernameAdopter));
-        existQuery.bindValue(":usernameAdoptee", QString::fromStdString(usernameAdoptee));
+        q.bindValue(":usernameAdopter", QString::fromStdString(usernameAdopter));
+        q.bindValue(":usernameAdoptee", QString::fromStdString(usernameAdoptee));
 
         if(q.exec()) {
             return true;
