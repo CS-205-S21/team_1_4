@@ -31,14 +31,14 @@ and from there, the user can explore our app.
 # Files to Look Over
 Before you look through the source code, to fully understand how our project works, you can
 explore the documentation as described in each header file, but also presented within the 
-other Documentaion text file. From here, you can get a glance at each method within each class,
+other CODE_DOCUMENTATION.md file. From here, you can get a glance at each method within each class,
 which also appears in the header file for each class. Each comment header descrbes the purpose 
 of each method, and the title will exaplin what class the methods appear inside. There are two
 classes, the database and the matchmaker, as the only other classes are the unit test class 
 and the GUI class, both of which do not need extensive documentation, since their purposes are 
 relatively simple and self-explanatory. 
 
-The other file to look over is our testing documentation file, as desribed in the testing 
+The other file to look over is our TEST_DOCUMENTATION.md file, as desribed in the testing 
 documentation read file. This gives a better overview of the way that we tested, which takes
 the place of needing a specific overview of that class. This testing documentation contains 
 the methods  we used to test and all tests that we conducted. 
