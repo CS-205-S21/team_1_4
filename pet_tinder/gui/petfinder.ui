@@ -518,7 +518,7 @@
        </layout>
       </item>
       <item>
-       <layout class="QVBoxLayout" name="infoLayout" stretch="1,0,0,7">
+       <layout class="QVBoxLayout" name="infoLayout" stretch="1,0,0,7,0">
         <item>
          <widget class="QLabel" name="nameSexAge">
           <property name="font">
@@ -570,7 +570,7 @@
              <x>0</x>
              <y>0</y>
              <width>301</width>
-             <height>323</height>
+             <height>297</height>
             </rect>
            </property>
            <widget class="QLabel" name="animalCustomBio">
@@ -604,6 +604,13 @@
             </property>
            </widget>
           </widget>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="editPetButton">
+          <property name="text">
+           <string>Edit Pet</string>
+          </property>
          </widget>
         </item>
        </layout>

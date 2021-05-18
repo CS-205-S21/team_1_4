@@ -6,27 +6,63 @@ AdopteeAddPet::AdopteeAddPet(QWidget *parent) : QWidget(parent), ui(new Ui::Adop
 
     ui->invalidImageLabel->setVisible(false);
 
-    input->name = "";
-    input->species = "";
-    input->breed = "";
-    input->age = 0;
-    input->weight = 0;
-    input->color = "";
-    input->hypoallergenic = false;
-    input->sex = "Male";
-    input->bio = "";
-    QImage img(":/claws.png");
-    QPixmap pic;
-    pic.convertFromImage(img.scaled(829, 786, Qt::KeepAspectRatio), 0);
-    QByteArray byteArray;
-    QBuffer buffer(&byteArray);
-    buffer.open(QIODevice::WriteOnly);
-    pic.save(&buffer, "png");
-    input->image = byteArray;
+    isNewPet = true;
+    input = new Pet;
+    pnter = NULL;
 }
 
 AdopteeAddPet::~AdopteeAddPet() {
     delete ui;
+}
+
+//Sets up pet's information ahead of time
+void AdopteeAddPet::setupPet(Pet* pet) {
+    //If a nullptr is passed, assume no prepared pet is available
+    // and fill input with base pet info.
+    if(pet == nullptr) {
+        input->name = "";
+        input->species = "";
+        input->breed = "";
+        input->age = 0;
+        input->weight = 0;
+        input->color = "";
+        input->hypoallergenic = false;
+        input->sex = "Male";
+        input->bio = "";
+        QImage img(":/claws.png");
+        QPixmap pic;
+        pic.convertFromImage(img.scaled(829, 786, Qt::KeepAspectRatio), 0);
+        QByteArray byteArray;
+        QBuffer buffer(&byteArray);
+        buffer.open(QIODevice::WriteOnly);
+        pic.save(&buffer, "png");
+        input->image = byteArray;
+    } else {
+        input = pet;
+        ui->nameInput->setText(QString::fromStdString(input->name));
+        ui->speciesInput->setText(QString::fromStdString(input->species));
+        ui->breedInput->setText(QString::fromStdString(input->breed));
+        ui->ageInput->setText(QString::number(input->age));
+        ui->weightInput->setText(QString::number(input->weight));
+        ui->colorInput->setText(QString::fromStdString(input->color));
+        ui->bioBox->setText(QString::fromStdString(input->bio));
+
+        if(input->hypoallergenic == true) {
+            ui->comboBox->setCurrentIndex(0);
+        } else {
+            ui->comboBox->setCurrentIndex(1);
+
+        }
+        if(input->sex.compare("Male") == 0) {
+            ui->comboBox->setCurrentIndex(0);
+        } else {
+            ui->comboBox->setCurrentIndex(1);
+        }
+
+        QPixmap pic;
+        pic.loadFromData(pet->image);
+        ui->lbl_image->setPixmap(pic);
+    }
 }
 
 void AdopteeAddPet::on_btn_image_clicked() {
@@ -67,15 +103,22 @@ void AdopteeAddPet::on_discardButton_clicked()
 
 void AdopteeAddPet::on_saveButton_clicked()
 {
-    //Add pet to database
-    pnter->matchmaker->DM->addPet(input);
-    //Add pet to adoptee's owned pet list
-    pnter->profileWindow->userInfoAdoptee->ownedPetIds.push_back
-            (pnter->matchmaker->DM->getPetIdMax() + 1);
-    pnter->petList.push_back(input);
-    if(pnter->petList.size() <= 0) {
-        pnter->setup();
+    ui->invalidImageLabel->setVisible(false);
+    //If user is creating a new pet...
+    if(isNewPet) {
+        //Add pet to database
+        pnter->pfptr->matchmaker->DM->addPet(input);
+        //Add pet to adoptee's owned pet list
+        pnter->userInfoAdoptee->ownedPetIds.push_back
+                (pnter->pfptr->matchmaker->DM->getPetIdMax() + 1);
+        pnter->pfptr->petList.push_back(input);
+        if(pnter->pfptr->petList.size() <= 0) {
+            pnter->pfptr->setup();
+        }
+    } else { //If user is editing an old pet...
+        pnter->pfptr->editPet(input);
     }
+
     this->close();
 }
 

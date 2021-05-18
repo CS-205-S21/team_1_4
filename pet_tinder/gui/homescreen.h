@@ -22,6 +22,8 @@ public:
     ~HomeScreen();
     void login();
 
+    void closeEvent(QCloseEvent* event);
+
     //DatabaseManager* databaseManager;
 
 private slots:

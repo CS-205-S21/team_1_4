@@ -82,7 +82,10 @@ void HomeScreen::login() {
             cout << "Login failed!" << endl; //DISPLAY ON SCREEN LATER
         }
     }
+}
 
+void HomeScreen::closeEvent(QCloseEvent *event) {
+    petWindow->closeEvent(event);
 }
 
 void HomeScreen::on_loginButton_clicked() {

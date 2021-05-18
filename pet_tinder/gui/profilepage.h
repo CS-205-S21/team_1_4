@@ -36,6 +36,8 @@ public:
 
     void displayUserInfo(bool adopter);
 
+    void closeEvent(QCloseEvent *event);
+
 signals:
 
 public slots:

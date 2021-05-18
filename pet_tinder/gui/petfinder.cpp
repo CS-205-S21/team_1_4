@@ -35,9 +35,12 @@ void PetFinder::initialize() {
     }
 }
 
+//Sets up visible components of screen depending on type of user
 void PetFinder::setup() {
+    //If user is adopter
     if(isUserAdopter == true) {
         ui->deleteButton->setVisible(false);
+        ui->editPetButton->setVisible(false);
         QPalette test;
         test.setColor(QPalette::Button, QColor(140,0,0,255));
         ui->likeButton->setText("like");
@@ -45,8 +48,9 @@ void PetFinder::setup() {
         ui->dislikeButton->setPalette(test);
         test.setColor(QPalette::Button, QColor(0,140,0,255));
         ui->likeButton->setPalette(test);
-    } else {
+    } else { //If user is adoptee
         ui->deleteButton->setVisible(true);
+        ui->editPetButton->setVisible(true);
         QPalette test;
         test.setColor(QPalette::Button, QColor(0,140,0,255));
         ui->likeButton->setText("->");
@@ -54,15 +58,13 @@ void PetFinder::setup() {
         ui->dislikeButton->setPalette(test);
         ui->likeButton->setPalette(test);
     }
+    //If there are no pets to display
     if(petList.size() <= 0) {
         ui->deleteButton->setVisible(false);
         ui->likeButton->setVisible(false);
         ui->dislikeButton->setVisible(false);
         ui->animalImage->setVisible(false);
-    } else {
-        ui->likeButton->setVisible(true);
-        ui->dislikeButton->setVisible(true);
-        ui->animalImage->setVisible(true);
+        ui->editPetButton->setVisible(false);
     }
 }
 
@@ -72,6 +74,13 @@ PetFinder::~PetFinder() {
 
 //Displays passed-in pet on screen
 void PetFinder::displayPet(Pet *pet) {
+    ui->likeButton->setVisible(true);
+    ui->dislikeButton->setVisible(true);
+    ui->animalImage->setVisible(true);
+    if(!isUserAdopter) {
+        ui->deleteButton->setVisible(true);
+        ui->editPetButton->setVisible(true);
+    }
 
     //Displays name, sex, and age
     ui->nameSexAge->setText(QString::fromStdString(pet->name + ", " + pet->sex + ", " + to_string(pet->age)));
@@ -94,6 +103,11 @@ void PetFinder::displayPet(Pet *pet) {
 
 //Displays passed-in pet on screen
 void PetFinder::displayEmptyPet() {
+    ui->deleteButton->setVisible(false);
+    ui->likeButton->setVisible(false);
+    ui->dislikeButton->setVisible(false);
+    ui->animalImage->setVisible(false);
+    ui->editPetButton->setVisible(false);
     //Empty pet for adopter
     if(isUserAdopter) {
         //Displays name, sex, and age
@@ -119,12 +133,21 @@ void PetFinder::displayEmptyPet() {
     }
 }
 
+void PetFinder::editPet(Pet* pet) {
+    if(petList.size() > 0) {
+        petList.at(petIndex) = pet;
+        displayPet(pet);
+    }
+}
+
 void PetFinder::closeEvent (QCloseEvent *event) {
+    //Creates & displays exit pop-up screen
     QMessageBox::StandardButton exitButton =
-            QMessageBox::question(this, "pet_tinder", tr("Are you sure?\n"),
+            QMessageBox::question(this, "Claws n' Paws", tr("Are you sure you wish to exit?\n"),
                                    QMessageBox::Cancel | QMessageBox::No
-                                   | QMessageBox::Yes, QMessageBox::Yes);
-    if (exitButton == QMessageBox::Yes) {
+                                   | QMessageBox::Yes, QMessageBox::No);
+    //If exit is confirmed...
+    if(exitButton == QMessageBox::Yes) {
         event->accept();
     } else {
         event->ignore();
@@ -241,4 +264,10 @@ void PetFinder::on_dislikeButton_clicked()
             displayPet(petList.at(petIndex));
         }
     }
+}
+
+void PetFinder::on_editPetButton_clicked() {
+    profileWindow->aap->setupPet(petList.at(petIndex));
+    profileWindow->aap->isNewPet = false;
+    profileWindow->aap->show();
 }
