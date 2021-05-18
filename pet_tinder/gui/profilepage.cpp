@@ -9,6 +9,7 @@ ProfilePage::ProfilePage(QWidget *parent) : QWidget(parent), ui(new Ui::ProfileP
     aap->pnter = this;
     ptpnter = new PrefTab();
 
+    ui->pushButton->setEnabled(false);
     ui->bioEdit->setVisible(false);
     editingBio = false;
     bioText = "";

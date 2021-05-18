@@ -153,12 +153,25 @@ void PetFinder::closeEvent (QCloseEvent *event) {
                                    | QMessageBox::Yes, QMessageBox::No);
     //If exit is confirmed...
     if(exitButton == QMessageBox::Yes) {
+        //Read out user info
         //If user is adopter
         if(isUserAdopter) {
-            profileWindow->userInfoAdopter;
+            matchmaker->DM->updateAdopter(profileWindow->userInfoAdopter);
         } else { //If user is adoptee
-
+            matchmaker->DM->updateAdoptee(profileWindow->userInfoAdoptee);
         }
+
+        //Read out conversations
+        for(int i = 0; i < petListWindow->textboxes.size(); i++) {
+            Conversation* convo = new Conversation;
+            convo->usernameAdopter = petListWindow->adoptersChatting.at(i)->username;
+            convo->petId = petListWindow->petsChatting.at(i)->id;
+            convo->usernameAdoptee = petListWindow->adopteesChatting.at(i)->username;
+            convo->messages = petListWindow->textboxes.at(i);
+
+            matchmaker->DM->updateConversation(convo);
+        }
+
         event->accept();
     } else {
         event->ignore();

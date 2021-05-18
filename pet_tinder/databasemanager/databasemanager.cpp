@@ -154,23 +154,24 @@ Adoptee* DatabaseManager::readInAdopteePublic(string username) {
     }
 }
 
-Conversation* DatabaseManager::readInConversation(string usernameAdopter, string usernameAdoptee) {
+Conversation* DatabaseManager::readInConversation(string usernameAdopter, int petId) {
     cout << "readInConversation called" << endl;
     cout << "adopter: " + usernameAdopter << endl;
-    cout << "adoptee: " + usernameAdoptee << endl;
+    cout << "petId: " + to_string(petId) << endl;
     //Prepares a query that will read in all pets ordered by id.
     QSqlQuery query;
-    query.prepare("SELECT usernameAdopter, usernameAdoptee, messages FROM conversation "
+    query.prepare("SELECT usernameAdopter, petId, usernameAdoptee, messages FROM conversation "
                   "WHERE usernameAdopter = (:usernameAdopter) "
-                  "AND usernameAdoptee = (:usernameAdoptee);");
+                  "AND petId = (:petId);");
     query.bindValue(":usernameAdopter", QString::fromStdString(usernameAdopter));
-    query.bindValue(":usernameAdoptee", QString::fromStdString(usernameAdoptee));
+    query.bindValue(":petId", petId);
     if(query.exec() && query.next()) {
         //Creates and fills info struct
         Conversation *convo = new Conversation;
         convo->messages = messageParse(query.value("messages").toString().toStdString());
         convo->usernameAdopter = usernameAdopter;
-        convo->usernameAdoptee = usernameAdoptee;
+        convo->petId = petId;
+        convo->usernameAdoptee = findAdopteePet(petId)->username;
         return convo; //Returns adoptee struct
     } else {
         qDebug() << "Read conversation through query error" << endl;
@@ -484,6 +485,46 @@ bool DatabaseManager::addAdopter(Adopter *a, string password) {
     }
 }
 
+bool DatabaseManager::updateAdopter(Adopter* adopter) {
+    //Prepares a query that inserts all pet info from pet struct
+    QSqlQuery q;
+        q.prepare("UPDATE adopter "
+                  "SET likedPetIds = :likedPetIds, dislikedPetIds = :dislikedPetIds, "
+                  "prefSpecies = :prefSpecies, prefSpeciesReq = :prefSpeciesReq, "
+                  "prefBreed = :prefBreed, prefBreedReq = :prefBreedReq, "
+                  "prefAge = :prefAge, prefAgeReq = :prefAgeReq, "
+                  "prefWeight = :prefWeight, prefWeightReq = :prefWeightReq, "
+                  "prefColor = :prefColor, prefColorReq = :prefColorReq, "
+                  "prefHypoallergenic = :prefHypoallergenic, "
+                  "prefHypoallergenicReq = :prefHypoallergenicReq, "
+                  "prefSex = :prefSex, prefSexReq = :prefSexReq "
+                  "bio = :bio WHERE username = :username;");
+        q.bindValue(":likedPetIds", intVectorToQString(adopter->likedPetIds));
+        q.bindValue(":dislikedPetIds", intVectorToQString(adopter->dislikedPetIds));
+        q.bindValue(":prefSpecies", QString::fromStdString(adopter->prefSpecies));
+        q.bindValue(":prefSpeciesReq", adopter->prefSpeciesReq);
+        q.bindValue(":prefBreed", QString::fromStdString(adopter->prefBreed));
+        q.bindValue(":prefBreedReq", adopter->prefBreedReq);
+        q.bindValue(":prefAge", adopter->prefAge);
+        q.bindValue(":prefAgeReq", adopter->prefAgeReq);
+        q.bindValue(":prefWeight", adopter->prefWeight);
+        q.bindValue(":prefWeightReq", adopter->prefWeightReq);
+        q.bindValue(":prefColor", QString::fromStdString(adopter->prefColor));
+        q.bindValue(":prefColorReq", adopter->prefColorReq);
+        q.bindValue(":prefHypoallergenic", adopter->prefHypoallergenic);
+        q.bindValue(":prefHypoallergenicReq", adopter->prefHypoallergenicReq);
+        q.bindValue(":prefSex", QString::fromStdString(adopter->prefSex));
+        q.bindValue(":prefSexReq", adopter->prefSexReq);
+        q.bindValue(":bio", QString::fromStdString(adopter->bio));
+        q.bindValue(":username", QString::fromStdString(adopter->username));
+    if(q.exec()) {
+        return true;
+    } else {
+        qDebug() << "Update Adopter Error" << q.lastError();
+        return false;
+    }
+}
+
 //Removes an adopter from the database of adopters
 bool DatabaseManager::removeAdopter(string username) {
     QString qUsername = QString::fromStdString(username);
@@ -544,6 +585,23 @@ bool DatabaseManager::addAdoptee(Adoptee *a, string password) {
     }
 }
 
+bool DatabaseManager::updateAdoptee(Adoptee* adoptee) {
+    //Prepares a query that inserts all pet info from pet struct
+    QSqlQuery q;
+        q.prepare("UPDATE adoptee "
+                  "SET petIds = :petIds, bio = :bio, "
+                  "WHERE username = :username;");
+        q.bindValue(":petIds", intVectorToQString(adoptee->ownedPetIds));
+        q.bindValue(":bio", QString::fromStdString(adoptee->bio));
+        q.bindValue(":username", QString::fromStdString(adoptee->username));
+    if(q.exec()) {
+        return true;
+    } else {
+        qDebug() << "Update Adoptee Error" << q.lastError();
+        return false;
+    }
+}
+
 //Removes an adoptee from the database of adoptees
 bool DatabaseManager::removeAdoptee(string username) {
     bool exists = false;
@@ -574,20 +632,22 @@ bool DatabaseManager::addConversation(Conversation* convo) {
     QSqlQuery existQuery;
         existQuery.prepare("SELECT usernameAdopter FROM conversation "
                            "WHERE usernameAdopter = (:usernameAdopter) "
-                           "AND usernameAdoptee = (:usernameAdoptee);");
+                           "AND petId = (:petId);");
         existQuery.bindValue(":usernameAdopter", QString::fromStdString(convo->usernameAdopter));
-        existQuery.bindValue(":usernameAdoptee", QString::fromStdString(convo->usernameAdoptee));
+        existQuery.bindValue(":petId", convo->petId);
 
     //If conversation doesn't exist...
     if(existQuery.exec() && !existQuery.next()){
         //Prepares a query that inserts given conversation
         QSqlQuery q;
-            q.prepare("INSERT INTO conversation (usernameAdopter, usernameAdoptee, messages) "
-                      "VALUES (:usernameAdopter, :usernameAdoptee, :messages);");
+            q.prepare("INSERT INTO conversation (usernameAdopter, petId, usernameAdoptee, messages) "
+                      "VALUES (:usernameAdopter, :petId, :usernameAdoptee, :messages);");
             q.bindValue(":usernameAdopter", QString::fromStdString(convo->usernameAdopter));
+            q.bindValue(":petId", convo->petId);
             q.bindValue(":usernameAdoptee", QString::fromStdString(convo->usernameAdoptee));
             q.bindValue(":messages", messageUnparse(convo->messages));
         if(q.exec()) {
+            cout << "Conversation added" << endl;;
             return true;
         } else {
             qDebug() << "Add conversation error" << q.lastError();
@@ -598,20 +658,38 @@ bool DatabaseManager::addConversation(Conversation* convo) {
     }
 }
 
-bool DatabaseManager::removeConversation(string usernameAdopter, string usernameAdoptee) {
+bool DatabaseManager::updateConversation(Conversation* convo) {
+    //Prepares a query that inserts all pet info from pet struct
+    QSqlQuery q;
+        q.prepare("UPDATE conversation SET messages = :messages "
+                  "WHERE usernameAdopter = :usernameAdopter"
+                  "AND petId = :petId;");
+        q.bindValue(":conversation", messageUnparse(convo->messages));
+        q.bindValue(":usernameAdopter", QString::fromStdString(convo->usernameAdopter));
+        q.bindValue(":petId", convo->petId);
+        q.bindValue(":usernameAdoptee", QString::fromStdString(convo->usernameAdoptee));
+    if(q.exec()) {
+        return true;
+    } else {
+        qDebug() << "Update Adoptee Error" << q.lastError();
+        return false;
+    }
+}
+
+bool DatabaseManager::removeConversation(string usernameAdopter, int petId) {
     QSqlQuery existQuery;
     existQuery.prepare("SELECT usernameAdopter FROM conversation "
                        "WHERE usernameAdopter = (:usernameAdopter) "
-                       "AND usernameAdoptee = (:usernameAdoptee);");
+                       "AND petId = (:usernameAdoptee);");
     existQuery.bindValue(":usernameAdopter", QString::fromStdString(usernameAdopter));
-    existQuery.bindValue(":usernameAdoptee", QString::fromStdString(usernameAdoptee));
+    existQuery.bindValue(":petId", petId);
     if(existQuery.exec() && existQuery.next()) {
         QSqlQuery q;
         q.prepare("DELETE FROM conversation "
                   "WHERE usernameAdopter = (:usernameAdopter) "
-                  "AND usernameAdoptee = (:usernameAdoptee);");
+                  "AND petId = (:petId);");
         q.bindValue(":usernameAdopter", QString::fromStdString(usernameAdopter));
-        q.bindValue(":usernameAdoptee", QString::fromStdString(usernameAdoptee));
+        q.bindValue(":petId", petId);
 
         if(q.exec()) {
             return true;
@@ -672,11 +750,11 @@ vector<QString> DatabaseManager::messageParse(string message) {
 }
 
 QString DatabaseManager::messageUnparse(vector<QString> message) {
-    QString dannyCodeBad;
+    QString str = "";
     for(QString i : message) {
-        dannyCodeBad.append(i + "|");
+        str.append(i + "|");
     }
-    return dannyCodeBad;
+    return str;
 }
 
 int DatabaseManager::getPetIdMax() {

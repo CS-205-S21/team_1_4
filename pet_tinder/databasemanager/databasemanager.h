@@ -52,6 +52,7 @@ struct Adoptee {
 };
 struct Conversation {
     string usernameAdopter;
+    int petId;
     string usernameAdoptee;
     vector<QString> messages;
 };
@@ -119,7 +120,7 @@ public:
      * @return Pointer to Messages struct of message info.
      *  If conversation is not found, a nullptr is returned.
      */
-    Conversation* readInConversation(string usernameAdopter, string usernameAdoptee);
+    Conversation* readInConversation(string usernameAdopter, int petId);
 
     /**
      * @brief checkUsernames - Checks given username against usernames
@@ -173,22 +174,21 @@ public:
 
     /**
      * @brief addPet - Adds a pet to the database of pets and to the vector of pets
-     * @param p - the pet that will be added to the database
+     * @param p - The pet that will be added to the database
      * @return True or false depending on if the pet was successfully added.
      */
     bool addPet(Pet* p);
 
     /**
-     * @brief updatePet - updates pet with given information
-     * @param petId - id of pet to upate
-     * @param pet - struct of info to update pet with
-     * @return - true if pet successfully updated
+     * @brief updatePet - Updates pet with given information
+     * @param pet - Struct of info to update pet with
+     * @return bool - True if pet successfully updated
      */
     bool updatePet(Pet* pet);
 
     /**
      * @brief addPet - Adds a pet to the database of pets and to the vector of pets
-     * @param p - the pet that will be added to the database
+     * @param p - The pet that will be added to the database
      * @return True or false depending on if the pet was successfully added.
      */
     bool removePet(int id);
@@ -199,6 +199,13 @@ public:
      * @return True or false depending on if the adopter was successfully added.
      */
     bool addAdopter(Adopter* p, string password);
+
+    /**
+     * @brief updateAdopter - Updates adopter with given struct of info
+     * @param adopter - Adopter to find & update
+     * @return bool - True if updated successfully
+     */
+    bool updateAdopter(Adopter* adopter);
 
     /**
      * @brief removeAdopter - Removes an adopter from the database of adopters
@@ -213,6 +220,13 @@ public:
      * @return True or false depending on if the adoptee was successfully added.
      */
     bool addAdoptee(Adoptee* p, string password);
+
+    /**
+     * @brief updateAdoptee - Updates adoptee with given struct of info
+     * @param adoptee - Adoptee to find & update
+     * @return bool - True if updated successfully
+     */
+    bool updateAdoptee(Adoptee* adoptee);
 
     /**
      * @brief removeAdoptee - Removes an adoptee from the database of adoptees
@@ -230,12 +244,19 @@ public:
     bool addConversation(Conversation* convo);
 
     /**
+     * @brief updateConversation - Updates conversation with given struct of info
+     * @param convo - Conversation to find & update
+     * @return bool - True if updated successfully
+     */
+    bool updateConversation(Conversation* convo);
+
+    /**
      * @brief removeConversation - Removes found conversation from database
      * @param usernameAdopter - Username of adopter involved in conversation
      * @param usernameAdoptee - Username of adoptee involved in conversation
      * @return bool - Whether or not conversation was succesfully deleted
      */
-    bool removeConversation(string usernameAdopter, string usernameAdoptee);
+    bool removeConversation(string usernameAdopter, int petId);
 
     /**
      * @brief stringToIntVector - Turns a string of ints seperated by ' ' characters
