@@ -5,12 +5,10 @@ PrefTab::PrefTab(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::PrefTab)
 {
-    pnter = new PetFinder();
     ui->setupUi(this);
     ui->pushButton_2->setVisible(false);
     ui->ageInput->setValidator( new QIntValidator(0, 1000, this) );
      ui->weightInput->setValidator( new QDoubleValidator(0, 10000, 5, this) );
-     populateBoxes();
 }
 
 PrefTab::~PrefTab()
@@ -25,7 +23,6 @@ void PrefTab::on_pushButton_2_clicked()
 
 void PrefTab::populateBoxes()
 {
-    cout << pnter->matchmaker->total.species.size() << endl;
 }
 void PrefTab::on_prefSaveButton_clicked()
 {
