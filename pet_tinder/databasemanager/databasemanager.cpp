@@ -358,7 +358,7 @@ bool DatabaseManager::addPet(Pet *pet) {
     }
 }
 
-bool updatePet(int petId, Pet* pet) {
+bool updatePet(Pet* pet) {
     //Prepares a query that inserts all pet info from pet struct
     QSqlQuery q;
         q.prepare("UPDATE pet SET name = :name, species = :species, breed = :breed, "
@@ -368,12 +368,13 @@ bool updatePet(int petId, Pet* pet) {
         q.bindValue(":name", QString::fromStdString(pet->name));
         q.bindValue(":species", QString::fromStdString(pet->species));
         q.bindValue(":breed", QString::fromStdString(pet->breed));
-        q.bindValue(":age", QString::number(pet->age));
-        q.bindValue(":weight", QString::number(pet->weight));
+        q.bindValue(":age", pet->age);
+        q.bindValue(":weight", pet->weight);
         q.bindValue(":color", QString::fromStdString(pet->color));
-        q.bindValue(":hypoallergenic", QString::fromStdString(pet->hypoallergenic));
+        q.bindValue(":hypoallergenic", pet->hypoallergenic);
         q.bindValue(":sex", QString::fromStdString(pet->sex));
         q.bindValue(":image", pet->image);
+        q.bindValue(":id", pet->id);
     if(q.exec()) {
         return true;
     } else {
@@ -383,11 +384,11 @@ bool updatePet(int petId, Pet* pet) {
 }
 
 //Removes a pet from the database of pets
-bool DatabaseManager::removePet(int petId) {
+bool DatabaseManager::removePet(int id) {
     bool exists = false;
     QSqlQuery sel;
     sel.prepare("SELECT petId FROM pet WHERE petId = (:id);");
-    sel.bindValue(":id", petId);
+    sel.bindValue(":id", id);
     if(sel.exec()){
         if(sel.next()){
             exists = true;
@@ -396,13 +397,13 @@ bool DatabaseManager::removePet(int petId) {
 
     QSqlQuery q;
     q.prepare("DELETE FROM pet WHERE petId = (:petId);");
-    q.bindValue(":petId", petId);
+    q.bindValue(":petId", id);
 
     if(q.exec() && exists) {
         //Searches through pets vector to find pet with given id
         for(int i = 0; i < (int)pets.size(); i++) {
             //When pet with matching id is found, return it
-            if(pets.at(i)->id == petId) {
+            if(pets.at(i)->id == id) {
                 pets.erase(pets.begin() + i);
                 return true;
             }

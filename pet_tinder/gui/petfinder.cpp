@@ -151,6 +151,7 @@ void PetFinder::closeEvent (QCloseEvent *event) {
                                    | QMessageBox::Yes, QMessageBox::No);
     //If exit is confirmed...
     if(exitButton == QMessageBox::Yes) {
+
         event->accept();
     } else {
         event->ignore();

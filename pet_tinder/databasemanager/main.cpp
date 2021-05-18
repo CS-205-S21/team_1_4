@@ -19,7 +19,6 @@ int main() {
     pet->sex = "male";
     pet->species = "epc";
     pet->weight = 2.0;
-    dm->updatePet()
     dm->readInPets();
     cout << dm->findPet(1)->name << endl;
     cout << dm->findPet(2)->name << endl;
