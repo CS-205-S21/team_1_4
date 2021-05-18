@@ -122,6 +122,10 @@ void PetList::newConvo(Pet* pet, Adoptee *adoptee) {
     }
 }
 
+Adopter* PetList::getAdopterChatting(int index) {
+    return adoptersChatting.at(index);
+}
+
 void PetList::closeEvent(QCloseEvent* event) {
     pfptr->closeEvent(event);
 }
@@ -163,6 +167,7 @@ void PetList::on_lineEdit_returnPressed() {
 }
 
 void PetList::on_otherConvos_currentIndexChanged(int index) {
+    cout << index << endl;
     convoIndex = index;
     QString text = "";
     for(QString i : textboxes.at(convoIndex)) {

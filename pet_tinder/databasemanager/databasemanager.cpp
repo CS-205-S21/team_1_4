@@ -589,7 +589,7 @@ bool DatabaseManager::updateAdoptee(Adoptee* adoptee) {
     //Prepares a query that inserts all pet info from pet struct
     QSqlQuery q;
         q.prepare("UPDATE adoptee "
-                  "SET petIds = :petIds, bio = :bio, "
+                  "SET petIds = :petIds, bio = :bio "
                   "WHERE username = :username;");
         q.bindValue(":petIds", intVectorToQString(adoptee->ownedPetIds));
         q.bindValue(":bio", QString::fromStdString(adoptee->bio));
@@ -659,16 +659,18 @@ bool DatabaseManager::addConversation(Conversation* convo) {
 }
 
 bool DatabaseManager::updateConversation(Conversation* convo) {
+    cout << messageUnparse(convo->messages).toStdString() << endl;
     //Prepares a query that inserts all pet info from pet struct
     QSqlQuery q;
         q.prepare("UPDATE conversation SET messages = :messages "
-                  "WHERE usernameAdopter = :usernameAdopter"
+                  "WHERE usernameAdopter = :usernameAdopter "
                   "AND petId = :petId;");
-        q.bindValue(":conversation", messageUnparse(convo->messages));
+        q.bindValue(":messages", messageUnparse(convo->messages));
         q.bindValue(":usernameAdopter", QString::fromStdString(convo->usernameAdopter));
         q.bindValue(":petId", convo->petId);
         q.bindValue(":usernameAdoptee", QString::fromStdString(convo->usernameAdoptee));
     if(q.exec()) {
+        cout << "g" << endl;
         return true;
     } else {
         qDebug() << "Update Adoptee Error" << q.lastError();
@@ -735,7 +737,7 @@ vector<QString> DatabaseManager::messageParse(string message) {
     // so this runs until the message is fully consumed by the great coding lords
     while(message.length() > 0) {
         //Finds message sent
-        string foundMessage = message.substr(0, message.find(delimeterEndMessage) - 1);
+        string foundMessage = message.substr(0, message.find(delimeterEndMessage));
         cout << "Found message: " + foundMessage << endl;
 
         messageVec.push_back(QString::fromStdString(foundMessage));

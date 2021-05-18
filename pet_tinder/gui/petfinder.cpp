@@ -162,12 +162,23 @@ void PetFinder::closeEvent (QCloseEvent *event) {
         }
 
         //Read out conversations
-        for(int i = 0; i < petListWindow->textboxes.size(); i++) {
+        for(int i = 0; i < (int)petListWindow->textboxes.size(); i++) {
             Conversation* convo = new Conversation;
-            convo->usernameAdopter = petListWindow->adoptersChatting.at(i)->username;
+            if(isUserAdopter) {
+                convo->usernameAdopter = profileWindow->userInfoAdopter->username;
+                convo->usernameAdoptee = petListWindow->adopteesChatting.at(i)->username;
+            } else {
+                convo->usernameAdoptee = profileWindow->userInfoAdoptee->username;
+                convo->usernameAdopter = petListWindow->adoptersChatting.at(i)->username;
+            }
             convo->petId = petListWindow->petsChatting.at(i)->id;
             convo->usernameAdoptee = petListWindow->adopteesChatting.at(i)->username;
             convo->messages = petListWindow->textboxes.at(i);
+
+            cout << "NEW MESSAGE CYCLE" << endl;
+            for(QString strings : convo->messages) {
+                cout << "Mesaaaage: " + strings.toStdString() << endl;
+            }
 
             matchmaker->DM->updateConversation(convo);
         }

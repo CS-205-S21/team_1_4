@@ -27,6 +27,7 @@ public:
     void initialize();
     void sendMessage();
     void newConvo(Pet* pet, Adoptee* adoptee);
+    Adopter* getAdopterChatting(int index);
 
     void closeEvent(QCloseEvent* event);
 
