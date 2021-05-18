@@ -8,6 +8,7 @@ AdopteeAddPet::AdopteeAddPet(QWidget *parent) : QWidget(parent), ui(new Ui::Adop
 
     isNewPet = true;
     input = new Pet;
+    pnter = NULL;
 }
 
 AdopteeAddPet::~AdopteeAddPet() {
@@ -46,7 +47,7 @@ void AdopteeAddPet::setupPet(Pet* pet) {
         ui->colorInput->setText(QString::fromStdString(input->color));
         ui->bioBox->setText(QString::fromStdString(input->bio));
 
-        if(input->hypoallergenic = true) {
+        if(input->hypoallergenic == true) {
             ui->comboBox->setCurrentIndex(0);
         } else {
             ui->comboBox->setCurrentIndex(1);
@@ -106,16 +107,16 @@ void AdopteeAddPet::on_saveButton_clicked()
     //If user is creating a new pet...
     if(isNewPet) {
         //Add pet to database
-        pnter->matchmaker->DM->addPet(input);
+        pnter->pfptr->matchmaker->DM->addPet(input);
         //Add pet to adoptee's owned pet list
-        pnter->profileWindow->userInfoAdoptee->ownedPetIds.push_back
-                (pnter->matchmaker->DM->getPetIdMax() + 1);
-        pnter->petList.push_back(input);
-        if(pnter->petList.size() <= 0) {
-            pnter->setup();
+        pnter->userInfoAdoptee->ownedPetIds.push_back
+                (pnter->pfptr->matchmaker->DM->getPetIdMax() + 1);
+        pnter->pfptr->petList.push_back(input);
+        if(pnter->pfptr->petList.size() <= 0) {
+            pnter->pfptr->setup();
         }
     } else { //If user is editing an old pet...
-        pnter->editPet(input);
+        pnter->pfptr->editPet(input);
     }
 
     this->close();

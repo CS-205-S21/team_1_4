@@ -3,12 +3,17 @@
 
 #include <QWidget>
 #include <QFileDialog>
-#include "petfinder.h"
+#include "profilepage.h"
 #include "../databasemanager/databasemanager.h"
+
+class ProfilePage;
+
 namespace Ui {
 class AdopteeAddPet;
 }
+
 class PetFinder;
+
 class AdopteeAddPet : public QWidget
 {
     Q_OBJECT
@@ -20,7 +25,7 @@ public:
     explicit AdopteeAddPet(QWidget *parent = 0);
     ~AdopteeAddPet();
     Pet *input;
-    PetFinder *pnter;
+    ProfilePage *pnter;
 
     void setupPet(Pet* pet);
 

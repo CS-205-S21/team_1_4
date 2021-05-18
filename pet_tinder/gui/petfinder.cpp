@@ -134,10 +134,9 @@ void PetFinder::displayEmptyPet() {
 }
 
 void PetFinder::editPet(Pet* pet) {
-    cout << "AHHH: " + to_string(petIndex) << endl;
     if(petList.size() > 0) {
-        petList.at(petIndex)->name = pet->name;
-        //displayPet(pet);
+        petList.at(petIndex) = pet;
+        displayPet(pet);
     }
 }
 

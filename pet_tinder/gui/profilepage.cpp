@@ -6,6 +6,7 @@ ProfilePage::ProfilePage(QWidget *parent) : QWidget(parent), ui(new Ui::ProfileP
     pfptr = NULL;
     plptr = NULL;
     aap = new AdopteeAddPet();
+    aap->pnter = this;
     ptpnter = new PrefTab();
 
     ui->bioEdit->setVisible(false);
@@ -60,7 +61,6 @@ void ProfilePage::on_PrefsButton_clicked()
 
 void ProfilePage::on_addPetButton_clicked()
 {
-    aap->pnter = pfptr;
     aap->show();
 }
 

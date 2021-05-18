@@ -3,6 +3,7 @@
 //creates an instance of the database
 Matchmaker::Matchmaker(){
     DM = new DatabaseManager();
+
 }
 
 //reads in pets to the correct areas
