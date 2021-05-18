@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include "../databasemanager/databasemanager.h"
 #include <vector>
+#include <cstring>
 
 using namespace std;
 
