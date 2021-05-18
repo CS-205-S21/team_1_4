@@ -27,6 +27,7 @@ public:
     void setup();
     void displayPet(Pet *pet);
     void displayEmptyPet();
+    void editPet(Pet* pet);
 
     void closeEvent(QCloseEvent *event);
 
@@ -50,6 +51,8 @@ private slots:
     void on_likeButton_clicked();
 
     void on_dislikeButton_clicked();
+
+    void on_editPetButton_clicked();
 
 private:
     Ui::PetFinder *ui;

@@ -29,6 +29,8 @@ public:
     void newConvo(Pet* pet, Adopter* adopter);
     void newConvo(Pet* pet, Adoptee* adoptee);
 
+    void closeEvent(QCloseEvent* event);
+
     PetFinder* pfptr;
     ProfilePage* ppptr;
     ChatInfo* ciptr;

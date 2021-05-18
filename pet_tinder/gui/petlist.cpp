@@ -23,14 +23,13 @@ void PetList::initialize() {
     //Reads in messages frmo database
     if(pfptr->isUserAdopter) {
         Adopter* user = ppptr->userInfoAdopter;
-        for(int i = 0; i < (int)user->likedPetIds.size(); i++) {
+        for(int i : user->likedPetIds) {
             Conversation* convo = pfptr->matchmaker->DM->readInConversation
-                                   (user->username, pfptr->matchmaker->DM->findAdopteePet
-                                    (user->likedPetIds.at(i))->username);
+                                   (user->username, pfptr->matchmaker->DM->
+                                    findAdopteePet(i)->username);
             adopteesChatting.push_back(pfptr->matchmaker->DM->readInAdopteePublic
                                        (convo->usernameAdoptee));
-            petsChatting.push_back(pfptr->matchmaker->DM->findPet
-                                   (user->likedPetIds.at(i)));
+            petsChatting.push_back(pfptr->matchmaker->DM->findPet(i));
             textboxes.push_back(convo->messages);
             //If adoptee doesn't have an associated shelter, display their username instead
             if(adopteesChatting.back()->shelter.compare("") == 0) {
@@ -38,6 +37,8 @@ void PetList::initialize() {
                                          (petsChatting.back()->name +
                                           " from " + adopteesChatting.back()->username));
             } else {
+                cout << petsChatting.back()->name << endl;
+                cout << adopteesChatting.back()->username << endl;
                 ui->otherConvos->addItem(QString::fromStdString
                                          (petsChatting.back()->name +
                                           " from " + adopteesChatting.back()->shelter));
@@ -88,6 +89,10 @@ void PetList::newConvo(Pet* pet, Adoptee *adoptee) {
     } else {
         ui->otherConvos->addItem(QString::fromStdString(pet->name + " from " + adoptee->shelter));
     }
+}
+
+void PetList::closeEvent(QCloseEvent* event) {
+    pfptr->closeEvent(event);
 }
 
 void PetList::on_homeButton_clicked() {

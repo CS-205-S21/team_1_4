@@ -14,10 +14,17 @@ class AdopteeAddPet : public QWidget
     Q_OBJECT
 
 public:
+    //True if user is creating a new pet, false if editing an old one
+    bool isNewPet;
+
     explicit AdopteeAddPet(QWidget *parent = 0);
     ~AdopteeAddPet();
-    Pet *input = new Pet;
+    Pet *input;
     PetFinder *pnter;
+
+    void setupPet(Pet* pet);
+
+
 private slots:
     void on_btn_image_clicked();
 

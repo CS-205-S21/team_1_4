@@ -32,6 +32,10 @@ void ProfilePage::displayUserInfo(bool adopter) {
     }
 }
 
+void ProfilePage::closeEvent(QCloseEvent *event) {
+    pfptr->closeEvent(event);
+}
+
 void ProfilePage::on_homeButton_clicked()
 {
     this->hide();
