@@ -92,18 +92,25 @@ void AdopteeAddPet::on_btn_image_clicked() {
 }
 
 //broken DO NOT DELETE I AM TOO LAZY TO DEAL WITH THE ISSUES THAT WILL OCCUR
-//void AdopteeAddPet::on_pushButton_2_clicked()
-//{
+void AdopteeAddPet::on_pushButton_2_clicked()
+{
 
-//}
+}
 
 void AdopteeAddPet::on_discardButton_clicked()
 {
+    ui->ageInput->setText("");
+    ui->speciesInput->setText("");
+    ui->breedInput->setText("");
+    ui->colorInput->setText("");
+    ui->weightInput->setText("");
+    ui->bioBox->setText("");
     this->close();
 }
 
 void AdopteeAddPet::on_saveButton_clicked()
 {
+    input->bio = ui->bioBox->toPlainText().toStdString();
     ui->invalidImageLabel->setVisible(false);
     //If user is creating a new pet...
     if(isNewPet) {
@@ -173,9 +180,4 @@ void AdopteeAddPet::on_comboBox_2_currentIndexChanged(int index)
     else{
         input->sex = "Female";
     }
-}
-
-void AdopteeAddPet::on_bioBox_textChanged(const QString &arg1)
-{
-    input->bio = arg1.toStdString();
 }
