@@ -35,10 +35,10 @@ void HomeScreen::login() {
         //Passes adopter to profileWindow and displays their info
         petWindow->profileWindow->userInfoAdopter = userInfoAdopter;
         petWindow->profileWindow->displayUserInfo(true);
-        petWindow->petListWindow->initialize();
 
-        //Initialize pet window's display
+        //Initialize pet window & pet list window's displays
         petWindow->initialize();
+        petWindow->petListWindow->initialize();
 
         //Change window to pet window
         this->hide();
@@ -71,8 +71,9 @@ void HomeScreen::login() {
             petWindow->profileWindow->userInfoAdoptee = userInfoAdoptee;
             petWindow->profileWindow->displayUserInfo(false);
 
-            //Initialize pet window's display
+            //Initialize pet window & pet list window's displays
             petWindow->initialize();
+            petWindow->petListWindow->initialize();
 
             //Change window to pet window
             this->hide();

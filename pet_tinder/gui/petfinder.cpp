@@ -29,7 +29,7 @@ void PetFinder::initialize() {
     if(petList.size() > 0) {
         cout << "PetFinder screen display first pet!" << endl;
         displayPet(petList.front());
-        petIndex++;
+        petIndex = 0;
     } else {
         displayEmptyPet();
     }

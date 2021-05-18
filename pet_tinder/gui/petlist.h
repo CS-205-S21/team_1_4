@@ -26,7 +26,6 @@ public:
     ~PetList();
     void initialize();
     void sendMessage();
-    void newConvo(Pet* pet, Adopter* adopter);
     void newConvo(Pet* pet, Adoptee* adoptee);
 
     void closeEvent(QCloseEvent* event);

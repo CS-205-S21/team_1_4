@@ -135,7 +135,7 @@ public:
      * @return Adopter - struct of adopter's info
      *  or nullptr if no adopter was found (though that shouldn't happen)
      */
-    Adopter* findAdopterPet(int id);
+    vector<Adopter*> findAdopterPet(int id);
 
     /**
      * @brief findAdopteePet - Finds adoptee who has owned pet with given id

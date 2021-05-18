@@ -139,7 +139,7 @@ void AdopteeAddPet::on_breedInput_textChanged(const QString &arg1)
 
 void AdopteeAddPet::on_ageInput_textChanged(const QString &arg1)
 {
-    input->age =  arg1.toInt();
+    input->age = arg1.toInt();
 
 }
 

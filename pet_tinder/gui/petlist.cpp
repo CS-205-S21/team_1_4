@@ -20,13 +20,18 @@ PetList::~PetList() {
 
 //Initializes conversations, call from login not constructor
 void PetList::initialize() {
-    //Reads in messages frmo database
+    //Reads in messages from database
+    //If user is adopter...
     if(pfptr->isUserAdopter) {
+        ui->chatTitle->setText("You haven't liked any pets yet!");
+        ui->chatbox->setText("This is where you will be able to chat "
+                             "with the shelters whose pets you've liked.");
+
         Adopter* user = ppptr->userInfoAdopter;
         for(int i : user->likedPetIds) {
             Conversation* convo = pfptr->matchmaker->DM->readInConversation
-                                   (user->username, pfptr->matchmaker->DM->
-                                    findAdopteePet(i)->username);
+                    (user->username, pfptr->matchmaker->DM->
+                     findAdopteePet(i)->username);
             adopteesChatting.push_back(pfptr->matchmaker->DM->readInAdopteePublic
                                        (convo->usernameAdoptee));
             petsChatting.push_back(pfptr->matchmaker->DM->findPet(i));
@@ -44,6 +49,31 @@ void PetList::initialize() {
                                           " from " + adopteesChatting.back()->shelter));
             }
         }
+    } else { //If user is adoptee
+        ui->chatTitle->setText("None of your pets have been liked yet!");
+        ui->chatbox->setText("This is where you will be able to chat "
+                             "with the users who have liked your pets.");
+
+        Adoptee* user = ppptr->userInfoAdoptee;
+        for(int i : user->ownedPetIds) {
+            vector<Adopter*> adopters = pfptr->matchmaker->DM->findAdopterPet(i);
+            for(Adopter* adopter : adopters) {
+                Conversation* convo = pfptr->matchmaker->DM->readInConversation
+                        (adopter->username, user->username);
+                adoptersChatting.push_back(adopter);
+                petsChatting.push_back(pfptr->matchmaker->DM->findPet(i));
+                if(convo != nullptr) {
+                    textboxes.push_back(convo->messages);
+                } else {
+                    vector<QString> emptyVec;
+                    textboxes.push_back(emptyVec);
+                }
+                ui->otherConvos->addItem(QString::fromStdString
+                                         (adoptersChatting.back()->username +
+                                          " who is interested in " +
+                                          petsChatting.back()->name));
+            }
+        }
     }
 }
 
@@ -58,10 +88,10 @@ void PetList::sendMessage() {
         if(validMessage) {
             if(pfptr->isUserAdopter) {
                 textboxes.at(convoIndex).push_back
-                    (QString::fromStdString(ppptr->userInfoAdopter->username) + ": " + typedMessage);
+                        (QString::fromStdString(ppptr->userInfoAdopter->username) + ": " + typedMessage);
             } else {
                 textboxes.at(convoIndex).push_back
-                    (QString::fromStdString(ppptr->userInfoAdoptee->username) + ": " + typedMessage);
+                        (QString::fromStdString(ppptr->userInfoAdoptee->username) + ": " + typedMessage);
             }
             QString text;
             for(QString i : textboxes.at(convoIndex)) {
@@ -71,10 +101,6 @@ void PetList::sendMessage() {
             ui->lineEdit->clear();
         }
     }
-}
-
-void PetList::newConvo(Pet* pet, Adopter *adopter) {
-
 }
 
 void PetList::newConvo(Pet* pet, Adoptee *adoptee) {
@@ -133,18 +159,18 @@ void PetList::on_lineEdit_returnPressed() {
 
 void PetList::on_otherConvos_currentIndexChanged(int index) {
     convoIndex = index;
-    QString text;
+    QString text = "";
     for(QString i : textboxes.at(convoIndex)) {
         text.append(i + "\n");
     }
     ui->chatbox->setText(text);
-    if(pfptr->isUserAdopter && adoptersChatting.size() > 0) {
-        ui->chatTitle->setText
-                (QString::fromStdString("Chatting with " + adoptersChatting.at(convoIndex)->username));
-    } else if (adopteesChatting.size() > 0) {
+    if(pfptr->isUserAdopter && adopteesChatting.size() > 0) {
         ui->chatTitle->setText
                 (QString::fromStdString("Chatting with " + adopteesChatting.at(convoIndex)->username +
                                         " from " + adopteesChatting.at(convoIndex)->shelter));
+    } else if (!pfptr->isUserAdopter && adoptersChatting.size() > 0) {
+        ui->chatTitle->setText
+                (QString::fromStdString("Chatting with " + adoptersChatting.at(convoIndex)->username));
     }
 }
 
@@ -163,4 +189,3 @@ void PetList::on_shelterInfoButton_clicked() {
         ciptr->show();
     }
 }
-

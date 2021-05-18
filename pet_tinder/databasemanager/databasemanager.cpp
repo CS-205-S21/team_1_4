@@ -203,10 +203,11 @@ bool DatabaseManager::isUsernameTaken(string username) {
 }
 
 //Finds adopter who has liked pet with given id
-Adopter* DatabaseManager::findAdopterPet(int id) {
+vector<Adopter*> DatabaseManager::findAdopterPet(int id) {
+    vector<Adopter*> adopters;
+
     QSqlQuery query;
-    query.prepare("SELECT likedPetIds, username, password FROM adopter "
-                  "ORDER BY likedPetIds;");
+    query.prepare("SELECT likedPetIds, username FROM adopter ORDER BY likedPetIds;");
     if(query.exec()) {
         while(query.next()) {
             //Pull vector of liked pets for current adopter
@@ -215,20 +216,18 @@ Adopter* DatabaseManager::findAdopterPet(int id) {
             for(int i = 0; i < (int)likedPetIds.size(); i++) {
                 //If likedPetIds contains the id being searched for, pull and return said adopter
                 if(likedPetIds.at(i) == id) {
-                    return readInAdopter(query.value("username").toString().toStdString(),
-                                         query.value("password").toString().toStdString());
+                    adopters.push_back(readInAdopterPublic(query.value("username").toString().toStdString()));
                 }
             }
         }
     }
-    return nullptr;
+    return adopters;
 }
 
 //Finds adoptee who owns pet with given id
 Adoptee* DatabaseManager::findAdopteePet(int id) {
     QSqlQuery query;
-    query.prepare("SELECT petIds, username, password FROM adoptee "
-                  "ORDER BY petIds;");
+    query.prepare("SELECT petIds, username FROM adoptee ORDER BY petIds;");
     if(query.exec()) {
         while(query.next()) {
             //Pull vector of liked pets for current adoptee
@@ -237,8 +236,7 @@ Adoptee* DatabaseManager::findAdopteePet(int id) {
             for(int i = 0; i < (int)petIds.size(); i++) {
                 //If petIds contains the id being searched for, pull and return said adoptee
                 if(petIds.at(i) == id) {
-                    return readInAdoptee(query.value("username").toString().toStdString(),
-                                         query.value("password").toString().toStdString());
+                    return readInAdopteePublic(query.value("username").toString().toStdString());
                 }
             }
         }

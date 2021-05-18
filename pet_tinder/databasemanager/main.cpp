@@ -16,8 +16,10 @@ int main() {
     cout << dm->findPet(12)->name << endl << endl;
 
     //cout << dm->isUsernameTaken("Glue") << endl << endl;
-
-    cout << "User: " + dm->findAdopterPet(1)->username << endl;
+    vector<Adopter*> adopters = dm->findAdopterPet(1);
+    for(Adopter* a : adopters) {
+        cout << "User: " + a->username << endl;
+    }
     cout << "User: " + dm->findAdopteePet(1)->username << endl << endl;
 
     vector<QString> vec = dm->messageParse("Kate: AHAHHHHHH|Glue: GIUDHGUIDGUI|Kate: SCREAMING|");
