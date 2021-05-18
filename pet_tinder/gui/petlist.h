@@ -28,6 +28,8 @@ public:
     void sendMessage();
     void newConvo(Pet* pet, Adoptee* adoptee);
     Adopter* getAdopterChatting(int index);
+    void reset();
+    void deleteIndex(int petId);
 
     void closeEvent(QCloseEvent* event);
 
@@ -49,6 +51,7 @@ public:
     QString typedMessage;
     bool validMessage;
     int convoIndex;
+    int comboNum;
 
     //String to display when no messages have been sent
     QString noMessagesDisplay;

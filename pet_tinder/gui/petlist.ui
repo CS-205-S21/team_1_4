@@ -286,7 +286,7 @@
          <item>
           <widget class="QPushButton" name="shelterInfoButton">
            <property name="text">
-            <string>Shelter Information</string>
+            <string>Iterlocuter's Information</string>
            </property>
           </widget>
          </item>

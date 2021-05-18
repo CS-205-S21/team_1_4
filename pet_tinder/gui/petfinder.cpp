@@ -28,8 +28,13 @@ void PetFinder::initialize() {
 
     if(petList.size() > 0) {
         cout << "PetFinder screen display first pet!" << endl;
-        displayPet(petList.front());
-        petIndex = 0;
+
+        if(petList.front() != nullptr) {
+            displayPet(petList.front());
+            petIndex = 0;
+        } else {
+            petIndex = 1;
+        }
     } else {
         displayEmptyPet();
     }
@@ -149,8 +154,8 @@ void PetFinder::closeEvent (QCloseEvent *event) {
     //Creates & displays exit pop-up screen
     QMessageBox::StandardButton exitButton =
             QMessageBox::question(this, "Claws n' Paws", tr("Are you sure you wish to exit?\n"),
-                                   QMessageBox::Cancel | QMessageBox::No
-                                   | QMessageBox::Yes, QMessageBox::No);
+                                  QMessageBox::Cancel | QMessageBox::No
+                                  | QMessageBox::Yes, QMessageBox::No);
     //If exit is confirmed...
     if(exitButton == QMessageBox::Yes) {
         //Read out user info
@@ -172,13 +177,7 @@ void PetFinder::closeEvent (QCloseEvent *event) {
                 convo->usernameAdopter = petListWindow->adoptersChatting.at(i)->username;
             }
             convo->petId = petListWindow->petsChatting.at(i)->id;
-            convo->usernameAdoptee = petListWindow->adopteesChatting.at(i)->username;
             convo->messages = petListWindow->textboxes.at(i);
-
-            cout << "NEW MESSAGE CYCLE" << endl;
-            for(QString strings : convo->messages) {
-                cout << "Mesaaaage: " + strings.toStdString() << endl;
-            }
 
             matchmaker->DM->updateConversation(convo);
         }
@@ -190,12 +189,14 @@ void PetFinder::closeEvent (QCloseEvent *event) {
 }
 
 void PetFinder::on_profileButton_clicked() {
+    remove(petList.begin(), petList.end(), nullptr);
     this->hide();
     profileWindow->showMaximized();
 }
 
 
 void PetFinder::on_petListButton_clicked() {
+    remove(petList.begin(), petList.end(), nullptr);
     this->hide();
     petListWindow->showMaximized();
 }
@@ -229,10 +230,47 @@ void PetFinder::on_likeButton_clicked() {
         ui->likeButton->setPalette(test);
 
         if(petList.size() > 0) {
-            matchmaker->DM->removePet(petList.at(petIndex)->id);
-        }
+            //DELETING PET
+            Pet* deletedPet = petList.at(petIndex);
+            if(matchmaker->DM->removePet(deletedPet->id)) {
+                //Delete pet from pet database
+                vector<Adopter*> petLikers = matchmaker->DM->findAdopterPet(deletedPet->id);
+                //Delete conversations about pet from conversation database
+                for(Adopter* petLiker : petLikers) {
+                    matchmaker->DM->removeConversation(petLiker->username, deletedPet->id);
+                }
 
+                //Delete ongoing conversation from PetList window
+                for(int i = 0; i < petListWindow->petsChatting.size(); i++) {
+                    if(petListWindow->petsChatting.at(i)->id = deletedPet->id) {
+                        petListWindow->petsChatting.erase(petListWindow->petsChatting.begin() + i);
+                        petListWindow->adoptersChatting.erase(petListWindow->adoptersChatting.begin() + i);
+                        //petListWindow->textboxes.erase(petListWindow->textboxes.begin() + i);
+                    }
+                }
+
+                //Delete pet from petList
+                petList.erase(petList.begin() + petIndex);
+                //Delete pet id from owned pet list for current user
+                remove(profileWindow->userInfoAdoptee->ownedPetIds.begin(),
+                       profileWindow->userInfoAdoptee->ownedPetIds.end(), deletedPet->id);
+                //Delete pet id from liked pet list for all users
+                for(Adopter* petLiker : petLikers) {
+                    remove(petLiker->likedPetIds.begin(), petLiker->likedPetIds.end(), deletedPet->id);
+                    matchmaker->DM->updateAdopter(petLiker);
+                }
+
+                if(petIndex >= petList.size() - 1) {
+                    petIndex--;
+                }
+                displayPet(petList.at(petIndex));
+                //petListWindow->reset();
+                //petListWindow->deleteIndex(deletedPet->id);
+                petListWindow->initialize();
+            }
+        }
         deleteClicked = false;
+
     } else { //likeButton = like/right arrow
         Pet* likedPet = petList.at(petIndex);
         //Iterates one up through the petList
@@ -240,8 +278,11 @@ void PetFinder::on_likeButton_clicked() {
             cout << "GUI PetFinder screen: Like button clicked, next pet displayed" << endl;
             //Adds pet id to user info's liked pet list
             petIndex++;
-            cout << petIndex << endl;
-            displayPet(petList.at(petIndex));
+            if(petList.at(petIndex) != nullptr) {
+                displayPet(petList.at(petIndex));
+            } else {
+                petIndex++;
+            }
         } else if(isUserAdopter) {
             cout << "GUI PetFinder screen: Like button clicked, no more pets to display" << endl;
             displayEmptyPet();
@@ -295,7 +336,6 @@ void PetFinder::on_dislikeButton_clicked()
         if(petList.size() > 0 && petIndex - 1 >= 0) {
             cout << "GUI PetFinder screen: left arrow clicked, previous pet displayed" << endl;
             petIndex--;
-            cout << petIndex << endl;
             displayPet(petList.at(petIndex));
         }
     }

@@ -66,6 +66,7 @@ void HomeScreen::login() {
                             " or was not read in properly" << endl;
                 }
             }
+            remove(petWindow->petList.begin(), petWindow->petList.end(), nullptr);
 
             //Passes adoptee to profileWindow and displays their info
             petWindow->profileWindow->userInfoAdoptee = userInfoAdoptee;

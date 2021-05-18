@@ -7,6 +7,7 @@ PetList::PetList(QWidget *parent) : QWidget(parent), ui(new Ui::PetList) {
     ppptr = NULL;
     ciptr = new ChatInfo();
     ciptr->petListWindow = this;
+    comboNum = 0;
 
     validMessage = false;
     noMessagesDisplay = "This is where your messages will appear!";
@@ -21,6 +22,11 @@ PetList::~PetList() {
 
 //Initializes conversations, call from login not constructor
 void PetList::initialize() {
+    adoptersChatting.clear();
+    adopteesChatting.clear();
+    petsChatting.clear();
+    textboxes.clear();
+    //ui->otherConvos->clear();
     //Reads in messages from database
     //If user is adopter...
     if(pfptr->isUserAdopter) {
@@ -41,6 +47,11 @@ void PetList::initialize() {
                 ui->otherConvos->addItem(QString::fromStdString
                                          (petsChatting.back()->name +
                                           " from " + adopteesChatting.back()->username));
+                int k = ui->otherConvos->findText(QString::fromStdString
+                                                  (petsChatting.back()->name +
+                                                   " from " + adopteesChatting.back()->username));
+                QVariant t = convo->petId;
+                ui->otherConvos->setItemData(k, t, 0);
             } else {
                 cout << petsChatting.back()->name << endl;
                 cout << adopteesChatting.back()->username << endl;
@@ -48,6 +59,7 @@ void PetList::initialize() {
                                          (petsChatting.back()->name +
                                           " from " + adopteesChatting.back()->shelter));
             }
+            comboNum++;
         }
     } else { //If user is adoptee
         ui->chatTitle->setText("None of your pets have been liked yet!");
@@ -60,20 +72,27 @@ void PetList::initialize() {
             for(Adopter* adopter : adopters) {
                 Conversation* convo = pfptr->matchmaker->DM->readInConversation
                         (adopter->username, i);
-                adoptersChatting.push_back(adopter);
-                petsChatting.push_back(pfptr->matchmaker->DM->findPet(i));
                 if(convo != nullptr) {
+                    adoptersChatting.push_back(adopter);
+                    petsChatting.push_back(pfptr->matchmaker->DM->findPet(i));
                     textboxes.push_back(convo->messages);
-                } else {
-                    vector<QString> emptyVec;
-                    textboxes.push_back(emptyVec);
+                    if(adoptersChatting.back() != nullptr && petsChatting.back() != nullptr) {
+                        ui->otherConvos->addItem(QString::fromStdString(adoptersChatting.back()->username + " who is interested in " + petsChatting.back()->name));
+                    }
                 }
-                ui->otherConvos->addItem(QString::fromStdString
-                                         (adoptersChatting.back()->username +
-                                          " who is interested in " +
-                                          petsChatting.back()->name));
+                comboNum++;
             }
         }
+    }
+}
+
+void PetList::reset() {
+    ui->otherConvos->clear();
+    for(int i = 0; i < textboxes.size(); i++) {
+        ui->otherConvos->addItem(QString::fromStdString
+                                 (adoptersChatting.at(i)->username +
+                                  " who is interested in " +
+                                  petsChatting.at(i)->name));
     }
 }
 
@@ -117,6 +136,7 @@ void PetList::newConvo(Pet* pet, Adoptee *adoptee) {
         } else {
             ui->otherConvos->addItem(QString::fromStdString(pet->name + " from " + adoptee->shelter));
         }
+        comboNum++;
     } else {
         cout << "New conversation failed" << endl;
     }
@@ -124,6 +144,14 @@ void PetList::newConvo(Pet* pet, Adoptee *adoptee) {
 
 Adopter* PetList::getAdopterChatting(int index) {
     return adoptersChatting.at(index);
+}
+
+void PetList::deleteIndex(int petId) {
+    for(int i = 0; i < comboNum; i++) {
+        if(petId == ui->otherConvos->itemData(i)) {
+            ui->otherConvos->removeItem(i);
+        }
+    }
 }
 
 void PetList::closeEvent(QCloseEvent* event) {
@@ -167,8 +195,21 @@ void PetList::on_lineEdit_returnPressed() {
 }
 
 void PetList::on_otherConvos_currentIndexChanged(int index) {
-    cout << index << endl;
     convoIndex = index;
+
+    /*for(Pet* p : petsChatting) {
+        int flag = 0;
+        for(Pet* pp : pfptr->petList) {
+            if(p->id != pp->id) {
+                flag++;
+            }
+        }
+        if(flag == pfptr->petList.size() - 1) {
+            ui->otherConvos->removeItem(index);
+            return;
+        }
+    }*/
+
     QString text = "";
     for(QString i : textboxes.at(convoIndex)) {
         text.append(i + "\n");
