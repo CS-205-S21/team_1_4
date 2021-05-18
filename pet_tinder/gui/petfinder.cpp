@@ -83,14 +83,17 @@ void PetFinder::displayPet(Pet *pet) {
     }
 
     //Displays name, sex, and age
-    ui->nameSexAge->setText(QString::fromStdString(pet->name + ", " + pet->sex + ", " + to_string(pet->age)));
+    ui->nameSexAge->setText(QString::fromStdString(pet->name + ", " + pet->sex + ", " +
+                                                   to_string(pet->age) + " years old"));
     //Displays species and breed
     ui->speciesBreed->setText(QString::fromStdString(pet->species + " - " + pet->breed));
     //Checks if pet is hypoallergenic, then displays that
     if(pet->hypoallergenic == 1) {
-        ui->hypoallergenic->setText("Hypoallergenic");
+        ui->hypoallergenicWeight->setText
+                ("Hypoallergenic & weighs " + QString::number(pet->weight) + " pounds");
     } else {
-        ui->hypoallergenic->setText("Not hypoallergenic");
+        ui->hypoallergenicWeight->setText
+                ("Not hypoallergenic & weighs " + QString::number(pet->weight) + " pounds");
     }
     //Displays bio
     ui->animalCustomBio->setText(QString::fromStdString(pet->bio));
@@ -115,7 +118,7 @@ void PetFinder::displayEmptyPet() {
         //Displays species and breed
         ui->speciesBreed->clear();
         //Checks if pet is hypoallergenic, then displays that
-        ui->hypoallergenic->clear();
+        ui->hypoallergenicWeight->clear();
         //Displays bio
         ui->animalCustomBio->setText("Update your preferences in the Profile "
                                      "or wait around for new pets to be added!");
@@ -126,7 +129,7 @@ void PetFinder::displayEmptyPet() {
         //Displays species and breed
         ui->speciesBreed->clear();
         //Checks if pet is hypoallergenic, then displays that
-        ui->hypoallergenic->clear();
+        ui->hypoallergenicWeight->clear();
         //Displays bio
         ui->animalCustomBio->setText("You can add new pet profiles "
                                      "in the profile screen!");

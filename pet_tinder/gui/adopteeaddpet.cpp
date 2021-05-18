@@ -19,6 +19,7 @@ AdopteeAddPet::~AdopteeAddPet() {
 void AdopteeAddPet::setupPet(Pet* pet) {
     //If a nullptr is passed, assume no prepared pet is available
     // and fill input with base pet info.
+    input = new Pet;
     if(pet == nullptr) {
         input->name = "";
         input->species = "";

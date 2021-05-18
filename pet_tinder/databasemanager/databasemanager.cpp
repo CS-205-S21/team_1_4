@@ -358,6 +358,38 @@ bool DatabaseManager::addPet(Pet *pet) {
     }
 }
 
+/*
+bool updatePet(int petId, Pet* pet) {
+    //Prepares a query that inserts all pet info from pet struct
+    QSqlQuery q;
+        q.prepare("UPDATE pet SET name = :name, species = :species, breed = :breed, "
+                  "age = :age, weight = :weight, color = :color, "
+                  "hypoallergenic = :hypoallergenic, sex = :sex, "
+                  "bio = :bio, image = :image WHERE petId = :id;");
+        q.bindValue(":name", QString::fromStdString(pet->name));
+        QString species = QString::fromStdString(pet->species);
+        q.bindValue(":species", species);
+        QString breed = QString::fromStdString(pet->breed);
+        q.bindValue(":breed", breed);
+        q.bindValue(":age", pet->age);
+        q.bindValue(":weight", pet->weight);
+        QString color = QString::fromStdString(pet->color);
+        q.bindValue(":color", color);
+        q.bindValue(":hypoallergenic", pet->hypoallergenic);
+        QString sex = QString::fromStdString(pet->sex);
+        q.bindValue(":sex", sex);
+        QString bio = QString::fromStdString(pet->bio);
+        q.bindValue(":bio", bio);
+        q.bindValue(":image", pet->image);
+    if(q.exec()){
+        pets.push_back(pet); //Adds pet struct to pets vector
+        return true;
+    } else {
+        qDebug() << "Add Pet Error" << q.lastError();
+        return false;
+    }
+}*/
+
 //Removes a pet from the database of pets
 bool DatabaseManager::removePet(int petId) {
     bool exists = false;
