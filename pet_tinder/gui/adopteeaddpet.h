@@ -33,7 +33,7 @@ public:
 private slots:
     void on_btn_image_clicked();
 
-   // void on_pushButton_2_clicked();
+    void on_pushButton_2_clicked();
 
     void on_discardButton_clicked();
 
@@ -55,7 +55,7 @@ private slots:
 
     void on_comboBox_2_currentIndexChanged(int index);
 
-    void on_bioBox_textChanged(const QString &arg1);
+
 
 private:
     Ui::AdopteeAddPet *ui;
