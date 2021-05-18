@@ -547,7 +547,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="hypoallergenic">
+         <widget class="QLabel" name="hypoallergenicWeight">
           <property name="font">
            <font>
             <pointsize>12</pointsize>
@@ -555,7 +555,7 @@
            </font>
           </property>
           <property name="text">
-           <string>Hypoallergenic</string>
+           <string>Hypoallergenic, Weight</string>
           </property>
          </widget>
         </item>
