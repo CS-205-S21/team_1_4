@@ -73,8 +73,8 @@ Adopter* DatabaseManager::readInAdopter(string username, string password) {
         adopter->prefSpeciesReq = query.value("prefSpeciesReq").toBool();
         adopter->prefBreed = query.value("prefBreed").toString().toStdString();
         adopter->prefBreedReq = query.value("prefBreedReq").toBool();
-        adopter->prefAge = query.value("prefBreed").toInt();
-        adopter->prefAgeReq = query.value("prefBreedReq").toBool();
+        adopter->prefAge = query.value("prefAge").toInt();
+        adopter->prefAgeReq = query.value("prefAgeReq").toBool();
         adopter->prefWeight = query.value("prefWeight").toDouble();
         adopter->prefWeightReq = query.value("prefWeightReq").toBool();
         adopter->prefColor = query.value("prefColor").toString().toStdString();
@@ -155,9 +155,9 @@ Adoptee* DatabaseManager::readInAdopteePublic(string username) {
 }
 
 Conversation* DatabaseManager::readInConversation(string usernameAdopter, int petId) {
-    cout << "readInConversation called" << endl;
-    cout << "adopter: " + usernameAdopter << endl;
-    cout << "petId: " + to_string(petId) << endl;
+    //cout << "readInConversation called" << endl;
+    //cout << "adopter: " + usernameAdopter << endl;
+    //cout << "petId: " + to_string(petId) << endl;
     //Prepares a query that will read in all pets ordered by id.
     QSqlQuery query;
     query.prepare("SELECT usernameAdopter, petId, usernameAdoptee, messages FROM conversation "
@@ -165,7 +165,7 @@ Conversation* DatabaseManager::readInConversation(string usernameAdopter, int pe
                   "AND petId = (:petId);");
     query.bindValue(":usernameAdopter", QString::fromStdString(usernameAdopter));
     query.bindValue(":petId", petId);
-    if(query.exec() && query.next()) {
+    if(query.exec() && query.next() && findAdopteePet(petId) != nullptr) {
         //Creates and fills info struct
         Conversation *convo = new Conversation;
         convo->messages = messageParse(query.value("messages").toString().toStdString());
@@ -589,7 +589,7 @@ bool DatabaseManager::updateAdoptee(Adoptee* adoptee) {
     //Prepares a query that inserts all pet info from pet struct
     QSqlQuery q;
         q.prepare("UPDATE adoptee "
-                  "SET petIds = :petIds, bio = :bio, "
+                  "SET petIds = :petIds, bio = :bio "
                   "WHERE username = :username;");
         q.bindValue(":petIds", intVectorToQString(adoptee->ownedPetIds));
         q.bindValue(":bio", QString::fromStdString(adoptee->bio));
@@ -680,7 +680,7 @@ bool DatabaseManager::removeConversation(string usernameAdopter, int petId) {
     QSqlQuery existQuery;
     existQuery.prepare("SELECT usernameAdopter FROM conversation "
                        "WHERE usernameAdopter = (:usernameAdopter) "
-                       "AND petId = (:usernameAdoptee);");
+                       "AND petId = (:petId);");
     existQuery.bindValue(":usernameAdopter", QString::fromStdString(usernameAdopter));
     existQuery.bindValue(":petId", petId);
     if(existQuery.exec() && existQuery.next()) {
@@ -726,7 +726,7 @@ QString DatabaseManager::intVectorToQString(vector<int> vec) {
 }
 
 vector<QString> DatabaseManager::messageParse(string message) {
-    cout << "Database Manager: parsing message" << endl;
+    //cout << "Database Manager: parsing message" << endl;
 
     vector<QString> messageVec;
     string delimeterEndMessage = "|"; //Marks end of sent message
@@ -736,7 +736,7 @@ vector<QString> DatabaseManager::messageParse(string message) {
     while(message.length() > 0) {
         //Finds message sent
         string foundMessage = message.substr(0, message.find(delimeterEndMessage) - 1);
-        cout << "Found message: " + foundMessage << endl;
+        //cout << "Found message: " + foundMessage << endl;
 
         messageVec.push_back(QString::fromStdString(foundMessage));
 
