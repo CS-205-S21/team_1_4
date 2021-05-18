@@ -450,6 +450,56 @@ TEST_F(DatabaseManager_Test, FIND_PETS) {
                     << "Pets should be back to original number";
 }
 
+//This will test Updating a pet in the database manager
+TEST_F(DatabaseManager_Test, UPDATE_PET) {
+    Pet *bear = new Pet;
+    bear->name = "Trinket";
+    bear->species = "Large";
+    bear->breed = "Fuzzy";
+    bear->age = 6;
+    bear->weight = 200.0;
+    bear->color = "Brown";
+    bear->hypoallergenic = false;
+    bear->sex = "Male";
+    bear->bio = "The companion to Lady Vex'ahlia, Mistress of the Grey Hunt. Accompanying her,"
+               "Trinket has seen a great many adventure and receieved special treatment as the"
+               "bear that aided Vox Machina through several adventures that would save all of Tal"
+               "Dore. THis is probably the most well-known bear in the world, for good reason. ";
+    bear->image = "";
+    ASSERT_TRUE(dm->addPet(bear))
+                        << "Bear should have been added.";
+    ASSERT_EQ(numPets+1, dm->getNumPets())
+                    << "Pets should have one addition.";
+    bear->name = "Not Trinket";
+    bear->species = "Bear";
+    bear->breed = "Brown Bear";
+    bear->age = 7;
+    bear->weight = 250.5;
+    bear->color = "brown";
+    bear->hypoallergenic = true;
+    bear->sex = "Female";
+    bear->bio = "Changed.";
+    dm->updatePet(bear);
+    ASSERT_EQ("Not Trinket", dm->findPet(bear->id)->name)
+                        << "Bear should have updated information";
+    ASSERT_EQ("Bear", dm->findPet(bear->id)->species)
+                        << "Bear should have updated information";
+    ASSERT_EQ("Brown Bear", dm->findPet(bear->id)->breed)
+                        << "Bear should have updated information";
+    ASSERT_EQ(7, dm->findPet(bear->id)->age)
+                        << "Bear should have updated information";
+    ASSERT_EQ(250.5, dm->findPet(bear->id)->weight)
+                        << "Bear should have updated information";
+    ASSERT_EQ("brown", dm->findPet(bear->id)->color)
+                        << "Bear should have updated information";
+    ASSERT_EQ("Female", dm->findPet(bear->id)->sex)
+                        << "Bear should have updated information";
+    ASSERT_EQ("Changed.", dm->findPet(bear->id)->bio)
+                        << "Bear should have updated information";
+    ASSERT_TRUE(dm->removePet(bear->id))
+                        << "Bear should have been removed.";
+}
+
 //*********************************************************************************************************************
 //*****************************************TESTS FOR DATABASE ADOPTERS*************************************************
 //*********************************************************************************************************************

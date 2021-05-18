@@ -358,7 +358,7 @@ bool DatabaseManager::addPet(Pet *pet) {
     }
 }
 
-bool updatePet(Pet* pet) {
+bool DatabaseManager::updatePet(Pet* pet) {
     //Prepares a query that inserts all pet info from pet struct
     QSqlQuery q;
         q.prepare("UPDATE pet SET name = :name, species = :species, breed = :breed, "
@@ -374,6 +374,7 @@ bool updatePet(Pet* pet) {
         q.bindValue(":hypoallergenic", pet->hypoallergenic);
         q.bindValue(":sex", QString::fromStdString(pet->sex));
         q.bindValue(":image", pet->image);
+        q.bindValue(":bio", QString::fromStdString(pet->bio));
         q.bindValue(":id", pet->id);
     if(q.exec()) {
         return true;
