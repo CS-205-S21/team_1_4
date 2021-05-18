@@ -12,7 +12,7 @@ PrefTab::~PrefTab()
 {
     delete ui;
 }
-
+//not shown because it is useless
 void PrefTab::on_pushButton_2_clicked()
 {
     this->close();
@@ -25,7 +25,8 @@ void PrefTab::on_prefSaveButton_clicked()
 {
 
 
-
+    pnter->petList = pnter->matchmaker->DatabaseInterface(pnter->profileWindow->userInfoAdopter);
+    pnter->initialize();
     this->close();
 
 }

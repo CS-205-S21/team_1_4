@@ -1,4 +1,5 @@
 #include "matchmaker.h"
+#include<bits/stdc++.h>
 
 //creates an instance of the database
 Matchmaker::Matchmaker(){
@@ -27,12 +28,12 @@ vector<Pet*> Matchmaker::DatabaseInterface(Adopter *cu){
     //continue breaks loop and is triggers for when a pet doesnt match a hard preference
     for(int i = 0; i < (int)sortablePets.size(); i++){ //SORTABLE PETS EMPTY
         if(currentUser->prefSpeciesReq == true){
-            if(currentUser->prefSpecies != sortablePets.at(i)->species){
+            if(strcasecmp(currentUser->prefSpecies.c_str(), sortablePets.at(i)->species.c_str()) != 0){
                 continue;
             }
         }
         if(currentUser->prefBreedReq == true){
-            if(currentUser->prefBreed != sortablePets.at(i)->breed){
+            if(strcasecmp(currentUser->prefBreed.c_str(),sortablePets.at(i)->breed.c_str()) != 0){
                 continue;
             }
         }
@@ -47,7 +48,7 @@ vector<Pet*> Matchmaker::DatabaseInterface(Adopter *cu){
             }
         }
         if(currentUser->prefColorReq == true){
-            if(currentUser->prefColor != sortablePets.at(i)->color){
+            if(strcasecmp(currentUser->prefColor.c_str(),sortablePets.at(i)->color.c_str()) != 0){
                 continue;
             }
         }
