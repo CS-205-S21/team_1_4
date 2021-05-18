@@ -20,11 +20,11 @@ travel to shelters for adoptions, leading to more pet euthanizations than before
 3) Use the Logout button when done with likeing/disliking pets, and after any modifications to profile. Exiting out may just cause an error with storing and saving information.
 4) This app is meant to be used as a short-term matchmaking system, for users who want to match with pets and message adoptees in the process of gettng a pet.
 5) At first, since we do not have the backing of any shelters, we will be using sample pet data, which cannot be adopted since they are static. When we get backing of a shelter, this app will be more useful. 
-6) We did not patent this name or any names associated with this project. We are currently non-profit and are not trying to gain a profit for this project. We did not use any outside code, other than created libraries like sort, or art we did not create ourselves. 
+6) We did not patent or trademark this name or any names associated with this project. We are currently non-profit and are not trying to gain a profit for this project. We did not use any outside code, other than created libraries like sort, or art we did not create ourselves. 
 
 # Building and Running our System:
 To build this system, just download our source code, as well as any database included with 
-sqlite3 and our pictures of each pet. Then, make sure that th eproject builds, then run it 
+sqlite3 and our pictures of each pet. Then, make sure that the project builds, then run it 
 while starting from qtcreator's GUI main method. Then, it will bring up the login screen,
 and from there, the user can explore our app. 
 
