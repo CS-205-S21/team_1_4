@@ -20,7 +20,6 @@ void PrefTab::on_pushButton_2_clicked()
 
 void PrefTab::populateBoxes()
 {
-
 }
 void PrefTab::on_prefSaveButton_clicked()
 {

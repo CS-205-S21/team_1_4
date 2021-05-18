@@ -61,6 +61,8 @@ void ProfilePage::on_PrefsButton_clicked()
 
 void ProfilePage::on_addPetButton_clicked()
 {
+    aap->setupPet(nullptr);
+    aap->isNewPet = true;
     aap->show();
 }
 
