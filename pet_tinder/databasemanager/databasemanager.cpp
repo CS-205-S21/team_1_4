@@ -497,7 +497,7 @@ bool DatabaseManager::updateAdopter(Adopter* adopter) {
                   "prefColor = :prefColor, prefColorReq = :prefColorReq, "
                   "prefHypoallergenic = :prefHypoallergenic, "
                   "prefHypoallergenicReq = :prefHypoallergenicReq, "
-                  "prefSex = :prefSex, prefSexReq = :prefSexReq "
+                  "prefSex = :prefSex, prefSexReq = :prefSexReq, "
                   "bio = :bio WHERE username = :username;");
         q.bindValue(":likedPetIds", intVectorToQString(adopter->likedPetIds));
         q.bindValue(":dislikedPetIds", intVectorToQString(adopter->dislikedPetIds));

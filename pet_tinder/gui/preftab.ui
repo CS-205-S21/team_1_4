@@ -176,7 +176,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Prefernces </string>
+    <string>Preferences</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_9">
@@ -184,7 +184,7 @@
     <rect>
      <x>460</x>
      <y>10</y>
-     <width>111</width>
+     <width>131</width>
      <height>41</height>
     </rect>
    </property>
@@ -202,10 +202,10 @@
     </rect>
    </property>
    <property name="text">
-    <string>options</string>
+    <string>Options</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -388,6 +388,13 @@
         <string>Yes</string>
        </property>
       </item>
+     </widget>
+    </item>
+    <item row="9" column="0" colspan="2">
+     <widget class="QLabel" name="errorBar">
+      <property name="text">
+       <string/>
+      </property>
      </widget>
     </item>
    </layout>

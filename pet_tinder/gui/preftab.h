@@ -19,6 +19,7 @@ public:
     ~PrefTab();
     Adopter input;
     PetFinder *pnter;
+    void userProofing();
 
 private slots:
     void on_pushButton_2_clicked();
