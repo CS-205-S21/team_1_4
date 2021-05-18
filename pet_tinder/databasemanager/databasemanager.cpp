@@ -374,6 +374,7 @@ bool DatabaseManager::updatePet(Pet* pet) {
         q.bindValue(":hypoallergenic", pet->hypoallergenic);
         q.bindValue(":sex", QString::fromStdString(pet->sex));
         q.bindValue(":image", pet->image);
+        q.bindValue(":bio", QString::fromStdString(pet->bio));
         q.bindValue(":id", pet->id);
     if(q.exec()) {
         return true;

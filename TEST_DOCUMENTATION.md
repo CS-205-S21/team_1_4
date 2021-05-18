@@ -30,9 +30,10 @@ not allow pets with the same species, breed and name in case of duplicates. We a
 made sure that a pet with little parameters specified was able to be added, say if 
 the user could not fill out the information entirely. We also tested that a user could
 not enter weird information like negative ages or weights or something similar. We also
-tested that we could not add a pet that was un-initialized. Finally, we tested that when
+tested that we could not add a pet that was un-initialized. We also tested that when
 searching for pets, using the find pets method within the database, it returned the 
-correct pets. 
+correct pets. Finally, we tested the update pet method so that pets within the database
+can be edited if needed by the user.
 
 Next we focused on similar tests for the adopter and adoptee respectively. The only 
 difference in tests for the pets and these two, were that instead of the find pets, 
