@@ -358,7 +358,7 @@ bool DatabaseManager::addPet(Pet *pet) {
     }
 }
 
-bool updatePet(Pet* pet) {
+bool DatabaseManager::updatePet(Pet* pet) {
     //Prepares a query that inserts all pet info from pet struct
     QSqlQuery q;
         q.prepare("UPDATE pet SET name = :name, species = :species, breed = :breed, "

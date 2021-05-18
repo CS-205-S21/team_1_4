@@ -24,7 +24,6 @@ void PrefTab::populateBoxes()
 void PrefTab::on_prefSaveButton_clicked()
 {
 
-
     pnter->petList = pnter->matchmaker->DatabaseInterface(pnter->profileWindow->userInfoAdopter);
     pnter->initialize();
     this->close();

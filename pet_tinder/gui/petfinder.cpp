@@ -138,8 +138,10 @@ void PetFinder::displayEmptyPet() {
 
 void PetFinder::editPet(Pet* pet) {
     if(petList.size() > 0) {
+        pet->id = petList.at(petIndex)->id;
         petList.at(petIndex) = pet;
         displayPet(pet);
+        matchmaker->DM->updatePet(pet);
     }
 }
 
@@ -151,7 +153,12 @@ void PetFinder::closeEvent (QCloseEvent *event) {
                                    | QMessageBox::Yes, QMessageBox::No);
     //If exit is confirmed...
     if(exitButton == QMessageBox::Yes) {
+        //If user is adopter
+        if(isUserAdopter) {
+            profileWindow->userInfoAdopter;
+        } else { //If user is adoptee
 
+        }
         event->accept();
     } else {
         event->ignore();
