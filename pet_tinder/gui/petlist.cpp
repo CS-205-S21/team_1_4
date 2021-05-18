@@ -10,6 +10,7 @@ PetList::PetList(QWidget *parent) : QWidget(parent), ui(new Ui::PetList) {
 
     validMessage = false;
     noMessagesDisplay = "This is where your messages will appear!";
+    ui->pushButton->setEnabled(false);
     ui->invalidWarning->setVisible(false);
     convoIndex = ui->otherConvos->currentIndex();
 }
@@ -30,8 +31,7 @@ void PetList::initialize() {
         Adopter* user = ppptr->userInfoAdopter;
         for(int i : user->likedPetIds) {
             Conversation* convo = pfptr->matchmaker->DM->readInConversation
-                    (user->username, pfptr->matchmaker->DM->
-                     findAdopteePet(i)->username);
+                    (user->username, i);
             adopteesChatting.push_back(pfptr->matchmaker->DM->readInAdopteePublic
                                        (convo->usernameAdoptee));
             petsChatting.push_back(pfptr->matchmaker->DM->findPet(i));
@@ -59,7 +59,7 @@ void PetList::initialize() {
             vector<Adopter*> adopters = pfptr->matchmaker->DM->findAdopterPet(i);
             for(Adopter* adopter : adopters) {
                 Conversation* convo = pfptr->matchmaker->DM->readInConversation
-                        (adopter->username, user->username);
+                        (adopter->username, i);
                 adoptersChatting.push_back(adopter);
                 petsChatting.push_back(pfptr->matchmaker->DM->findPet(i));
                 if(convo != nullptr) {
@@ -81,10 +81,6 @@ void PetList::sendMessage() {
     //Doesn't send a message if you have no conversations
     if(textboxes.size() > 0) {
         //Finds current conversation index
-        //If this is the first message, clear no messages display
-        if(textboxes.at(convoIndex).size() == 0) {
-            textboxes.at(convoIndex).clear();
-        }
         if(validMessage) {
             if(pfptr->isUserAdopter) {
                 textboxes.at(convoIndex).push_back
@@ -104,16 +100,25 @@ void PetList::sendMessage() {
 }
 
 void PetList::newConvo(Pet* pet, Adoptee *adoptee) {
-    adopteesChatting.push_back(adoptee);
-    petsChatting.push_back(pet);
-    vector<QString> vec;
-    vec.push_back(noMessagesDisplay);
-    textboxes.push_back(vec);
-    //If adoptee doesn't have an associated shelter, display their username instead
-    if(adoptee->shelter.compare("") == 0) {
-        ui->otherConvos->addItem(QString::fromStdString(pet->name + " from " + adoptee->username));
+    Conversation* convo = new Conversation;
+    convo->usernameAdopter = pfptr->profileWindow->userInfoAdopter->username;
+    convo->petId = pet->id;
+    convo->usernameAdoptee = adoptee->username;
+    vector<QString> empty;
+    convo->messages = empty;
+    if(pfptr->matchmaker->DM->addConversation(convo)) {
+        adopteesChatting.push_back(adoptee);
+        petsChatting.push_back(pet);
+        vector<QString> vec;
+        textboxes.push_back(vec);
+        //If adoptee doesn't have an associated shelter, display their username instead
+        if(adoptee->shelter.compare("") == 0) {
+            ui->otherConvos->addItem(QString::fromStdString(pet->name + " from " + adoptee->username));
+        } else {
+            ui->otherConvos->addItem(QString::fromStdString(pet->name + " from " + adoptee->shelter));
+        }
     } else {
-        ui->otherConvos->addItem(QString::fromStdString(pet->name + " from " + adoptee->shelter));
+        cout << "New conversation failed" << endl;
     }
 }
 

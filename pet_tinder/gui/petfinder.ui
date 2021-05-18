@@ -103,9 +103,9 @@
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>255</red>
-        <green>255</green>
-        <blue>255</blue>
+        <red>207</red>
+        <green>207</green>
+        <blue>207</blue>
        </color>
       </brush>
      </colorrole>
@@ -204,9 +204,9 @@
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>255</red>
-        <green>255</green>
-        <blue>255</blue>
+        <red>207</red>
+        <green>207</green>
+        <blue>207</blue>
        </color>
       </brush>
      </colorrole>
@@ -296,18 +296,18 @@
      <colorrole role="Base">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>255</red>
-        <green>255</green>
-        <blue>255</blue>
+        <red>207</red>
+        <green>207</green>
+        <blue>207</blue>
        </color>
       </brush>
      </colorrole>
      <colorrole role="Window">
       <brush brushstyle="SolidPattern">
        <color alpha="255">
-        <red>255</red>
-        <green>255</green>
-        <blue>255</blue>
+        <red>207</red>
+        <green>207</green>
+        <blue>207</blue>
        </color>
       </brush>
      </colorrole>
@@ -385,7 +385,7 @@
               <active>
                <colorrole role="Button">
                 <brush brushstyle="SolidPattern">
-                 <color alpha="255">
+                 <color alpha="0">
                   <red>226</red>
                   <green>0</green>
                   <blue>0</blue>
@@ -396,7 +396,7 @@
               <inactive>
                <colorrole role="Button">
                 <brush brushstyle="SolidPattern">
-                 <color alpha="255">
+                 <color alpha="0">
                   <red>226</red>
                   <green>0</green>
                   <blue>0</blue>
@@ -407,7 +407,7 @@
               <disabled>
                <colorrole role="Button">
                 <brush brushstyle="SolidPattern">
-                 <color alpha="255">
+                 <color alpha="0">
                   <red>226</red>
                   <green>0</green>
                   <blue>0</blue>
@@ -477,9 +477,9 @@
                <colorrole role="Button">
                 <brush brushstyle="SolidPattern">
                  <color alpha="255">
-                  <red>0</red>
-                  <green>181</green>
-                  <blue>0</blue>
+                  <red>50</red>
+                  <green>85</green>
+                  <blue>19</blue>
                  </color>
                 </brush>
                </colorrole>
@@ -488,9 +488,9 @@
                <colorrole role="Button">
                 <brush brushstyle="SolidPattern">
                  <color alpha="255">
-                  <red>0</red>
-                  <green>181</green>
-                  <blue>0</blue>
+                  <red>50</red>
+                  <green>85</green>
+                  <blue>19</blue>
                  </color>
                 </brush>
                </colorrole>
@@ -499,9 +499,9 @@
                <colorrole role="Button">
                 <brush brushstyle="SolidPattern">
                  <color alpha="255">
-                  <red>0</red>
-                  <green>181</green>
-                  <blue>0</blue>
+                  <red>50</red>
+                  <green>85</green>
+                  <blue>19</blue>
                  </color>
                 </brush>
                </colorrole>
@@ -593,6 +593,9 @@
               <pointsize>12</pointsize>
              </font>
             </property>
+            <property name="frameShape">
+             <enum>QFrame::NoFrame</enum>
+            </property>
             <property name="text">
              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;This is a bio, which users will never see ever so we can write anything we want here.&lt;/p&gt;&lt;p&gt;haha poopy&lt;/p&gt;&lt;p&gt;Richie &amp;amp; Anna &amp;lt;3&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
@@ -608,6 +611,43 @@
         </item>
         <item>
          <widget class="QPushButton" name="editPetButton">
+          <property name="palette">
+           <palette>
+            <active>
+             <colorrole role="Button">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>50</red>
+                <green>85</green>
+                <blue>19</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </active>
+            <inactive>
+             <colorrole role="Button">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>50</red>
+                <green>85</green>
+                <blue>19</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </inactive>
+            <disabled>
+             <colorrole role="Button">
+              <brush brushstyle="SolidPattern">
+               <color alpha="255">
+                <red>50</red>
+                <green>85</green>
+                <blue>19</blue>
+               </color>
+              </brush>
+             </colorrole>
+            </disabled>
+           </palette>
+          </property>
           <property name="text">
            <string>Edit Pet</string>
           </property>

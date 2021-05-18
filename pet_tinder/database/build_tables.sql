@@ -28,6 +28,7 @@ create table adopter (
 
 create table conversation (
       usernameAdopter CHAR NOT NULL,
+      petId           INT NOT NULL,
       usernameAdoptee CHAR NOT NULL,
       messages        CHAR NOT NULL        );
       

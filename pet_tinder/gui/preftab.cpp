@@ -52,12 +52,6 @@ void PrefTab::on_prefSaveButton_clicked()
         this->close();
 }
 
-
-
-
-
-
-
 void PrefTab::on_speciesInput_textChanged(const QString &arg1)
 {
     pnter->profileWindow->userInfoAdopter->prefSpecies = arg1.toStdString();
