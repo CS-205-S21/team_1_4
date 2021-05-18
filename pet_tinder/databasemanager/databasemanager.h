@@ -179,11 +179,19 @@ public:
     bool addPet(Pet* p);
 
     /**
-     * @brief removePet - Removes a pet from the database of pets
-     * @param p - the pet that will be removed from the database
-     * @return True or false depending on if the pet was successfully removed.
+     * @brief addPet - Adds a pet to the database of pets and to the vector of pets
+     * @param p - the pet that will be added to the database
+     * @return True or false depending on if the pet was successfully added.
      */
-    bool removePet(int petId);
+    bool addPet(Pet* p);
+
+    /**
+     * @brief updatePet - updates pet with given information
+     * @param petId - id of pet to upate
+     * @param pet - struct of info to update pet with
+     * @return - true if pet successfully updated
+     */
+    bool updatePet(Pet* pet, int petId);
 
     /**
      * @brief addAdopter - Adds an adopter to the database of adopters, using the pref struct

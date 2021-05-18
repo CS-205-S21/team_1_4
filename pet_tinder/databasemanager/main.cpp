@@ -7,6 +7,19 @@ int main() {
     cout << "Database main, for testing purposes only" << endl;
 
     DatabaseManager* dm = new DatabaseManager;
+
+    Pet* pet = new Pet;
+    pet->age = 2;
+    pet->bio = "";
+    pet->breed = "true";
+    pet->color = "glue";
+    pet->hypoallergenic = true;
+    pet->image = "";
+    pet->name = "myname";
+    pet->sex = "male";
+    pet->species = "epc";
+    pet->weight = 2.0;
+    dm->updatePet()
     dm->readInPets();
     cout << dm->findPet(1)->name << endl;
     cout << dm->findPet(2)->name << endl;
@@ -26,17 +39,4 @@ int main() {
     for(QString i : vec) {
         cout << i.toStdString() << endl;
     }
-
-    Pet* pet = new Pet;
-    pet->age = 2;
-    pet->bio = "";
-    pet->breed = "true";
-    pet->color = "glue";
-    pet->hypoallergenic = true;
-    pet->image = "";
-    pet->name = "myname";
-    pet->sex = "male";
-    pet->species = "epc";
-    pet->weight = 2.0;
-    dm->addPet(pet);
 }
