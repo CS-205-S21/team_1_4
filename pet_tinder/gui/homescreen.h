@@ -18,6 +18,7 @@ public:
     string username;
     string password;
     AddAccount *AApointer;
+    PetFinder* petWindow;
     explicit HomeScreen(QWidget *parent = 0);
     ~HomeScreen();
     void login();
@@ -41,7 +42,6 @@ private slots:
 
 private:
     Ui::HomeScreen* ui;
-    PetFinder* petWindow;
 };
 
 #endif // HOMESCREEN_H

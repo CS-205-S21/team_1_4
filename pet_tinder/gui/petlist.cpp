@@ -47,14 +47,7 @@ void PetList::initialize() {
                 ui->otherConvos->addItem(QString::fromStdString
                                          (petsChatting.back()->name +
                                           " from " + adopteesChatting.back()->username));
-                int k = ui->otherConvos->findText(QString::fromStdString
-                                                  (petsChatting.back()->name +
-                                                   " from " + adopteesChatting.back()->username));
-                QVariant t = convo->petId;
-                ui->otherConvos->setItemData(k, t, 0);
             } else {
-                cout << petsChatting.back()->name << endl;
-                cout << adopteesChatting.back()->username << endl;
                 ui->otherConvos->addItem(QString::fromStdString
                                          (petsChatting.back()->name +
                                           " from " + adopteesChatting.back()->shelter));
@@ -77,7 +70,9 @@ void PetList::initialize() {
                     petsChatting.push_back(pfptr->matchmaker->DM->findPet(i));
                     textboxes.push_back(convo->messages);
                     if(adoptersChatting.back() != nullptr && petsChatting.back() != nullptr) {
-                        ui->otherConvos->addItem(QString::fromStdString(adoptersChatting.back()->username + " who is interested in " + petsChatting.back()->name));
+                        ui->otherConvos->addItem(QString::fromStdString
+                                                 (adoptersChatting.back()->username + " who is interested in "
+                                                  + petsChatting.back()->name));
                     }
                 }
                 comboNum++;

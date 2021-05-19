@@ -30,13 +30,15 @@ public:
     void editPet(Pet* pet);
 
     void closeEvent(QCloseEvent *event);
+    void logout(QCloseEvent *event);
 
     Matchmaker *matchmaker;
     ProfilePage *profileWindow;
     PetList *petListWindow;
 
     bool isUserAdopter;
-    bool deleteClicked = false;
+    bool deleteClicked;
+    bool loggingOut;
 
     vector<Pet*> petList; //Holds all pets pet finder can display
     int petIndex; //Current pet index in petList

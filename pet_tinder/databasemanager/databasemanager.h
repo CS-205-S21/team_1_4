@@ -114,10 +114,11 @@ public:
 
     /**
      * @brief DatabaseManager::readInMessages - Reads in conversation from
-     *  messages database with matching parties
+     *  messages database with adopter's username and the id
+     *  of the pet they liked to begin the conversation
      * @param usernameAdopter - Username of adopter involved
-     * @param usernameAdoptee - Username of adoptee involved
-     * @return Pointer to Messages struct of message info.
+     * @param petId - id of pet adopter had liked
+     * @return Pointer to Conversation struct of conversation info.
      *  If conversation is not found, a nullptr is returned.
      */
     Conversation* readInConversation(string usernameAdopter, int petId);
@@ -131,10 +132,12 @@ public:
     bool isUsernameTaken(string username);
 
     /**
-     * @brief findAdopterPet - Finds adopter who has liked pet with given id
-     * @param id - id for pet to look for among adopters
-     * @return Adopter - struct of adopter's info
-     *  or nullptr if no adopter was found (though that shouldn't happen)
+     * @brief findAdopterPet - Finds all adopters who have liked the pet
+     *  with the given id
+     * @param id - id for pet to look for among adopters' liked pets lists
+     * @return vector<Adopter*> - a vector containing adopter structs
+     *  for all adopters who liked this pet. Will return an empty
+     *  vector if no adopters liked this pet or if the code otherwise fails.
      */
     vector<Adopter*> findAdopterPet(int id);
 
@@ -149,14 +152,14 @@ public:
     /**
      * @brief DatabaseManager::findPet - Finds pet with given id from vector
      * @param findId - Id of pet to search for
-     * @return Pointer to Pet struct of pet's info. If no pet is found,
+     * @return Pet* - Pointer to Pet struct of pet's info. If no pet is found,
      *  returns a nullptr
      */
     Pet* findPet(int id);
 
     /**
      * @brief getNumPets - Finds number of pets
-     * @return Number of pets currently in Pets vector
+     * @return int - Number of pets currently in Pets vector
      */
     int getNumPets();
 
@@ -188,7 +191,7 @@ public:
 
     /**
      * @brief addPet - Adds a pet to the database of pets and to the vector of pets
-     * @param p - The pet that will be added to the database
+     * @param id - id of pet you're trying to remove
      * @return True or false depending on if the pet was successfully added.
      */
     bool removePet(int id);
@@ -196,7 +199,8 @@ public:
     /**
      * @brief addAdopter - Adds an adopter to the database of adopters, using the pref struct
      * @param p - the adopter (pref) that will be added to the database.
-     * @return True or false depending on if the adopter was successfully added.
+     * @param password - password of adopter to add to the database
+     * @return  bool - True or false depending on if the adopter was successfully added.
      */
     bool addAdopter(Adopter* p, string password);
 
@@ -209,15 +213,16 @@ public:
 
     /**
      * @brief removeAdopter - Removes an adopter from the database of adopters
-     * @param p - the adopter that will be removed from the database
-     * @return True or false depending on if the adopter was successfully removed.
+     * @param username - username of adopter you're trying to remove
+     * @return bool - True or false depending on if the adopter was successfully removed.
      */
     bool removeAdopter(string username);
 
     /**
      * @brief addAdoptee - Adds an "adoptee" to the database of adoptees, using the adoptee info struct
      * @param p - the adoptee that will be added to the database.
-     * @return True or false depending on if the adoptee was successfully added.
+     * @param password - password of adoptee to add to the database
+     * @return bool - True or false depending on if the adoptee was successfully added.
      */
     bool addAdoptee(Adoptee* p, string password);
 
@@ -230,8 +235,8 @@ public:
 
     /**
      * @brief removeAdoptee - Removes an adoptee from the database of adoptees
-     * @param p - the adoptee that will be removed from the database
-     * @return True or false depending on if the adoptee was successfully removed.
+     * @param username - username of adoptee you're trying to remove
+     * @return bool - True or false depending on if the adoptee was successfully removed.
      */
     bool removeAdoptee(string username);
 
@@ -253,7 +258,7 @@ public:
     /**
      * @brief removeConversation - Removes found conversation from database
      * @param usernameAdopter - Username of adopter involved in conversation
-     * @param usernameAdoptee - Username of adoptee involved in conversation
+     * @param petId - id of pet involved in conversation
      * @return bool - Whether or not conversation was succesfully deleted
      */
     bool removeConversation(string usernameAdopter, int petId);
@@ -290,9 +295,10 @@ public:
     vector<QString> messageParse(string message);
 
     /**
-     * @brief messageUnparse
-     * @param message
-     * @return
+     * @brief messageUnparse - Turns a vector of QStrings into a single QString
+     *  seperated by '|' characters
+     * @param message - A vector of QStrings
+     * @return QString - Single QString of QStrings from vector
      */
     QString messageUnparse(vector<QString> message);
 
