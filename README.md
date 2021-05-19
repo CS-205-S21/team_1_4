@@ -20,6 +20,11 @@ travel to shelters for adoptions, leading to more pet euthanizations than before
 3) This app is meant to be used as a short-term matchmaking system, for users who want to match with pets and message adoptees in the process of gettng a pet.
 4) At first, since we do not have the backing of any shelters, we will be using sample pet data, which cannot be adopted since they are static. When we get backing of a shelter, this app will be more useful. 
 5) We did not patent or trademark this name or any names associated with this project. We are currently non-profit and are not trying to gain a profit for this project. We did not use any outside code, other than created libraries like sort, or art we did not create ourselves. 
+6) To view our project as either an adopter or adoptee, you can use the sample data below:
+Adopter - username: "Kate" password: "123"
+Adoptee - username: "Glue" password: "elmerselastic"
+Adoptee - username: "Biggy" password: "Smalls"
+Adoptee - username: "Brightly" password: "Townsie"
 
 # Building and Running our System:
 To build this system, just download our source code, as well as any database included with 
